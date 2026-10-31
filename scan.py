@@ -263,6 +263,56 @@ def pack_line(bars, line, kind, touches, body_n, wick_n, lookback, *, horizontal
     }
 
 
+def _empty_miss():
+    return {"rank": -1, "tried": 0, "maxTouches": 0, "fail": None, "bodyN": 0, "wickN": 0, "touches": 0}
+
+
+def _note_miss(miss, ev):
+    miss["tried"] += 1
+    t = int(ev.get("touches") or 0)
+    if t > miss["maxTouches"]:
+        miss["maxTouches"] = t
+    rank = t * 10 + (3 if ev.get("fail") == "breaks" else 2 if ev.get("fail") == "recent" else 1)
+    if rank < miss["rank"]:
+        return
+    miss["rank"] = rank
+    miss["fail"] = ev.get("fail")
+    miss["bodyN"] = int(ev.get("bodyN") or 0)
+    miss["wickN"] = int(ev.get("wickN") or 0)
+    miss["touches"] = t
+
+
+def _merge_miss(into, frm):
+    if not frm or frm.get("tried", 0) <= 0:
+        return into
+    if frm["rank"] > into["rank"]:
+        return dict(frm)
+    if frm["maxTouches"] > into["maxTouches"]:
+        into["maxTouches"] = frm["maxTouches"]
+    into["tried"] += frm["tried"]
+    return into
+
+
+def format_why(kind, miss, no_window=False):
+    side = "支撐" if kind == "support" else "壓力" if kind == "resistance" else "通道"
+    if no_window:
+        return f"{side}不成線：做線資料不足（少於 80 根）"
+    if not miss or miss.get("tried", 0) <= 0:
+        return f"{side}不成線：沒有可用樞軸錨點"
+    if miss.get("fail") == "breaks":
+        bits = []
+        if miss["bodyN"] > MAX_BODY_BREAKS:
+            bits.append(f"實體穿越 {miss['bodyN']}（最多 {MAX_BODY_BREAKS}）")
+        if miss["wickN"] > MAX_WICK_BREAKS:
+            bits.append(f"引線穿越 {miss['wickN']}（最多 {MAX_WICK_BREAKS}）")
+        return f"{side}不成線：{'、'.join(bits) or '穿越過多'}"
+    if miss.get("fail") == "recent":
+        return f"{side}不成線：最新 {RECENT_TOUCH_BARS} 根沒有觸點"
+    if miss.get("maxTouches", 0) < MIN_TOUCHES:
+        return f"{side}不成線：觸點不足（最長 {miss.get('maxTouches', 0)} 點，需 ≥{MIN_TOUCHES}）"
+    return f"{side}不成線：未通過四點成線規則"
+
+
 def evaluate_candidate(bars, line, kind, win_lo, lookback):
     n = len(bars)
     last_i = n - 1
@@ -270,14 +320,14 @@ def evaluate_candidate(bars, line, kind, win_lo, lookback):
     raw = collect_raw_touches(bars, line, resistance, win_lo, last_i)
     seg = longest_touch_segment(raw)
     if len(seg) < MIN_TOUCHES:
-        return None
+        return {"fail": "touches", "touches": len(seg)}
     recent_lo = last_i - (RECENT_TOUCH_BARS - 1)
     if not any(i >= recent_lo for i in seg):
-        return None
+        return {"fail": "recent", "touches": len(seg)}
     first_i = seg[0]
     body_n, wick_n = pierce_counts(bars, line, resistance, first_i + 1, last_i)
     if body_n > MAX_BODY_BREAKS or wick_n > MAX_WICK_BREAKS:
-        return None
+        return {"fail": "breaks", "touches": len(seg), "bodyN": body_n, "wickN": wick_n}
     out_line = dict(line)
     horizontal = False
     span = seg[-1] - first_i
@@ -291,7 +341,7 @@ def evaluate_candidate(bars, line, kind, win_lo, lookback):
     packed = pack_line(
         bars, out_line, kind, seg, body_n, wick_n, lookback, horizontal=horizontal
     )
-    return packed
+    return {"line": packed}
 
 
 def _pivots_in_lookback(bars, lookback):
@@ -308,6 +358,7 @@ def collect_side_line(bars, lookback, kind):
     highs, lows = _pivots_in_lookback(bars, actual)
     pts = lows if kind == "support" else highs
     best = None
+    miss = _empty_miss()
     for a in range(len(pts)):
         for c in range(a + 1, len(pts)):
             i1, i2 = pts[a], pts[c]
@@ -320,29 +371,32 @@ def collect_side_line(bars, lookback, kind):
             if kind == "resistance" and p2 > p1:
                 continue
             line = line_through(i1, p1, i2, p2)
-            cand = evaluate_candidate(bars, line, kind, win_lo, actual)
+            ev = evaluate_candidate(bars, line, kind, win_lo, actual)
+            cand = ev.get("line")
             if cand is None:
+                _note_miss(miss, ev)
                 continue
             if best is None or _line_score(cand) > _line_score(best):
                 best = cand
-    return best
+    return best, miss
 
 
 def make_parallel_channel(L, bars):
     if not L or not L.get("touches"):
-        return None
+        return None, _empty_miss()
     n = len(bars)
     lookback = int(L.get("windowSize") or n)
     win_lo = max(0, n - lookback)
     last_i = n - 1
     i0 = L.get("drawFrom", L["touches"][0])
     if i0 >= last_i:
-        return None
+        return None, _empty_miss()
     opp = "resistance" if L["kind"] == "support" else "support"
     highs, lows = _pivots_in_lookback(bars, lookback)
     pts = lows if opp == "support" else highs
     m = L["line"]["m"]
     best = None
+    miss = _empty_miss()
     for i in pts:
         src_y = y_at(L["line"], i)
         price = bars[i]["l"] if opp == "support" else bars[i]["h"]
@@ -350,37 +404,47 @@ def make_parallel_channel(L, bars):
             continue
         if opp == "support" and price > src_y:
             continue
-        cand = evaluate_candidate(bars, {"m": m, "b": price - m * i}, opp, win_lo, lookback)
+        ev = evaluate_candidate(bars, {"m": m, "b": price - m * i}, opp, win_lo, lookback)
+        cand = ev.get("line")
         if cand is None:
+            _note_miss(miss, ev)
             continue
         if best is None or _line_score(cand) > _line_score(best):
             best = cand
     if best is None:
-        return None
+        return None, miss
     best["type"] = "channel"
     best["label"] = "平行通道"
     best["isParallel"] = True
     best["pairOf"] = L["type"]
     best["drawFrom"] = min(i0, best["touches"][0])
     best["drawTo"] = n - 1
-    return best
+    return best, miss
 
 
 def analyze_symbol(bars, windows=None):
     windows = list(windows or WINDOWS)
     n = len(bars)
     found = {}
+    why = {"support": None, "resistance": None, "channel": None}
     for kind in ("support", "resistance"):
+        miss = _empty_miss()
+        windows_tried = 0
         for lookback in windows:
             actual = min(lookback, n)
             if actual < 80 and lookback >= 80:
                 continue
-            line = collect_side_line(bars, actual, kind)
+            windows_tried += 1
+            line, side_miss = collect_side_line(bars, actual, kind)
             if line:
                 found[kind] = line
+                miss = None
                 break
+            miss = _merge_miss(miss, side_miss)
             if actual >= n:
                 break
+        if kind not in found:
+            why[kind] = format_why(kind, miss, windows_tried == 0)
     up = found.get("support")
     down = found.get("resistance")
     used = None
@@ -390,8 +454,10 @@ def analyze_symbol(bars, windows=None):
     channel = None
     primary = up if up and not down else (down if down and not up else None)
     if primary:
-        channel = make_parallel_channel(primary, bars)
-    return {"up": up, "down": down, "channel": channel, "window": used}
+        channel, ch_miss = make_parallel_channel(primary, bars)
+        if not channel:
+            why["channel"] = format_why("channel", ch_miss)
+    return {"up": up, "down": down, "channel": channel, "window": used, "why": why}
 
 
 def shift_line(L, offset: int):
@@ -419,6 +485,7 @@ def shift_analysis(analysis: dict, offset: int) -> dict:
         "up": shift_line(analysis.get("up"), offset),
         "down": shift_line(analysis.get("down"), offset),
         "channel": shift_line(analysis.get("channel"), offset),
+        "why": analysis.get("why"),
     }
 
 
@@ -472,6 +539,7 @@ def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
                     "up": slim_line(analysis["up"]),
                     "down": slim_line(analysis["down"]),
                     "channel": slim_line(analysis["channel"]),
+                    "why": analysis.get("why"),
                 },
             })
             ok += 1

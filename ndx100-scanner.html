@@ -532,6 +532,9 @@
     flex-shrink: 0;
   }
   .lg b { font-weight: 600; color: var(--text); white-space: nowrap; }
+  .lg.is-why { align-items: flex-start; }
+  .lg.is-why b { color: var(--muted); font-weight: 500; }
+  .lg.is-why em { white-space: normal; color: var(--dim); }
   .lg em {
     font-family: var(--mono);
     font-style: normal;
@@ -1289,18 +1292,64 @@ function packLine(bars, line, kind, touches, bodyN, wickN, lookback, horizontal)
   };
 }
 
+function emptyMiss() {
+  return { rank: -1, tried: 0, maxTouches: 0, fail: null, bodyN: 0, wickN: 0, touches: 0 };
+}
+
+function noteMiss(miss, ev) {
+  miss.tried++;
+  const t = ev.touches || 0;
+  if (t > miss.maxTouches) miss.maxTouches = t;
+  const rank = t * 10 + (ev.fail === "breaks" ? 3 : ev.fail === "recent" ? 2 : 1);
+  if (rank < miss.rank) return;
+  miss.rank = rank;
+  miss.fail = ev.fail;
+  miss.bodyN = ev.bodyN || 0;
+  miss.wickN = ev.wickN || 0;
+  miss.touches = t;
+}
+
+function mergeMiss(into, from) {
+  if (!from || from.tried <= 0) return into;
+  if (from.rank > into.rank) {
+    return { ...from };
+  }
+  if (from.maxTouches > into.maxTouches) into.maxTouches = from.maxTouches;
+  into.tried += from.tried;
+  return into;
+}
+
+function formatWhy(kind, miss, noWindow) {
+  const side = kind === "support" ? "支撐" : kind === "resistance" ? "壓力" : "通道";
+  if (noWindow) return `${side}不成線：做線資料不足（少於 80 根）`;
+  if (!miss || miss.tried <= 0) return `${side}不成線：沒有可用樞軸錨點`;
+  if (miss.fail === "breaks") {
+    const bits = [];
+    if (miss.bodyN > CFG.maxBodyBreaks) bits.push(`實體穿越 ${miss.bodyN}（最多 ${CFG.maxBodyBreaks}）`);
+    if (miss.wickN > CFG.maxWickBreaks) bits.push(`引線穿越 ${miss.wickN}（最多 ${CFG.maxWickBreaks}）`);
+    return `${side}不成線：${bits.join("、") || "穿越過多"}`;
+  }
+  if (miss.fail === "recent") return `${side}不成線：最新 ${CFG.recentTouchBars} 根沒有觸點`;
+  if ((miss.maxTouches || 0) < CFG.minTouches) {
+    return `${side}不成線：觸點不足（最長 ${miss.maxTouches} 點，需 ≥${CFG.minTouches}）`;
+  }
+  return `${side}不成線：未通過四點成線規則`;
+}
+
 function evaluateCandidate(bars, line, kind, winLo, lookback) {
   const n = bars.length;
   const lastI = n - 1;
   const resistance = kind === "resistance";
   const raw = collectRawTouches(bars, line, resistance, winLo, lastI);
   const seg = longestTouchSegment(raw);
-  if (seg.length < CFG.minTouches) return null;
+  if (seg.length < CFG.minTouches) return { fail: "touches", touches: seg.length };
   const recentLo = lastI - (CFG.recentTouchBars - 1);
-  if (!seg.some(i => i >= recentLo)) return null;
+  if (!seg.some(i => i >= recentLo)) return { fail: "recent", touches: seg.length };
   const firstI = seg[0];
   const br = pierceCounts(bars, line, resistance, firstI + 1, lastI);
-  if (br.bodyBreaks > CFG.maxBodyBreaks || br.wickBreaks > CFG.maxWickBreaks) return null;
+  if (br.bodyBreaks > CFG.maxBodyBreaks || br.wickBreaks > CFG.maxWickBreaks) {
+    return { fail: "breaks", touches: seg.length, bodyN: br.bodyBreaks, wickN: br.wickBreaks };
+  }
   let outLine = { ...line };
   let horizontal = false;
   const span = seg[seg.length - 1] - firstI;
@@ -1314,7 +1363,7 @@ function evaluateCandidate(bars, line, kind, winLo, lookback) {
       horizontal = true;
     }
   }
-  return packLine(bars, outLine, kind, seg, br.bodyBreaks, br.wickBreaks, lookback, horizontal);
+  return { line: packLine(bars, outLine, kind, seg, br.bodyBreaks, br.wickBreaks, lookback, horizontal) };
 }
 
 function pivotsInLookback(bars, lookback) {
@@ -1334,6 +1383,7 @@ function collectSideLine(bars, lookback, kind) {
   const { highs, lows } = pivotsInLookback(bars, actual);
   const pts = kind === "support" ? lows : highs;
   let best = null;
+  const miss = emptyMiss();
   for (let a = 0; a < pts.length; a++) {
     for (let c = a + 1; c < pts.length; c++) {
       const i1 = pts[a], i2 = pts[c];
@@ -1343,12 +1393,15 @@ function collectSideLine(bars, lookback, kind) {
       if (kind === "support" && p2 < p1) continue;
       if (kind === "resistance" && p2 > p1) continue;
       const line = lineThrough(i1, p1, i2, p2);
-      const cand = evaluateCandidate(bars, line, kind, winLo, actual);
-      if (!cand) continue;
-      if (!best || betterLine(cand, best)) best = cand;
+      const ev = evaluateCandidate(bars, line, kind, winLo, actual);
+      if (ev.line) {
+        if (!best || betterLine(ev.line, best)) best = ev.line;
+      } else {
+        noteMiss(miss, ev);
+      }
     }
   }
-  return best;
+  return { line: best, miss };
 }
 
 function lineFitBars(bars, skip) {
@@ -1366,17 +1419,24 @@ function analyzeSymbol(bars, mode, skipLast = 0) {
     : [parseInt(mode, 10)].filter(Boolean);
 
   const found = {};
+  const why = { support: null, resistance: null, channel: null };
   for (const kind of ["support", "resistance"]) {
+    let miss = emptyMiss();
+    let windowsTried = 0;
     for (const lookback of windows) {
       const actual = Math.min(lookback, fit.length);
       if (actual < 80 && lookback >= 80) continue;
-      const line = collectSideLine(fit, actual, kind);
-      if (line) {
-        found[kind] = line;
+      windowsTried++;
+      const got = collectSideLine(fit, actual, kind);
+      if (got.line) {
+        found[kind] = got.line;
+        miss = null;
         break;
       }
+      miss = mergeMiss(miss, got.miss);
       if (actual >= fit.length) break;
     }
+    if (!found[kind]) why[kind] = formatWhy(kind, miss, windowsTried === 0);
   }
 
   const up = found.support || null;
@@ -1388,45 +1448,53 @@ function analyzeSymbol(bars, mode, skipLast = 0) {
 
   let channel = null;
   const primary = up && !down ? up : (!up && down ? down : null);
-  if (primary) channel = makeParallelChannel(primary, fit);
+  if (primary) {
+    const ch = makeParallelChannel(primary, fit);
+    channel = ch.line || null;
+    if (!channel) why.channel = formatWhy("channel", ch.miss);
+  }
 
-  return { up, down, channel, window: usedWindow, bars };
+  return { up, down, channel, window: usedWindow, bars, why };
 }
 
 /**
  * 單邊才找平行通道：同斜率、對側樞軸錨點，四點／實體破≤3／引線破≤5。
  */
 function makeParallelChannel(L, bars) {
-  if (!L?.touches?.length) return null;
+  if (!L?.touches?.length) return { line: null, miss: emptyMiss() };
   const n = bars.length;
   const lookback = L.windowSize || n;
   const winLo = Math.max(0, n - lookback);
   const i0 = L.drawFrom ?? L.touches[0];
-  if (i0 >= n - 1) return null;
+  if (i0 >= n - 1) return { line: null, miss: emptyMiss() };
 
   const oppKind = L.kind === "support" ? "resistance" : "support";
   const { highs, lows } = pivotsInLookback(bars, lookback);
   const pts = oppKind === "support" ? lows : highs;
   const m = L.line.m;
   let best = null;
+  const miss = emptyMiss();
 
   for (const i of pts) {
     const srcY = yAt(L.line, i);
     const price = oppKind === "support" ? bars[i].l : bars[i].h;
     if (oppKind === "resistance" && price < srcY) continue;
     if (oppKind === "support" && price > srcY) continue;
-    const cand = evaluateCandidate(bars, { m, b: price - m * i }, oppKind, winLo, lookback);
-    if (!cand) continue;
-    if (!best || betterLine(cand, best)) best = cand;
+    const ev = evaluateCandidate(bars, { m, b: price - m * i }, oppKind, winLo, lookback);
+    if (ev.line) {
+      if (!best || betterLine(ev.line, best)) best = ev.line;
+    } else {
+      noteMiss(miss, ev);
+    }
   }
-  if (!best) return null;
+  if (!best) return { line: null, miss };
   best.type = "channel";
   best.label = "平行通道";
   best.isParallel = true;
   best.pairOf = L.type;
   best.drawFrom = Math.min(i0, best.touches[0]);
   best.drawTo = n - 1;
-  return best;
+  return { line: best, miss };
 }
 
 /* ========== Chart drawing ========== */
@@ -1801,11 +1869,20 @@ function legendHtml(analysis) {
       `<span class="lg ${cls}"><b>${name}</b><em>${L.touches.length} 觸點 · 實體 ${L.bodyBreaks} · 引線 ${L.wickBreaks ?? 0} · ${L.windowSize}K</em></span>`
     );
   };
+  const addWhy = (text) => {
+    if (!text) return;
+    const [head, ...rest] = String(text).split("：");
+    const detail = rest.join("：") || text;
+    parts.push(`<span class="lg is-why"><b>${head}</b><em>${detail}</em></span>`);
+  };
   add(analysis?.up);
+  if (!analysis?.up) addWhy(analysis?.why?.support);
   add(analysis?.down);
+  if (!analysis?.down) addWhy(analysis?.why?.resistance);
   add(analysis?.channel);
-  if (!analysis?.up && !analysis?.down) {
-    parts.push("<span class=\"lg\">此視窗未能形成有效四點趨勢線</span>");
+  if (analysis?.why?.channel && !analysis?.channel) addWhy(analysis.why.channel);
+  if (!parts.length) {
+    parts.push("<span class=\"lg is-why\"><b>不成線</b><em>此視窗未能形成有效四點趨勢線</em></span>");
   }
   return parts.join("");
 }
@@ -2035,6 +2112,7 @@ function renderList(opts = {}) {
       t.textContent = "無資料";
       tagBox.appendChild(t);
     } else {
+      const a = rowAnalysis(r);
       if (ev.reclaim) {
         hints.push("收回");
         const t = document.createElement("span");
@@ -2052,6 +2130,13 @@ function renderList(opts = {}) {
         const t = document.createElement("span");
         t.className = "tag is-touch";
         t.textContent = "觸碰";
+        tagBox.appendChild(t);
+      } else if (!a?.up && !a?.down) {
+        const why = [a?.why?.support, a?.why?.resistance].filter(Boolean);
+        hints.push(...why);
+        const t = document.createElement("span");
+        t.className = "tag is-err";
+        t.textContent = "不成線";
         tagBox.appendChild(t);
       }
     }
@@ -2307,7 +2392,8 @@ function buildPackPayload(dateStr) {
           window: r.analysis.window,
           up: r.analysis.up || null,
           down: r.analysis.down || null,
-          channel: r.analysis.channel || null
+          channel: r.analysis.channel || null,
+          why: r.analysis.why || null
         }
       };
     })
