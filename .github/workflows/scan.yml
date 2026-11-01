@@ -3,18 +3,6 @@ name: Scan
 on:
   workflow_dispatch:
     inputs:
-      scan:
-        description: 掃描最新日線（關閉 = 只更新網站）
-        type: boolean
-        default: true
-      index:
-        description: Universe
-        type: choice
-        options:
-          - both
-          - ndx100
-          - dji30
-        default: both
       date:
         description: As-of date YYYY-MM-DD (empty = UTC today)
         required: false
@@ -50,20 +38,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scan != 'false')
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         with:
           python-version: "3.12"
       - name: Run scanner
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scan != 'false')
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           PYTHONUNBUFFERED: "1"
         run: |
-          INDEX="${{ github.event.inputs.index }}"
           DATE="${{ github.event.inputs.date }}"
-          if [ -z "$INDEX" ]; then INDEX=both; fi
-          python scan.py --index "$INDEX" --date "$DATE" --sleep 0.3
+          python scan.py --index both --date "$DATE" --sleep 0.3
       - name: Commit results
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.scan != 'false')
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           git add chartpacks LATEST.md
           if git diff --cached --quiet; then
