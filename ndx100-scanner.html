@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>NDX100 日線掃描器 · 趨勢線 / Creek / Ice</title>
-<meta name="description" content="NDX100 / DJI30 / CRYPTO30 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
+<title>台灣50 日線掃描器 · 趨勢線 / Creek / Ice</title>
+<meta name="description" content="台灣50 / 中型100 / 高股息 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
 <meta name="theme-color" content="#161618" />
 <meta name="color-scheme" content="dark" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="NDX 掃描" />
+<meta name="apple-mobile-web-app-title" content="台股掃描" />
 <meta name="format-detection" content="telephone=no" />
 <script>if (/\.github\.io$/i.test(location.hostname)) document.documentElement.classList.add("is-pages");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     NDX100 Scanner — data terminal
+     TWSE listed scanner — data terminal
      平面深色、單一藍色強調（只做 1px 選取線）、數字等寬
      ============================================================ */
   :root {
@@ -867,9 +867,9 @@
           <span class="filter-bar-label">篩選</span>
           <div class="filter-chips" role="group">
             <button type="button" class="filter-chip" id="filterIndexAll" data-index="all" aria-pressed="true">ALL</button>
-            <button type="button" class="filter-chip" id="filterIndexNdx" data-index="ndx100" aria-pressed="false">NDX100</button>
-            <button type="button" class="filter-chip" id="filterIndexDji" data-index="dji30" aria-pressed="false">DJI30</button>
-            <button type="button" class="filter-chip" id="filterIndexCrypto" data-index="crypto30" aria-pressed="false">CRYPTO30</button>
+            <button type="button" class="filter-chip" id="filterIndexNdx" data-index="tw50" aria-pressed="false">台灣50</button>
+            <button type="button" class="filter-chip" id="filterIndexDji" data-index="mid100" aria-pressed="false">中型100</button>
+            <button type="button" class="filter-chip" id="filterIndexCrypto" data-index="hdiv" aria-pressed="false">高股息</button>
             <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
             <button type="button" class="filter-chip" id="filterReclaim" data-filter="reclaim" aria-pressed="false" title="近 5 根先實體跌破，之後有一根實體完全回到線內">收回</button>
             <button type="button" class="filter-chip" id="filterTouch" data-filter="touch" aria-pressed="false">觸碰</button>
@@ -918,57 +918,60 @@
 
 <script>
 /* ========== 成分股 fallback ========== */
-const NDX100_FALLBACK = [
-  "AAPL","ABNB","ADBE","ADI","ADP","ADSK","AEP","ALAB","ALNY","AMAT","AMD","AMGN","AMZN","APP",
-  "ARM","ASML","AVGO","AXON","BKR","BKNG","CCEP","CDNS","CEG","CMCSA","COST","CPRT","CRWD","CRWV",
-  "CSCO","CSX","CTAS","DASH","DDOG","DXCM","EXC","FANG","FAST","FER","FTNT","GEHC","GILD","GOOG",
-  "GOOGL","HON","HONA","IDXX","INTC","INTU","ISRG","KDP","KLAC","LIN","LITE","LRCX","MAR","MCHP",
-  "MDLZ","MELI","META","MNST","MPWR","MRNA","MRVL","MSFT","MSTR","MU","NBIS","NFLX","NVDA","NXPI",
-  "ODFL","ORLY","PANW","PAYX","PCAR","PDD","PEP","PLTR","PYPL","QCOM","REGN","RKLB","ROP","ROST",
-  "SBUX","SHOP","SNDK","SNPS","STX","TER","TMUS","TRI","TSLA","TTWO","TXN","VRTX","WDAY","WDC",
-  "WMT","XEL"
+const TW50_FALLBACK = [
+  "2330.TW","2454.TW","2308.TW","2317.TW","3711.TW","2303.TW","3037.TW","2383.TW","1303.TW","2881.TW",
+  "2891.TW","3017.TW","2882.TW","2887.TW","2345.TW","2382.TW","2327.TW","2360.TW","2885.TW","2884.TW",
+  "2059.TW","2408.TW","2357.TW","3443.TW","6669.TW","2883.TW","3653.TW","2886.TW","2890.TW","2344.TW",
+  "3008.TW","3231.TW","2301.TW","2412.TW","3665.TW","2892.TW","2880.TW","4958.TW","2368.TW","6446.TW",
+  "1216.TW","2395.TW","2449.TW","8046.TW","7769.TW","5880.TW","2603.TW","4904.TW","3045.TW","6505.TW"
 ];
 
-/** 道瓊 30（2025-11 · NVDA 取代 INTC、AMZN 取代 WBA） */
-const DJI30_FALLBACK = [
-  "AAPL","AMGN","AMZN","AXP","BA","CAT","CRM","CSCO","CVX","DIS",
-  "DOW","GS","HD","HON","IBM","JNJ","JPM","KO","MCD","MMM",
-  "MRK","MSFT","NKE","NVDA","PG","TRV","UNH","V","VZ","WMT"
+/** 臺灣中型100（上市 · 對照 0051 2026-09-30） */
+const MID100_FALLBACK = [
+  "3481.TW","2379.TW","3189.TW","3034.TW","3661.TW","1301.TW","6770.TW","2313.TW","1326.TW","2409.TW",
+  "2337.TW","2404.TW","3044.TW","2801.TW","2002.TW","6239.TW","2376.TW","5876.TW","4938.TW","1101.TW",
+  "1590.TW","3702.TW","2615.TW","3036.TW","2324.TW","6515.TW","2207.TW","3533.TW","5871.TW","2356.TW",
+  "6213.TW","6415.TW","2834.TW","6805.TW","8996.TW","2347.TW","6139.TW","2618.TW","6257.TW","1605.TW",
+  "2912.TW","1519.TW","1560.TW","2609.TW","2377.TW","3026.TW","2455.TW","2049.TW","6531.TW","5434.TW",
+  "2353.TW","2474.TW","6442.TW","1402.TW","2027.TW","6285.TW","1102.TW","2492.TW","1504.TW","6919.TW",
+  "2812.TW","2315.TW","7750.TW","3023.TW","2385.TW","3006.TW","2354.TW","1513.TW","2610.TW","6409.TW",
+  "7610.TW","8464.TW","1717.TW","1802.TW","6196.TW","9904.TW","2451.TW","3167.TW","5269.TW","8210.TW",
+  "1503.TW","1476.TW","2105.TW","2542.TW","6691.TW","6789.TW","2633.TW","2467.TW","9945.TW","3005.TW",
+  "1229.TW","3030.TW","6526.TW","6949.TW","6781.TW","3532.TW","9910.TW","2646.TW","2838.TW","2645.TW"
 ];
 
-/** Crypto 市值前 30（不含穩定幣；Yahoo -USD） */
-const CRYPTO30_FALLBACK = [
-  "BTC-USD","ETH-USD","BNB-USD","XRP-USD","SOL-USD",
-  "TRX-USD","HYPE32196-USD","ZEC-USD","DOGE-USD","XMR-USD",
-  "LINK-USD","LEO-USD","ADA-USD","XLM-USD","NEAR-USD",
-  "BCH-USD","UNI7083-USD","LTC-USD","AVAX-USD","SUI20947-USD",
-  "TON-USD","HBAR-USD","SHIB-USD","TAO22974-USD","CRO-USD",
-  "ENA-USD","QNT-USD","OKB-USD","AAVE-USD","PEPE24478-USD"
+/** 臺灣高股息（上市 · 對照 0056 2026-09-30） */
+const HDIV_FALLBACK = [
+  "1303.TW","2408.TW","2357.TW","2890.TW","2880.TW","2344.TW","2891.TW","3231.TW","2382.TW","2886.TW",
+  "2603.TW","2883.TW","2887.TW","2885.TW","2884.TW","2301.TW","1216.TW","2303.TW","2379.TW","2317.TW",
+  "3045.TW","4904.TW","3034.TW","3044.TW","3036.TW","3711.TW","2454.TW","2376.TW","4938.TW","5876.TW",
+  "2618.TW","6239.TW","2449.TW","2356.TW","3702.TW","2347.TW","2324.TW","2377.TW","6285.TW","1102.TW",
+  "2474.TW","2027.TW","2105.TW","2353.TW","1513.TW","3023.TW","2385.TW","3005.TW","9904.TW","2645.TW"
 ];
 
 const INDEXES = {
-  ndx100: {
-    label: "NDX100",
-    fallback: NDX100_FALLBACK,
-    apiPath: "/api/ndx100",
-    minRows: 50
+  tw50: {
+    label: "台灣50",
+    fallback: TW50_FALLBACK,
+    apiPath: "/api/tw50",
+    minRows: 40
   },
-  dji30: {
-    label: "DJI30",
-    fallback: DJI30_FALLBACK,
-    apiPath: "/api/dji30",
-    minRows: 25
+  mid100: {
+    label: "中型100",
+    fallback: MID100_FALLBACK,
+    apiPath: "/api/mid100",
+    minRows: 80
   },
-  crypto30: {
-    label: "CRYPTO30",
-    fallback: CRYPTO30_FALLBACK,
-    apiPath: "/api/crypto30",
-    minRows: 20
+  hdiv: {
+    label: "高股息",
+    fallback: HDIV_FALLBACK,
+    apiPath: "/api/hdiv",
+    minRows: 40
   }
 };
 
 function displaySymbol(sym) {
-  return String(sym || "").replace(/-USD$/i, "").replace(/\d+$/, "");
+  return String(sym || "").replace(/\.TW$/i, "");
 }
 
 const CFG = {
@@ -1005,14 +1008,14 @@ const CFG = {
 /* ========== State ========== */
 const INDEX_CHIP_IDS = [
   ["filterIndexAll", "all"],
-  ["filterIndexNdx", "ndx100"],
-  ["filterIndexDji", "dji30"],
-  ["filterIndexCrypto", "crypto30"]
+  ["filterIndexNdx", "tw50"],
+  ["filterIndexDji", "mid100"],
+  ["filterIndexCrypto", "hdiv"]
 ];
 
 const state = {
   index: "all",
-  symbols: [...NDX100_FALLBACK],
+  symbols: [...TW50_FALLBACK],
   results: [],
   cache: {},          // symbol → 完整日線（未截斷）
   selected: null,
@@ -1028,7 +1031,7 @@ const state = {
 
 function currentIndexConfig() {
   if (state.index === "all") return { label: "ALL" };
-  return INDEXES[state.index] || INDEXES.ndx100;
+  return INDEXES[state.index] || INDEXES.tw50;
 }
 
 function setIndexChipsDisabled(on) {
@@ -1146,35 +1149,17 @@ function parseYahooBars(json) {
 }
 
 async function fetchIndexSymbols(indexKey = state.index) {
-  const cfg = INDEXES[indexKey] || INDEXES.ndx100;
-  const urls =
-    indexKey === "ndx100"
-      ? [
-          `${LOCAL_BASE}${cfg.apiPath}`,
-          "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://api.nasdaq.com/api/quote/list-type/nasdaq100"),
-          "https://corsproxy.io/?" + encodeURIComponent("https://api.nasdaq.com/api/quote/list-type/nasdaq100")
-        ]
-      : [`${LOCAL_BASE}${cfg.apiPath}`];
-
-  for (const url of urls) {
-    try {
-      const res = await fetch(url, { headers: { Accept: "application/json" } });
-      if (!res.ok) continue;
+  const cfg = INDEXES[indexKey] || INDEXES.tw50;
+  try {
+    const res = await fetch(`${LOCAL_BASE}${cfg.apiPath}`, { headers: { Accept: "application/json" } });
+    if (res.ok) {
       const json = await res.json();
-      if (indexKey === "dji30" || indexKey === "crypto30") {
-        const syms = json?.symbols;
-        if (Array.isArray(syms) && syms.length >= cfg.minRows) {
-          const mapped = syms.map(s => String(s).toUpperCase()).filter(Boolean);
-          return indexKey === "crypto30" ? mapped : mapped.sort();
-        }
-        continue;
+      const syms = json?.symbols;
+      if (Array.isArray(syms) && syms.length >= cfg.minRows) {
+        return syms.map(s => String(s).toUpperCase()).filter(Boolean);
       }
-      const rows = json?.data?.data?.rows;
-      if (Array.isArray(rows) && rows.length >= cfg.minRows) {
-        return rows.map(r => r.symbol).filter(Boolean).sort();
-      }
-    } catch (_) { /* try next */ }
-  }
+    }
+  } catch (_) { /* fallback */ }
   return [...cfg.fallback];
 }
 
@@ -2838,7 +2823,7 @@ async function runScan() {
   $("resultList").innerHTML = "";
   $("packView").innerHTML = "";
   showPane("emptyHint");
-  setViewerTitle("掃描中", "分析 NDX100 · DJI30 · CRYPTO30 日線…");
+  setViewerTitle("掃描中", "分析 台灣50 · 中型100 · 高股息 日線…");
   if ($("listCount")) {
     $("listCount").textContent = "掃描中…";
     replayAnim($("listCount"), "is-swap");
@@ -2921,9 +2906,9 @@ async function runScan() {
 $("packDate").value = todayISO();
 $("packDate").max = todayISO();
 $("filterIndexAll").onclick = () => selectIndex("all");
-$("filterIndexNdx").onclick = () => selectIndex("ndx100");
-$("filterIndexDji").onclick = () => selectIndex("dji30");
-$("filterIndexCrypto").onclick = () => selectIndex("crypto30");
+$("filterIndexNdx").onclick = () => selectIndex("tw50");
+$("filterIndexDji").onclick = () => selectIndex("mid100");
+$("filterIndexCrypto").onclick = () => selectIndex("hdiv");
 syncIndexUi();
 $("btnScan").onclick = () => runScan();
 $("btnStop").onclick = () => { state.stop = true; };

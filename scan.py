@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless NDX100 / DJI30 / CRYPTO30 daily scanner for local use and GitHub Actions.
+"""Headless 台灣50 / 中型100 / 高股息 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
   ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
@@ -14,18 +14,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from server import CRYPTO30_SYMBOLS, DJI30_SYMBOLS, PACKS_DIR, ensure_packs_dir, http_get
-
-NDX100_FALLBACK = [
-    "AAPL", "ABNB", "ADBE", "ADI", "ADP", "ADSK", "AEP", "ALAB", "ALNY", "AMAT", "AMD", "AMGN", "AMZN", "APP",
-    "ARM", "ASML", "AVGO", "AXON", "BKR", "BKNG", "CCEP", "CDNS", "CEG", "CMCSA", "COST", "CPRT", "CRWD", "CRWV",
-    "CSCO", "CSX", "CTAS", "DASH", "DDOG", "DXCM", "EXC", "FANG", "FAST", "FER", "FTNT", "GEHC", "GILD", "GOOG",
-    "GOOGL", "HON", "HONA", "IDXX", "INTC", "INTU", "ISRG", "KDP", "KLAC", "LIN", "LITE", "LRCX", "MAR", "MCHP",
-    "MDLZ", "MELI", "META", "MNST", "MPWR", "MRNA", "MRVL", "MSFT", "MSTR", "MU", "NBIS", "NFLX", "NVDA", "NXPI",
-    "ODFL", "ORLY", "PANW", "PAYX", "PCAR", "PDD", "PEP", "PLTR", "PYPL", "QCOM", "REGN", "RKLB", "ROP", "ROST",
-    "SBUX", "SHOP", "SNDK", "SNPS", "STX", "TER", "TMUS", "TRI", "TSLA", "TTWO", "TXN", "VRTX", "WDAY", "WDC",
-    "WMT", "XEL",
-]
+from server import HDIV_SYMBOLS, MID100_SYMBOLS, PACKS_DIR, TW50_SYMBOLS, ensure_packs_dir, http_get
 
 PIVOT_LEFT = 3
 PIVOT_RIGHT = 3
@@ -94,19 +83,6 @@ def parse_yahoo_bars(payload: dict) -> list[dict]:
     if median_gap_days(bars) > 5:
         raise ValueError(f"非日線資料（gap≈{median_gap_days(bars):.1f}d）")
     return bars
-
-
-def fetch_ndx_symbols() -> list[str]:
-    try:
-        raw = http_get("https://api.nasdaq.com/api/quote/list-type/nasdaq100")
-        data = json.loads(raw.decode("utf-8"))
-        rows = (((data.get("data") or {}).get("data") or {}).get("rows")) or []
-        syms = sorted({str(r.get("symbol") or "").upper() for r in rows if r.get("symbol")})
-        if len(syms) >= 50:
-            return syms
-    except Exception as e:
-        print(f"nasdaq list failed: {e}")
-    return list(NDX100_FALLBACK)
 
 
 def fetch_daily_bars(symbol: str) -> list[dict]:
@@ -545,16 +521,16 @@ def slim_line(L):
 
 
 def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
-    if index == "dji30":
-        symbols = list(DJI30_SYMBOLS)
-        label = "DJI30"
-    elif index == "crypto30":
-        symbols = list(CRYPTO30_SYMBOLS)
-        label = "CRYPTO30"
+    if index == "mid100":
+        symbols = list(MID100_SYMBOLS)
+        label = "中型100"
+    elif index == "hdiv":
+        symbols = list(HDIV_SYMBOLS)
+        label = "高股息"
     else:
-        symbols = fetch_ndx_symbols()
-        label = "NDX100"
-        index = "ndx100"
+        symbols = list(TW50_SYMBOLS)
+        label = "台灣50"
+        index = "tw50"
     results = []
     ok = 0
     for i, sym in enumerate(symbols, 1):
@@ -647,7 +623,8 @@ def write_latest_md(out: Path, packs: list[dict]) -> None:
                 L = a.get(key)
                 if L and L.get("label"):
                     labels.append(L["label"])
-            lines.append(f"| {r.get('symbol')} | {sig or '—'} | {' / '.join(labels) or '—'} |")
+            sym = str(r.get("symbol") or "").removesuffix(".TW")
+            lines.append(f"| {sym} | {sig or '—'} | {' / '.join(labels) or '—'} |")
         lines.append("")
     (out.parent / "LATEST.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -683,8 +660,8 @@ def write_manifest(out: Path) -> dict:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Scan NDX100 / DJI30 / CRYPTO30 daily trend lines")
-    p.add_argument("--index", choices=["ndx100", "dji30", "crypto30", "both"], default="both")
+    p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 高股息 daily trend lines")
+    p.add_argument("--index", choices=["tw50", "mid100", "hdiv", "both"], default="both")
     p.add_argument("--date", default="", help="YYYY-MM-DD (UTC today if empty)")
     p.add_argument("--sleep", type=float, default=0.25, help="delay between Yahoo requests")
     p.add_argument("--out", default="", help="output directory (default chartpacks/)")
@@ -693,7 +670,7 @@ def main() -> None:
     out = Path(args.out) if args.out else PACKS_DIR
     out.mkdir(parents=True, exist_ok=True)
     ensure_packs_dir()
-    indexes = ["ndx100", "dji30", "crypto30"] if args.index == "both" else [args.index]
+    indexes = ["tw50", "mid100", "hdiv"] if args.index == "both" else [args.index]
     written = []
     for idx in indexes:
         pack = scan_index(idx, date_str, args.sleep)

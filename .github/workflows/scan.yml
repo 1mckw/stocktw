@@ -41,6 +41,7 @@ jobs:
         env:
           PYTHONUNBUFFERED: "1"
         run: python scan.py --index both --sleep 0.3
+        # 台灣50 + 中型100 + 高股息（台股上市）
       - name: Commit results
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
