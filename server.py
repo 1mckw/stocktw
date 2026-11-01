@@ -107,16 +107,8 @@ def fetch_index_etf(index_id: str) -> list[dict]:
 def index_counts(stocks: list[dict]) -> dict[str, int]:
     counts = {k: 0 for k in INDEX_IDS}
     for s in stocks:
-        idxs = s.get("indexes")
-        if not idxs:
-            sym = str(s.get("symbol") or "")
-            if sym.endswith(".TWO"):
-                idxs = ["otc200"]
-            else:
-                idxs = []
-        for i in idxs:
-            if i in counts:
-                counts[i] += 1
+        for i in universe_indexes(s.get("indexes")):
+            counts[i] += 1
     return counts
 
 
@@ -128,19 +120,18 @@ def stocks_complete(stocks: list[dict]) -> bool:
 def cache_by_index(stocks: list[dict]) -> dict[str, list[dict]]:
     grouped = {k: [] for k in INDEX_IDS}
     for s in stocks:
-        idxs = list(s.get("indexes") or [])
-        if not idxs and str(s.get("symbol") or "").endswith(".TWO"):
-            idxs = ["otc200"]
-        for i in idxs:
-            if i in grouped:
-                grouped[i].append(
-                    {
-                        "code": s["code"],
-                        "name": s.get("name") or "",
-                        "symbol": s["symbol"],
-                        "indexes": [i],
-                    }
-                )
+        rec = normalize_stock(s)
+        if not rec:
+            continue
+        for i in rec["indexes"]:
+            grouped[i].append(
+                {
+                    "code": rec["code"],
+                    "name": rec["name"],
+                    "symbol": rec["symbol"],
+                    "indexes": [i],
+                }
+            )
     return grouped
 
 
@@ -154,10 +145,10 @@ def merge_index_stocks(*groups: list[dict]) -> list[dict]:
             )
             if s.get("name"):
                 rec["name"] = s["name"]
-            for i in s.get("indexes") or []:
+            for i in universe_indexes(s.get("indexes")):
                 if i not in rec["indexes"]:
                     rec["indexes"].append(i)
-    return sorted(by_sym.values(), key=lambda x: (x["symbol"], x["code"]))
+    return [x for x in sorted(by_sym.values(), key=lambda x: (x["symbol"], x["code"])) if x.get("indexes")]
 
 
 def load_listed_file() -> list[dict]:
@@ -167,13 +158,12 @@ def load_listed_file() -> list[dict]:
         data = json.loads(LISTED_PATH.read_text(encoding="utf-8"))
     except Exception:
         return []
-    stocks = data.get("stocks") or []
-    for s in stocks:
-        if s.get("indexes"):
-            continue
-        if str(s.get("symbol") or "").endswith(".TWO"):
-            s["indexes"] = ["otc200"]
-    return stocks
+    out = []
+    for s in data.get("stocks") or []:
+        rec = normalize_stock(s)
+        if rec:
+            out.append(rec)
+    return out
 
 
 def save_listed(stocks: list[dict]) -> None:
@@ -240,18 +230,43 @@ def pack_path(date: str) -> Path:
 
 def canonical_index(index: str) -> str:
     s = str(index or "")
+    if len(s) >= 11 and DATE_RE.match(s[-10:]) and s[-11] == "-":
+        s = s[:-11]
     for key in INDEX_IDS:
         if s == key or s.startswith(key):
             return key
-    return s
+    return ""
+
+
+def universe_indexes(raw) -> list[str]:
+    out = []
+    for i in raw or []:
+        c = canonical_index(i)
+        if c in INDEX_IDS and c not in out:
+            out.append(c)
+    return out
+
+
+def normalize_stock(stock: dict) -> dict | None:
+    idxs = universe_indexes(stock.get("indexes"))
+    if not idxs:
+        return None
+    return {
+        "code": stock.get("code") or "",
+        "name": stock.get("name") or "",
+        "symbol": stock.get("symbol") or "",
+        "indexes": idxs,
+    }
 
 
 def pack_files_for_date(date: str) -> list[Path]:
     ensure_packs_dir()
-    files = sorted(p for p in PACKS_DIR.glob(f"*-{date}.json") if p.stem != "manifest")
-    exact = pack_path(date)
-    if exact.exists() and exact not in files:
-        files.append(exact)
+    files = []
+    for p in sorted(PACKS_DIR.glob(f"*-{date}.json")):
+        if p.stem == "manifest":
+            continue
+        if canonical_index(p.stem) in INDEX_IDS:
+            files.append(p)
     return files
 
 
@@ -269,13 +284,16 @@ def merge_pack_files(date: str) -> dict | None:
             continue
         saved_at = data.get("savedAt") or saved_at
         idx = canonical_index(data.get("index") or fp.stem)
+        if idx not in INDEX_IDS:
+            continue
         for row in data.get("results") or []:
-            if idx:
-                row.setdefault("index", idx)
-                idxs = list(row.get("indexes") or [])
-                if idx not in idxs:
-                    idxs.append(idx)
-                row["indexes"] = idxs
+            idxs = universe_indexes(row.get("indexes") or ([idx] if idx else []))
+            if idx not in idxs:
+                idxs.append(idx)
+            if not idxs:
+                continue
+            row["index"] = idxs[0]
+            row["indexes"] = idxs
             results.append(row)
             if row.get("bars"):
                 count += 1
@@ -294,6 +312,8 @@ def list_pack_dates() -> list[str]:
     dates = set()
     for p in PACKS_DIR.glob("*.json"):
         if p.stem == "manifest":
+            continue
+        if canonical_index(p.stem) not in INDEX_IDS:
             continue
         if DATE_RE.match(p.stem):
             dates.add(p.stem)

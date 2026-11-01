@@ -22,6 +22,7 @@ from server import (
     ensure_packs_dir,
     fetch_listed_stocks,
     http_get,
+    universe_indexes,
 )
 
 PIVOT_LEFT = 3
@@ -542,9 +543,10 @@ def slim_bar(bar: dict) -> dict:
 
 def scan_listed(date_str: str, sleep_s: float, index: str = "all") -> list[dict]:
     stocks = fetch_listed_stocks(refresh=True)
+    stocks = [s for s in stocks if universe_indexes(s.get("indexes"))]
     want = canonical_index(index) if index and index != "all" else ""
     if want in INDEX_IDS:
-        stocks = [s for s in stocks if want in (s.get("indexes") or [])]
+        stocks = [s for s in stocks if want in universe_indexes(s.get("indexes"))]
     results = []
     ok = 0
     total = len(stocks)
@@ -689,7 +691,7 @@ def write_manifest(out: Path) -> dict:
             continue
         date = name[-10:]
         index = name[:-11]
-        if not index:
+        if canonical_index(index) not in INDEX_IDS:
             continue
         try:
             data = json.loads(fp.read_text(encoding="utf-8"))

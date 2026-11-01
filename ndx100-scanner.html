@@ -1059,11 +1059,21 @@ function currentIndexConfig() {
 }
 
 function canonicalIndex(id) {
-  const s = String(id || "");
+  let s = String(id || "");
+  if (/-\d{4}-\d{2}-\d{2}$/.test(s)) s = s.slice(0, -11);
   if (s.startsWith("tw50")) return "tw50";
   if (s.startsWith("mid100")) return "mid100";
   if (s.startsWith("otc200")) return "otc200";
-  return s || null;
+  return null;
+}
+
+function knownIndexes(raw) {
+  const out = [];
+  for (const id of raw || []) {
+    const c = canonicalIndex(id);
+    if (c && !out.includes(c)) out.push(c);
+  }
+  return out;
 }
 
 function setIndexChipsDisabled(on) {
@@ -1194,8 +1204,8 @@ async function fetchListedStocks() {
       const res = await fetch(url, { headers: { Accept: "application/json" } });
       if (!res.ok) continue;
       const json = await res.json();
-      const stocks = json?.stocks;
-      if (Array.isArray(stocks) && stocks.length >= 150) {
+      const stocks = (json?.stocks || []).filter(s => knownIndexes(s.indexes).length);
+      if (stocks.length >= 150) {
         rememberNames(stocks);
         return stocks;
       }
@@ -1210,10 +1220,9 @@ async function fetchAllUniverseSymbols() {
   for (const s of stocks) {
     const sym = String(s.symbol || "").toUpperCase();
     if (!sym) continue;
-    const idxs = Array.isArray(s.indexes) && s.indexes.length
-      ? s.indexes.map(canonicalIndex).filter(Boolean)
-      : (String(s.symbol || "").endsWith(".TWO") ? ["otc200"] : []);
-    membership.set(sym, idxs.length ? idxs : ["otc200"]);
+    const idxs = knownIndexes(s.indexes);
+    if (!idxs.length) continue;
+    membership.set(sym, idxs);
   }
   return membership;
 }
@@ -2187,9 +2196,10 @@ function anyFilterOn() {
 }
 
 function rowIndexes(row) {
-  if (Array.isArray(row?.indexes) && row.indexes.length) return row.indexes.map(canonicalIndex);
-  if (row?.index) return [canonicalIndex(row.index)];
-  return null;
+  const fromArr = knownIndexes(row?.indexes);
+  if (fromArr.length) return fromArr;
+  const one = canonicalIndex(row?.index);
+  return one ? [one] : null;
 }
 
 function matchesIndex(row) {
@@ -2628,7 +2638,7 @@ async function refreshSavedPacks(selectDate) {
     if (ON_PAGES) {
       const res = await fetch(packAsset("manifest.json"), { cache: "no-store" });
       const json = await res.json();
-      const packs = json.packs || [];
+      const packs = (json.packs || []).filter(p => canonicalIndex(p.index || p.file));
       dates = [...new Set(packs.map(p => p.date))];
     } else {
       const res = await fetch(`${LOCAL_BASE}/api/packs`);
@@ -2690,8 +2700,8 @@ async function savePack(dateStr) {
 function mapPackRow(r, json) {
   const bars = r.bars || null;
   const analysis = bars && r.analysis ? rebaseAnalysis(r.analysis, bars.length) : (r.analysis || null);
-  const idx = canonicalIndex(r.index || json.index || null);
-  const indexes = (r.indexes || (idx ? [idx] : null) || []).map(canonicalIndex).filter(Boolean);
+  const indexes = knownIndexes(r.indexes || (r.index || json.index ? [r.index || json.index] : []));
+  const idx = indexes[0] || canonicalIndex(r.index || json.index || null);
   const name = r.name || nameOf(r.symbol);
   if (name) {
     state.names[String(r.symbol || "").toUpperCase()] = name;
@@ -2728,7 +2738,7 @@ async function openPack(dateStr) {
     if (ON_PAGES) {
       const manRes = await fetch(packAsset("manifest.json"), { cache: "no-store" });
       const man = manRes.ok ? await manRes.json() : { packs: [] };
-      const files = [...new Set((man.packs || []).filter(p => p.date === d).map(p => p.file))];
+      const files = [...new Set((man.packs || []).filter(p => p.date === d && canonicalIndex(p.index || p.file)).map(p => p.file))];
       if (!files.length) files.push(`${d}.json`);
       const bySym = new Map();
       for (const file of files) {
@@ -2737,6 +2747,7 @@ async function openPack(dateStr) {
         json = json || part;
         for (const r of part.results || []) {
           const row = mapPackRow(r, part);
+          if (!knownIndexes(row.indexes).length && !canonicalIndex(row.index)) continue;
           if (!bySym.has(row.symbol)) bySym.set(row.symbol, row);
         }
       }
@@ -2750,7 +2761,7 @@ async function openPack(dateStr) {
     }
     state.packDate = json.date || d;
     $("packDate").value = state.packDate;
-    state.results = (json.results || []).map(r => mapPackRow(r, json));
+    state.results = (json.results || []).map(r => mapPackRow(r, json)).filter(r => knownIndexes(r.indexes).length || canonicalIndex(r.index));
     state.selected = filteredResults().find(r => r.bars)?.symbol
       || state.results.find(r => r.bars)?.symbol || null;
     state.cache = {};
