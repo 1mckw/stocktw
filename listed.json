@@ -1,5445 +1,2819 @@
 {
-  "count": 1088,
+  "count": 350,
+  "indexes": {
+    "tw50": {
+      "label": "台灣50",
+      "count": 50
+    },
+    "mid100": {
+      "label": "中型100",
+      "count": 100
+    },
+    "otc200": {
+      "label": "富櫃200",
+      "count": 200
+    }
+  },
   "stocks": [
     {
       "code": "1101",
       "name": "台泥",
-      "symbol": "1101.TW"
+      "symbol": "1101.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1102",
       "name": "亞泥",
-      "symbol": "1102.TW"
-    },
-    {
-      "code": "1103",
-      "name": "嘉泥",
-      "symbol": "1103.TW"
-    },
-    {
-      "code": "1104",
-      "name": "環泥",
-      "symbol": "1104.TW"
-    },
-    {
-      "code": "1108",
-      "name": "幸福",
-      "symbol": "1108.TW"
-    },
-    {
-      "code": "1109",
-      "name": "信大",
-      "symbol": "1109.TW"
-    },
-    {
-      "code": "1110",
-      "name": "東泥",
-      "symbol": "1110.TW"
-    },
-    {
-      "code": "1201",
-      "name": "味全",
-      "symbol": "1201.TW"
-    },
-    {
-      "code": "1203",
-      "name": "味王",
-      "symbol": "1203.TW"
-    },
-    {
-      "code": "1210",
-      "name": "大成",
-      "symbol": "1210.TW"
-    },
-    {
-      "code": "1213",
-      "name": "大飲",
-      "symbol": "1213.TW"
-    },
-    {
-      "code": "1215",
-      "name": "卜蜂",
-      "symbol": "1215.TW"
+      "symbol": "1102.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1216",
       "name": "統一",
-      "symbol": "1216.TW"
-    },
-    {
-      "code": "1217",
-      "name": "愛之味",
-      "symbol": "1217.TW"
-    },
-    {
-      "code": "1218",
-      "name": "泰山",
-      "symbol": "1218.TW"
-    },
-    {
-      "code": "1219",
-      "name": "福壽",
-      "symbol": "1219.TW"
-    },
-    {
-      "code": "1220",
-      "name": "台榮",
-      "symbol": "1220.TW"
-    },
-    {
-      "code": "1225",
-      "name": "福懋油",
-      "symbol": "1225.TW"
-    },
-    {
-      "code": "1227",
-      "name": "佳格",
-      "symbol": "1227.TW"
+      "symbol": "1216.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "1229",
       "name": "聯華",
-      "symbol": "1229.TW"
+      "symbol": "1229.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "1231",
-      "name": "聯華食",
-      "symbol": "1231.TW"
-    },
-    {
-      "code": "1232",
-      "name": "大統益",
-      "symbol": "1232.TW"
-    },
-    {
-      "code": "1233",
-      "name": "天仁",
-      "symbol": "1233.TW"
-    },
-    {
-      "code": "1234",
-      "name": "黑松",
-      "symbol": "1234.TW"
-    },
-    {
-      "code": "1235",
-      "name": "興泰",
-      "symbol": "1235.TW"
-    },
-    {
-      "code": "1236",
-      "name": "宏亞",
-      "symbol": "1236.TW"
-    },
-    {
-      "code": "1256",
-      "name": "鮮活果汁-KY",
-      "symbol": "1256.TW"
+      "code": "1268",
+      "name": "漢來美食",
+      "symbol": "1268.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "1301",
       "name": "台塑",
-      "symbol": "1301.TW"
+      "symbol": "1301.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1303",
       "name": "南亞",
-      "symbol": "1303.TW"
-    },
-    {
-      "code": "1304",
-      "name": "台聚",
-      "symbol": "1304.TW"
-    },
-    {
-      "code": "1305",
-      "name": "華夏",
-      "symbol": "1305.TW"
-    },
-    {
-      "code": "1307",
-      "name": "三芳",
-      "symbol": "1307.TW"
-    },
-    {
-      "code": "1308",
-      "name": "亞聚",
-      "symbol": "1308.TW"
-    },
-    {
-      "code": "1309",
-      "name": "台達化",
-      "symbol": "1309.TW"
-    },
-    {
-      "code": "1310",
-      "name": "台苯",
-      "symbol": "1310.TW"
-    },
-    {
-      "code": "1312",
-      "name": "國喬",
-      "symbol": "1312.TW"
-    },
-    {
-      "code": "1313",
-      "name": "聯成",
-      "symbol": "1313.TW"
-    },
-    {
-      "code": "1314",
-      "name": "中石化",
-      "symbol": "1314.TW"
-    },
-    {
-      "code": "1315",
-      "name": "達新",
-      "symbol": "1315.TW"
-    },
-    {
-      "code": "1316",
-      "name": "上曜",
-      "symbol": "1316.TW"
-    },
-    {
-      "code": "1319",
-      "name": "東陽",
-      "symbol": "1319.TW"
-    },
-    {
-      "code": "1321",
-      "name": "大洋",
-      "symbol": "1321.TW"
-    },
-    {
-      "code": "1323",
-      "name": "永裕",
-      "symbol": "1323.TW"
-    },
-    {
-      "code": "1324",
-      "name": "地球",
-      "symbol": "1324.TW"
-    },
-    {
-      "code": "1325",
-      "name": "恆大",
-      "symbol": "1325.TW"
+      "symbol": "1303.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "1326",
       "name": "台化",
-      "symbol": "1326.TW"
-    },
-    {
-      "code": "1337",
-      "name": "再生-KY",
-      "symbol": "1337.TW"
-    },
-    {
-      "code": "1338",
-      "name": "廣華-KY",
-      "symbol": "1338.TW"
-    },
-    {
-      "code": "1339",
-      "name": "昭輝",
-      "symbol": "1339.TW"
-    },
-    {
-      "code": "1340",
-      "name": "勝悅-KY",
-      "symbol": "1340.TW"
-    },
-    {
-      "code": "1341",
-      "name": "富林-KY",
-      "symbol": "1341.TW"
-    },
-    {
-      "code": "1342",
-      "name": "八貫",
-      "symbol": "1342.TW"
+      "symbol": "1326.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1402",
       "name": "遠東新",
-      "symbol": "1402.TW"
-    },
-    {
-      "code": "1409",
-      "name": "新纖",
-      "symbol": "1409.TW"
-    },
-    {
-      "code": "1410",
-      "name": "南染",
-      "symbol": "1410.TW"
-    },
-    {
-      "code": "1413",
-      "name": "宏洲",
-      "symbol": "1413.TW"
-    },
-    {
-      "code": "1414",
-      "name": "東和",
-      "symbol": "1414.TW"
-    },
-    {
-      "code": "1416",
-      "name": "廣豐",
-      "symbol": "1416.TW"
-    },
-    {
-      "code": "1417",
-      "name": "嘉裕",
-      "symbol": "1417.TW"
-    },
-    {
-      "code": "1418",
-      "name": "東華",
-      "symbol": "1418.TW"
-    },
-    {
-      "code": "1419",
-      "name": "新紡",
-      "symbol": "1419.TW"
-    },
-    {
-      "code": "1423",
-      "name": "利華",
-      "symbol": "1423.TW"
-    },
-    {
-      "code": "1432",
-      "name": "大魯閣",
-      "symbol": "1432.TW"
-    },
-    {
-      "code": "1434",
-      "name": "福懋",
-      "symbol": "1434.TW"
-    },
-    {
-      "code": "1435",
-      "name": "中福",
-      "symbol": "1435.TW"
-    },
-    {
-      "code": "1436",
-      "name": "華友聯",
-      "symbol": "1436.TW"
-    },
-    {
-      "code": "1437",
-      "name": "勤益控",
-      "symbol": "1437.TW"
-    },
-    {
-      "code": "1438",
-      "name": "三地開發",
-      "symbol": "1438.TW"
-    },
-    {
-      "code": "1439",
-      "name": "雋揚",
-      "symbol": "1439.TW"
-    },
-    {
-      "code": "1440",
-      "name": "南紡",
-      "symbol": "1440.TW"
-    },
-    {
-      "code": "1441",
-      "name": "大東",
-      "symbol": "1441.TW"
-    },
-    {
-      "code": "1442",
-      "name": "名軒",
-      "symbol": "1442.TW"
-    },
-    {
-      "code": "1443",
-      "name": "立益物流",
-      "symbol": "1443.TW"
-    },
-    {
-      "code": "1444",
-      "name": "力麗",
-      "symbol": "1444.TW"
-    },
-    {
-      "code": "1445",
-      "name": "大宇",
-      "symbol": "1445.TW"
-    },
-    {
-      "code": "1446",
-      "name": "宏和",
-      "symbol": "1446.TW"
-    },
-    {
-      "code": "1447",
-      "name": "力鵬",
-      "symbol": "1447.TW"
-    },
-    {
-      "code": "1449",
-      "name": "佳和",
-      "symbol": "1449.TW"
-    },
-    {
-      "code": "1451",
-      "name": "年興",
-      "symbol": "1451.TW"
-    },
-    {
-      "code": "1452",
-      "name": "宏益",
-      "symbol": "1452.TW"
-    },
-    {
-      "code": "1453",
-      "name": "大將",
-      "symbol": "1453.TW"
-    },
-    {
-      "code": "1454",
-      "name": "台富",
-      "symbol": "1454.TW"
-    },
-    {
-      "code": "1455",
-      "name": "集盛",
-      "symbol": "1455.TW"
-    },
-    {
-      "code": "1456",
-      "name": "怡華",
-      "symbol": "1456.TW"
-    },
-    {
-      "code": "1457",
-      "name": "宜進",
-      "symbol": "1457.TW"
-    },
-    {
-      "code": "1459",
-      "name": "聯發",
-      "symbol": "1459.TW"
-    },
-    {
-      "code": "1460",
-      "name": "宏遠",
-      "symbol": "1460.TW"
-    },
-    {
-      "code": "1463",
-      "name": "強盛新",
-      "symbol": "1463.TW"
-    },
-    {
-      "code": "1464",
-      "name": "得力",
-      "symbol": "1464.TW"
-    },
-    {
-      "code": "1465",
-      "name": "偉全",
-      "symbol": "1465.TW"
-    },
-    {
-      "code": "1466",
-      "name": "聚隆",
-      "symbol": "1466.TW"
-    },
-    {
-      "code": "1467",
-      "name": "南緯",
-      "symbol": "1467.TW"
-    },
-    {
-      "code": "1468",
-      "name": "昶和",
-      "symbol": "1468.TW"
-    },
-    {
-      "code": "1470",
-      "name": "大統新創",
-      "symbol": "1470.TW"
-    },
-    {
-      "code": "1471",
-      "name": "首利",
-      "symbol": "1471.TW"
-    },
-    {
-      "code": "1472",
-      "name": "三洋實業",
-      "symbol": "1472.TW"
-    },
-    {
-      "code": "1473",
-      "name": "台南",
-      "symbol": "1473.TW"
-    },
-    {
-      "code": "1474",
-      "name": "弘裕",
-      "symbol": "1474.TW"
-    },
-    {
-      "code": "1475",
-      "name": "業旺",
-      "symbol": "1475.TW"
+      "symbol": "1402.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1476",
       "name": "儒鴻",
-      "symbol": "1476.TW"
-    },
-    {
-      "code": "1477",
-      "name": "聚陽",
-      "symbol": "1477.TW"
+      "symbol": "1476.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1503",
       "name": "士電",
-      "symbol": "1503.TW"
+      "symbol": "1503.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1504",
       "name": "東元",
-      "symbol": "1504.TW"
-    },
-    {
-      "code": "1506",
-      "name": "正道",
-      "symbol": "1506.TW"
-    },
-    {
-      "code": "1512",
-      "name": "瑞利",
-      "symbol": "1512.TW"
+      "symbol": "1504.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1513",
       "name": "中興電",
-      "symbol": "1513.TW"
-    },
-    {
-      "code": "1514",
-      "name": "亞力",
-      "symbol": "1514.TW"
-    },
-    {
-      "code": "1515",
-      "name": "力山",
-      "symbol": "1515.TW"
-    },
-    {
-      "code": "1516",
-      "name": "川飛",
-      "symbol": "1516.TW"
-    },
-    {
-      "code": "1517",
-      "name": "利奇",
-      "symbol": "1517.TW"
+      "symbol": "1513.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1519",
       "name": "華城",
-      "symbol": "1519.TW"
-    },
-    {
-      "code": "1521",
-      "name": "大億",
-      "symbol": "1521.TW"
-    },
-    {
-      "code": "1522",
-      "name": "堤維西",
-      "symbol": "1522.TW"
-    },
-    {
-      "code": "1524",
-      "name": "耿鼎",
-      "symbol": "1524.TW"
-    },
-    {
-      "code": "1525",
-      "name": "江申",
-      "symbol": "1525.TW"
-    },
-    {
-      "code": "1526",
-      "name": "日馳",
-      "symbol": "1526.TW"
-    },
-    {
-      "code": "1527",
-      "name": "鑽全",
-      "symbol": "1527.TW"
-    },
-    {
-      "code": "1528",
-      "name": "恩德",
-      "symbol": "1528.TW"
-    },
-    {
-      "code": "1529",
-      "name": "樂事綠能",
-      "symbol": "1529.TW"
-    },
-    {
-      "code": "1530",
-      "name": "亞崴",
-      "symbol": "1530.TW"
-    },
-    {
-      "code": "1531",
-      "name": "高林股",
-      "symbol": "1531.TW"
-    },
-    {
-      "code": "1532",
-      "name": "勤美",
-      "symbol": "1532.TW"
-    },
-    {
-      "code": "1533",
-      "name": "車王電",
-      "symbol": "1533.TW"
-    },
-    {
-      "code": "1535",
-      "name": "中宇",
-      "symbol": "1535.TW"
-    },
-    {
-      "code": "1536",
-      "name": "和大",
-      "symbol": "1536.TW"
-    },
-    {
-      "code": "1537",
-      "name": "廣隆",
-      "symbol": "1537.TW"
-    },
-    {
-      "code": "1538",
-      "name": "正峰",
-      "symbol": "1538.TW"
-    },
-    {
-      "code": "1539",
-      "name": "巨庭",
-      "symbol": "1539.TW"
-    },
-    {
-      "code": "1540",
-      "name": "喬福",
-      "symbol": "1540.TW"
-    },
-    {
-      "code": "1541",
-      "name": "錩泰",
-      "symbol": "1541.TW"
-    },
-    {
-      "code": "1558",
-      "name": "伸興",
-      "symbol": "1558.TW"
+      "symbol": "1519.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1560",
       "name": "中砂",
-      "symbol": "1560.TW"
+      "symbol": "1560.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "1563",
-      "name": "巧新",
-      "symbol": "1563.TW"
-    },
-    {
-      "code": "1568",
-      "name": "倉佑",
-      "symbol": "1568.TW"
-    },
-    {
-      "code": "1582",
-      "name": "信錦",
-      "symbol": "1582.TW"
-    },
-    {
-      "code": "1583",
-      "name": "程泰",
-      "symbol": "1583.TW"
-    },
-    {
-      "code": "1587",
-      "name": "吉茂",
-      "symbol": "1587.TW"
-    },
-    {
-      "code": "1589",
-      "name": "永冠-KY",
-      "symbol": "1589.TW"
+      "code": "1569",
+      "name": "濱川",
+      "symbol": "1569.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "1590",
       "name": "亞德客-KY",
-      "symbol": "1590.TW"
-    },
-    {
-      "code": "1597",
-      "name": "直得",
-      "symbol": "1597.TW"
-    },
-    {
-      "code": "1598",
-      "name": "岱宇",
-      "symbol": "1598.TW"
-    },
-    {
-      "code": "1603",
-      "name": "華電",
-      "symbol": "1603.TW"
-    },
-    {
-      "code": "1604",
-      "name": "聲寶",
-      "symbol": "1604.TW"
+      "symbol": "1590.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1605",
       "name": "華新",
-      "symbol": "1605.TW"
-    },
-    {
-      "code": "1608",
-      "name": "華榮",
-      "symbol": "1608.TW"
-    },
-    {
-      "code": "1609",
-      "name": "大亞",
-      "symbol": "1609.TW"
-    },
-    {
-      "code": "1611",
-      "name": "中電",
-      "symbol": "1611.TW"
-    },
-    {
-      "code": "1612",
-      "name": "宏泰",
-      "symbol": "1612.TW"
-    },
-    {
-      "code": "1614",
-      "name": "三洋電",
-      "symbol": "1614.TW"
-    },
-    {
-      "code": "1615",
-      "name": "大山",
-      "symbol": "1615.TW"
-    },
-    {
-      "code": "1616",
-      "name": "億泰",
-      "symbol": "1616.TW"
-    },
-    {
-      "code": "1617",
-      "name": "榮星",
-      "symbol": "1617.TW"
-    },
-    {
-      "code": "1618",
-      "name": "合機",
-      "symbol": "1618.TW"
-    },
-    {
-      "code": "1623",
-      "name": "大東電",
-      "symbol": "1623.TW"
-    },
-    {
-      "code": "1626",
-      "name": "艾美特-KY",
-      "symbol": "1626.TW"
-    },
-    {
-      "code": "1702",
-      "name": "南僑",
-      "symbol": "1702.TW"
-    },
-    {
-      "code": "1707",
-      "name": "葡萄王",
-      "symbol": "1707.TW"
-    },
-    {
-      "code": "1708",
-      "name": "東鹼",
-      "symbol": "1708.TW"
-    },
-    {
-      "code": "1709",
-      "name": "和益",
-      "symbol": "1709.TW"
-    },
-    {
-      "code": "1710",
-      "name": "東聯",
-      "symbol": "1710.TW"
-    },
-    {
-      "code": "1711",
-      "name": "永光",
-      "symbol": "1711.TW"
-    },
-    {
-      "code": "1712",
-      "name": "興農",
-      "symbol": "1712.TW"
-    },
-    {
-      "code": "1713",
-      "name": "國化",
-      "symbol": "1713.TW"
-    },
-    {
-      "code": "1714",
-      "name": "和桐",
-      "symbol": "1714.TW"
+      "symbol": "1605.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "1717",
       "name": "長興",
-      "symbol": "1717.TW"
+      "symbol": "1717.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "1718",
-      "name": "中纖",
-      "symbol": "1718.TW"
-    },
-    {
-      "code": "1720",
-      "name": "生達",
-      "symbol": "1720.TW"
-    },
-    {
-      "code": "1721",
-      "name": "國慶科技",
-      "symbol": "1721.TW"
-    },
-    {
-      "code": "1722",
-      "name": "台肥",
-      "symbol": "1722.TW"
-    },
-    {
-      "code": "1723",
-      "name": "中碳",
-      "symbol": "1723.TW"
-    },
-    {
-      "code": "1725",
-      "name": "元禎",
-      "symbol": "1725.TW"
-    },
-    {
-      "code": "1726",
-      "name": "永記",
-      "symbol": "1726.TW"
-    },
-    {
-      "code": "1727",
-      "name": "中華化",
-      "symbol": "1727.TW"
-    },
-    {
-      "code": "1730",
-      "name": "花仙子",
-      "symbol": "1730.TW"
-    },
-    {
-      "code": "1731",
-      "name": "美吾華",
-      "symbol": "1731.TW"
-    },
-    {
-      "code": "1732",
-      "name": "毛寶",
-      "symbol": "1732.TW"
-    },
-    {
-      "code": "1733",
-      "name": "五鼎",
-      "symbol": "1733.TW"
-    },
-    {
-      "code": "1734",
-      "name": "杏輝",
-      "symbol": "1734.TW"
-    },
-    {
-      "code": "1735",
-      "name": "日勝化",
-      "symbol": "1735.TW"
-    },
-    {
-      "code": "1736",
-      "name": "喬山",
-      "symbol": "1736.TW"
-    },
-    {
-      "code": "1737",
-      "name": "臺鹽",
-      "symbol": "1737.TW"
-    },
-    {
-      "code": "1752",
-      "name": "南光",
-      "symbol": "1752.TW"
-    },
-    {
-      "code": "1760",
-      "name": "寶齡富錦",
-      "symbol": "1760.TW"
-    },
-    {
-      "code": "1762",
-      "name": "中化生",
-      "symbol": "1762.TW"
-    },
-    {
-      "code": "1773",
-      "name": "勝一",
-      "symbol": "1773.TW"
-    },
-    {
-      "code": "1776",
-      "name": "展宇",
-      "symbol": "1776.TW"
-    },
-    {
-      "code": "1783",
-      "name": "和康生",
-      "symbol": "1783.TW"
-    },
-    {
-      "code": "1786",
-      "name": "科妍",
-      "symbol": "1786.TW"
-    },
-    {
-      "code": "1789",
-      "name": "神隆",
-      "symbol": "1789.TW"
-    },
-    {
-      "code": "1795",
-      "name": "美時",
-      "symbol": "1795.TW"
+      "code": "1785",
+      "name": "光洋科",
+      "symbol": "1785.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "1802",
       "name": "台玻",
-      "symbol": "1802.TW"
+      "symbol": "1802.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "1805",
-      "name": "寶徠",
-      "symbol": "1805.TW"
-    },
-    {
-      "code": "1806",
-      "name": "冠軍",
-      "symbol": "1806.TW"
-    },
-    {
-      "code": "1808",
-      "name": "潤隆",
-      "symbol": "1808.TW"
-    },
-    {
-      "code": "1809",
-      "name": "中釉",
-      "symbol": "1809.TW"
-    },
-    {
-      "code": "1810",
-      "name": "和成",
-      "symbol": "1810.TW"
-    },
-    {
-      "code": "1817",
-      "name": "凱撒衛",
-      "symbol": "1817.TW"
-    },
-    {
-      "code": "1903",
-      "name": "士紙",
-      "symbol": "1903.TW"
-    },
-    {
-      "code": "1904",
-      "name": "正隆",
-      "symbol": "1904.TW"
-    },
-    {
-      "code": "1905",
-      "name": "華紙",
-      "symbol": "1905.TW"
-    },
-    {
-      "code": "1906",
-      "name": "寶隆",
-      "symbol": "1906.TW"
-    },
-    {
-      "code": "1907",
-      "name": "永豐餘",
-      "symbol": "1907.TW"
-    },
-    {
-      "code": "1909",
-      "name": "榮成",
-      "symbol": "1909.TW"
+      "code": "1815",
+      "name": "富喬",
+      "symbol": "1815.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "2002",
       "name": "中鋼",
-      "symbol": "2002.TW"
-    },
-    {
-      "code": "2006",
-      "name": "東和鋼鐵",
-      "symbol": "2006.TW"
-    },
-    {
-      "code": "2007",
-      "name": "燁興",
-      "symbol": "2007.TW"
-    },
-    {
-      "code": "2008",
-      "name": "高興昌",
-      "symbol": "2008.TW"
-    },
-    {
-      "code": "2009",
-      "name": "第一銅",
-      "symbol": "2009.TW"
-    },
-    {
-      "code": "2010",
-      "name": "春源",
-      "symbol": "2010.TW"
-    },
-    {
-      "code": "2012",
-      "name": "春雨",
-      "symbol": "2012.TW"
-    },
-    {
-      "code": "2013",
-      "name": "中鋼構",
-      "symbol": "2013.TW"
-    },
-    {
-      "code": "2014",
-      "name": "中鴻",
-      "symbol": "2014.TW"
-    },
-    {
-      "code": "2015",
-      "name": "豐興",
-      "symbol": "2015.TW"
-    },
-    {
-      "code": "2017",
-      "name": "官田鋼",
-      "symbol": "2017.TW"
-    },
-    {
-      "code": "2020",
-      "name": "美亞",
-      "symbol": "2020.TW"
-    },
-    {
-      "code": "2022",
-      "name": "聚亨",
-      "symbol": "2022.TW"
-    },
-    {
-      "code": "2023",
-      "name": "燁輝",
-      "symbol": "2023.TW"
-    },
-    {
-      "code": "2024",
-      "name": "志聯",
-      "symbol": "2024.TW"
-    },
-    {
-      "code": "2025",
-      "name": "千興",
-      "symbol": "2025.TW"
+      "symbol": "2002.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2027",
       "name": "大成鋼",
-      "symbol": "2027.TW"
-    },
-    {
-      "code": "2028",
-      "name": "威致",
-      "symbol": "2028.TW"
-    },
-    {
-      "code": "2029",
-      "name": "盛餘",
-      "symbol": "2029.TW"
-    },
-    {
-      "code": "2030",
-      "name": "彰源",
-      "symbol": "2030.TW"
-    },
-    {
-      "code": "2031",
-      "name": "新光鋼",
-      "symbol": "2031.TW"
-    },
-    {
-      "code": "2032",
-      "name": "新鋼",
-      "symbol": "2032.TW"
-    },
-    {
-      "code": "2033",
-      "name": "佳大",
-      "symbol": "2033.TW"
-    },
-    {
-      "code": "2034",
-      "name": "允強",
-      "symbol": "2034.TW"
-    },
-    {
-      "code": "2038",
-      "name": "海光",
-      "symbol": "2038.TW"
+      "symbol": "2027.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2049",
       "name": "上銀",
-      "symbol": "2049.TW"
+      "symbol": "2049.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2059",
       "name": "川湖",
-      "symbol": "2059.TW"
-    },
-    {
-      "code": "2062",
-      "name": "橋椿",
-      "symbol": "2062.TW"
-    },
-    {
-      "code": "2069",
-      "name": "運錩",
-      "symbol": "2069.TW"
-    },
-    {
-      "code": "2072",
-      "name": "世紀能源",
-      "symbol": "2072.TW"
-    },
-    {
-      "code": "2101",
-      "name": "南港",
-      "symbol": "2101.TW"
-    },
-    {
-      "code": "2102",
-      "name": "泰豐",
-      "symbol": "2102.TW"
-    },
-    {
-      "code": "2103",
-      "name": "台橡",
-      "symbol": "2103.TW"
-    },
-    {
-      "code": "2104",
-      "name": "國際中橡",
-      "symbol": "2104.TW"
+      "symbol": "2059.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2105",
       "name": "正新",
-      "symbol": "2105.TW"
-    },
-    {
-      "code": "2106",
-      "name": "建大",
-      "symbol": "2106.TW"
-    },
-    {
-      "code": "2107",
-      "name": "厚生",
-      "symbol": "2107.TW"
-    },
-    {
-      "code": "2108",
-      "name": "南帝",
-      "symbol": "2108.TW"
-    },
-    {
-      "code": "2109",
-      "name": "華豐",
-      "symbol": "2109.TW"
-    },
-    {
-      "code": "2114",
-      "name": "鑫永銓",
-      "symbol": "2114.TW"
-    },
-    {
-      "code": "2115",
-      "name": "六暉-KY",
-      "symbol": "2115.TW"
-    },
-    {
-      "code": "2201",
-      "name": "裕隆",
-      "symbol": "2201.TW"
-    },
-    {
-      "code": "2204",
-      "name": "中華",
-      "symbol": "2204.TW"
-    },
-    {
-      "code": "2206",
-      "name": "三陽工業",
-      "symbol": "2206.TW"
+      "symbol": "2105.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2207",
       "name": "和泰車",
-      "symbol": "2207.TW"
-    },
-    {
-      "code": "2208",
-      "name": "台船",
-      "symbol": "2208.TW"
-    },
-    {
-      "code": "2211",
-      "name": "長榮鋼",
-      "symbol": "2211.TW"
-    },
-    {
-      "code": "2227",
-      "name": "裕日車",
-      "symbol": "2227.TW"
-    },
-    {
-      "code": "2228",
-      "name": "劍麟",
-      "symbol": "2228.TW"
-    },
-    {
-      "code": "2231",
-      "name": "為升",
-      "symbol": "2231.TW"
-    },
-    {
-      "code": "2233",
-      "name": "宇隆",
-      "symbol": "2233.TW"
-    },
-    {
-      "code": "2236",
-      "name": "百達-KY",
-      "symbol": "2236.TW"
-    },
-    {
-      "code": "2237",
-      "name": "華德動能-創",
-      "symbol": "2237.TW"
-    },
-    {
-      "code": "2239",
-      "name": "英利-KY",
-      "symbol": "2239.TW"
-    },
-    {
-      "code": "2241",
-      "name": "艾姆勒",
-      "symbol": "2241.TW"
-    },
-    {
-      "code": "2243",
-      "name": "宏旭-KY",
-      "symbol": "2243.TW"
-    },
-    {
-      "code": "2247",
-      "name": "汎德永業",
-      "symbol": "2247.TW"
-    },
-    {
-      "code": "2248",
-      "name": "華勝-KY",
-      "symbol": "2248.TW"
-    },
-    {
-      "code": "2250",
-      "name": "IKKA-KY",
-      "symbol": "2250.TW"
-    },
-    {
-      "code": "2254",
-      "name": "巨鎧精密-創",
-      "symbol": "2254.TW"
-    },
-    {
-      "code": "2258",
-      "name": "鴻華先進-創",
-      "symbol": "2258.TW"
+      "symbol": "2207.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2301",
       "name": "光寶科",
-      "symbol": "2301.TW"
-    },
-    {
-      "code": "2302",
-      "name": "麗正",
-      "symbol": "2302.TW"
+      "symbol": "2301.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2303",
       "name": "聯電",
-      "symbol": "2303.TW"
-    },
-    {
-      "code": "2305",
-      "name": "全友",
-      "symbol": "2305.TW"
+      "symbol": "2303.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2308",
       "name": "台達電",
-      "symbol": "2308.TW"
-    },
-    {
-      "code": "2312",
-      "name": "金寶",
-      "symbol": "2312.TW"
+      "symbol": "2308.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2313",
       "name": "華通",
-      "symbol": "2313.TW"
+      "symbol": "2313.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "2314",
-      "name": "台揚",
-      "symbol": "2314.TW"
-    },
-    {
-      "code": "2316",
-      "name": "楠梓電",
-      "symbol": "2316.TW"
+      "code": "2315",
+      "name": "神達",
+      "symbol": "2315.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2317",
       "name": "鴻海",
-      "symbol": "2317.TW"
-    },
-    {
-      "code": "2321",
-      "name": "東訊",
-      "symbol": "2321.TW"
-    },
-    {
-      "code": "2323",
-      "name": "中環",
-      "symbol": "2323.TW"
+      "symbol": "2317.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2324",
       "name": "仁寶",
-      "symbol": "2324.TW"
+      "symbol": "2324.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2327",
       "name": "國巨*",
-      "symbol": "2327.TW"
-    },
-    {
-      "code": "2328",
-      "name": "廣宇",
-      "symbol": "2328.TW"
-    },
-    {
-      "code": "2329",
-      "name": "華泰",
-      "symbol": "2329.TW"
+      "symbol": "2327.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2330",
       "name": "台積電",
-      "symbol": "2330.TW"
-    },
-    {
-      "code": "2331",
-      "name": "精英",
-      "symbol": "2331.TW"
-    },
-    {
-      "code": "2332",
-      "name": "友訊",
-      "symbol": "2332.TW"
+      "symbol": "2330.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2337",
       "name": "旺宏",
-      "symbol": "2337.TW"
-    },
-    {
-      "code": "2338",
-      "name": "光罩",
-      "symbol": "2338.TW"
-    },
-    {
-      "code": "2340",
-      "name": "台亞",
-      "symbol": "2340.TW"
-    },
-    {
-      "code": "2342",
-      "name": "茂矽",
-      "symbol": "2342.TW"
+      "symbol": "2337.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2344",
       "name": "華邦電",
-      "symbol": "2344.TW"
+      "symbol": "2344.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2345",
       "name": "智邦",
-      "symbol": "2345.TW"
+      "symbol": "2345.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2347",
       "name": "聯強",
-      "symbol": "2347.TW"
-    },
-    {
-      "code": "2348",
-      "name": "海悅",
-      "symbol": "2348.TW"
-    },
-    {
-      "code": "2349",
-      "name": "錸德",
-      "symbol": "2349.TW"
-    },
-    {
-      "code": "2351",
-      "name": "順德",
-      "symbol": "2351.TW"
-    },
-    {
-      "code": "2352",
-      "name": "佳世達",
-      "symbol": "2352.TW"
+      "symbol": "2347.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2353",
       "name": "宏碁",
-      "symbol": "2353.TW"
+      "symbol": "2353.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2354",
       "name": "鴻準",
-      "symbol": "2354.TW"
-    },
-    {
-      "code": "2355",
-      "name": "敬鵬",
-      "symbol": "2355.TW"
+      "symbol": "2354.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2356",
       "name": "英業達",
-      "symbol": "2356.TW"
+      "symbol": "2356.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2357",
       "name": "華碩",
-      "symbol": "2357.TW"
-    },
-    {
-      "code": "2359",
-      "name": "所羅門",
-      "symbol": "2359.TW"
+      "symbol": "2357.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2360",
       "name": "致茂",
-      "symbol": "2360.TW"
-    },
-    {
-      "code": "2362",
-      "name": "藍天",
-      "symbol": "2362.TW"
-    },
-    {
-      "code": "2363",
-      "name": "矽統",
-      "symbol": "2363.TW"
-    },
-    {
-      "code": "2364",
-      "name": "倫飛",
-      "symbol": "2364.TW"
-    },
-    {
-      "code": "2365",
-      "name": "昆盈",
-      "symbol": "2365.TW"
-    },
-    {
-      "code": "2367",
-      "name": "燿華",
-      "symbol": "2367.TW"
+      "symbol": "2360.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2368",
       "name": "金像電",
-      "symbol": "2368.TW"
-    },
-    {
-      "code": "2369",
-      "name": "菱生",
-      "symbol": "2369.TW"
-    },
-    {
-      "code": "2371",
-      "name": "大同",
-      "symbol": "2371.TW"
-    },
-    {
-      "code": "2373",
-      "name": "震旦行",
-      "symbol": "2373.TW"
-    },
-    {
-      "code": "2374",
-      "name": "佳能",
-      "symbol": "2374.TW"
-    },
-    {
-      "code": "2375",
-      "name": "凱美",
-      "symbol": "2375.TW"
+      "symbol": "2368.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2376",
       "name": "技嘉",
-      "symbol": "2376.TW"
+      "symbol": "2376.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2377",
       "name": "微星",
-      "symbol": "2377.TW"
+      "symbol": "2377.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2379",
       "name": "瑞昱",
-      "symbol": "2379.TW"
-    },
-    {
-      "code": "2380",
-      "name": "虹光",
-      "symbol": "2380.TW"
+      "symbol": "2379.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2382",
       "name": "廣達",
-      "symbol": "2382.TW"
+      "symbol": "2382.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2383",
       "name": "台光電",
-      "symbol": "2383.TW"
+      "symbol": "2383.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2385",
       "name": "群光",
-      "symbol": "2385.TW"
-    },
-    {
-      "code": "2387",
-      "name": "精元",
-      "symbol": "2387.TW"
-    },
-    {
-      "code": "2388",
-      "name": "威盛",
-      "symbol": "2388.TW"
-    },
-    {
-      "code": "2390",
-      "name": "云辰",
-      "symbol": "2390.TW"
-    },
-    {
-      "code": "2392",
-      "name": "正崴",
-      "symbol": "2392.TW"
-    },
-    {
-      "code": "2393",
-      "name": "億光",
-      "symbol": "2393.TW"
+      "symbol": "2385.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2395",
       "name": "研華",
-      "symbol": "2395.TW"
-    },
-    {
-      "code": "2397",
-      "name": "友通",
-      "symbol": "2397.TW"
-    },
-    {
-      "code": "2399",
-      "name": "映泰",
-      "symbol": "2399.TW"
-    },
-    {
-      "code": "2401",
-      "name": "凌陽",
-      "symbol": "2401.TW"
-    },
-    {
-      "code": "2402",
-      "name": "毅嘉",
-      "symbol": "2402.TW"
+      "symbol": "2395.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2404",
       "name": "漢唐",
-      "symbol": "2404.TW"
-    },
-    {
-      "code": "2405",
-      "name": "輔信",
-      "symbol": "2405.TW"
-    },
-    {
-      "code": "2406",
-      "name": "國碩",
-      "symbol": "2406.TW"
+      "symbol": "2404.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2408",
       "name": "南亞科",
-      "symbol": "2408.TW"
+      "symbol": "2408.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2409",
       "name": "友達",
-      "symbol": "2409.TW"
+      "symbol": "2409.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2412",
       "name": "中華電",
-      "symbol": "2412.TW"
-    },
-    {
-      "code": "2413",
-      "name": "環科",
-      "symbol": "2413.TW"
-    },
-    {
-      "code": "2414",
-      "name": "精技",
-      "symbol": "2414.TW"
-    },
-    {
-      "code": "2415",
-      "name": "錩新",
-      "symbol": "2415.TW"
-    },
-    {
-      "code": "2417",
-      "name": "圓剛",
-      "symbol": "2417.TW"
-    },
-    {
-      "code": "2419",
-      "name": "仲琦",
-      "symbol": "2419.TW"
-    },
-    {
-      "code": "2420",
-      "name": "新巨",
-      "symbol": "2420.TW"
-    },
-    {
-      "code": "2421",
-      "name": "建準",
-      "symbol": "2421.TW"
-    },
-    {
-      "code": "2423",
-      "name": "固緯",
-      "symbol": "2423.TW"
-    },
-    {
-      "code": "2424",
-      "name": "隴華",
-      "symbol": "2424.TW"
-    },
-    {
-      "code": "2425",
-      "name": "承啟",
-      "symbol": "2425.TW"
-    },
-    {
-      "code": "2426",
-      "name": "鼎元",
-      "symbol": "2426.TW"
-    },
-    {
-      "code": "2427",
-      "name": "三商電",
-      "symbol": "2427.TW"
-    },
-    {
-      "code": "2428",
-      "name": "興勤",
-      "symbol": "2428.TW"
-    },
-    {
-      "code": "2429",
-      "name": "銘旺科",
-      "symbol": "2429.TW"
-    },
-    {
-      "code": "2430",
-      "name": "燦坤",
-      "symbol": "2430.TW"
-    },
-    {
-      "code": "2431",
-      "name": "聯昌",
-      "symbol": "2431.TW"
-    },
-    {
-      "code": "2432",
-      "name": "倚天酷碁-創",
-      "symbol": "2432.TW"
-    },
-    {
-      "code": "2433",
-      "name": "互盛電",
-      "symbol": "2433.TW"
-    },
-    {
-      "code": "2434",
-      "name": "統懋",
-      "symbol": "2434.TW"
-    },
-    {
-      "code": "2436",
-      "name": "偉詮電",
-      "symbol": "2436.TW"
-    },
-    {
-      "code": "2438",
-      "name": "翔耀",
-      "symbol": "2438.TW"
-    },
-    {
-      "code": "2439",
-      "name": "美律",
-      "symbol": "2439.TW"
-    },
-    {
-      "code": "2440",
-      "name": "太空梭",
-      "symbol": "2440.TW"
-    },
-    {
-      "code": "2441",
-      "name": "超豐",
-      "symbol": "2441.TW"
-    },
-    {
-      "code": "2442",
-      "name": "新美齊",
-      "symbol": "2442.TW"
-    },
-    {
-      "code": "2444",
-      "name": "兆勁",
-      "symbol": "2444.TW"
+      "symbol": "2412.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2449",
       "name": "京元電子",
-      "symbol": "2449.TW"
-    },
-    {
-      "code": "2450",
-      "name": "神腦",
-      "symbol": "2450.TW"
+      "symbol": "2449.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2451",
       "name": "創見",
-      "symbol": "2451.TW"
-    },
-    {
-      "code": "2453",
-      "name": "凌群",
-      "symbol": "2453.TW"
+      "symbol": "2451.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2454",
       "name": "聯發科",
-      "symbol": "2454.TW"
+      "symbol": "2454.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2455",
       "name": "全新",
-      "symbol": "2455.TW"
-    },
-    {
-      "code": "2457",
-      "name": "飛宏",
-      "symbol": "2457.TW"
-    },
-    {
-      "code": "2458",
-      "name": "義隆",
-      "symbol": "2458.TW"
-    },
-    {
-      "code": "2459",
-      "name": "敦吉",
-      "symbol": "2459.TW"
-    },
-    {
-      "code": "2460",
-      "name": "建通",
-      "symbol": "2460.TW"
-    },
-    {
-      "code": "2461",
-      "name": "光群雷",
-      "symbol": "2461.TW"
-    },
-    {
-      "code": "2462",
-      "name": "良得電",
-      "symbol": "2462.TW"
-    },
-    {
-      "code": "2464",
-      "name": "盟立",
-      "symbol": "2464.TW"
-    },
-    {
-      "code": "2465",
-      "name": "麗臺",
-      "symbol": "2465.TW"
-    },
-    {
-      "code": "2466",
-      "name": "冠西電",
-      "symbol": "2466.TW"
+      "symbol": "2455.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2467",
       "name": "志聖",
-      "symbol": "2467.TW"
-    },
-    {
-      "code": "2468",
-      "name": "華經",
-      "symbol": "2468.TW"
-    },
-    {
-      "code": "2471",
-      "name": "資通",
-      "symbol": "2471.TW"
-    },
-    {
-      "code": "2472",
-      "name": "立隆電",
-      "symbol": "2472.TW"
+      "symbol": "2467.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2474",
       "name": "可成",
-      "symbol": "2474.TW"
-    },
-    {
-      "code": "2476",
-      "name": "鉅祥",
-      "symbol": "2476.TW"
-    },
-    {
-      "code": "2477",
-      "name": "美隆電",
-      "symbol": "2477.TW"
-    },
-    {
-      "code": "2478",
-      "name": "大毅",
-      "symbol": "2478.TW"
-    },
-    {
-      "code": "2480",
-      "name": "敦陽科",
-      "symbol": "2480.TW"
-    },
-    {
-      "code": "2481",
-      "name": "強茂",
-      "symbol": "2481.TW"
-    },
-    {
-      "code": "2482",
-      "name": "連宇",
-      "symbol": "2482.TW"
-    },
-    {
-      "code": "2483",
-      "name": "百容",
-      "symbol": "2483.TW"
-    },
-    {
-      "code": "2484",
-      "name": "希華",
-      "symbol": "2484.TW"
-    },
-    {
-      "code": "2485",
-      "name": "兆赫",
-      "symbol": "2485.TW"
-    },
-    {
-      "code": "2486",
-      "name": "一詮",
-      "symbol": "2486.TW"
-    },
-    {
-      "code": "2488",
-      "name": "漢平",
-      "symbol": "2488.TW"
-    },
-    {
-      "code": "2489",
-      "name": "瑞軒",
-      "symbol": "2489.TW"
-    },
-    {
-      "code": "2491",
-      "name": "吉祥全",
-      "symbol": "2491.TW"
+      "symbol": "2474.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2492",
       "name": "華新科",
-      "symbol": "2492.TW"
-    },
-    {
-      "code": "2493",
-      "name": "揚博",
-      "symbol": "2493.TW"
-    },
-    {
-      "code": "2495",
-      "name": "普安",
-      "symbol": "2495.TW"
-    },
-    {
-      "code": "2496",
-      "name": "卓越",
-      "symbol": "2496.TW"
-    },
-    {
-      "code": "2497",
-      "name": "怡利電",
-      "symbol": "2497.TW"
-    },
-    {
-      "code": "2498",
-      "name": "宏達電",
-      "symbol": "2498.TW"
-    },
-    {
-      "code": "2501",
-      "name": "國建",
-      "symbol": "2501.TW"
-    },
-    {
-      "code": "2504",
-      "name": "國產",
-      "symbol": "2504.TW"
-    },
-    {
-      "code": "2505",
-      "name": "國揚",
-      "symbol": "2505.TW"
-    },
-    {
-      "code": "2506",
-      "name": "太設",
-      "symbol": "2506.TW"
-    },
-    {
-      "code": "2509",
-      "name": "全坤建",
-      "symbol": "2509.TW"
-    },
-    {
-      "code": "2511",
-      "name": "太子",
-      "symbol": "2511.TW"
-    },
-    {
-      "code": "2514",
-      "name": "龍邦",
-      "symbol": "2514.TW"
-    },
-    {
-      "code": "2515",
-      "name": "中工",
-      "symbol": "2515.TW"
-    },
-    {
-      "code": "2516",
-      "name": "新建",
-      "symbol": "2516.TW"
-    },
-    {
-      "code": "2520",
-      "name": "冠德",
-      "symbol": "2520.TW"
-    },
-    {
-      "code": "2524",
-      "name": "京城",
-      "symbol": "2524.TW"
-    },
-    {
-      "code": "2527",
-      "name": "宏璟",
-      "symbol": "2527.TW"
-    },
-    {
-      "code": "2528",
-      "name": "皇普",
-      "symbol": "2528.TW"
-    },
-    {
-      "code": "2530",
-      "name": "華建",
-      "symbol": "2530.TW"
-    },
-    {
-      "code": "2534",
-      "name": "宏盛",
-      "symbol": "2534.TW"
-    },
-    {
-      "code": "2535",
-      "name": "達欣工",
-      "symbol": "2535.TW"
-    },
-    {
-      "code": "2536",
-      "name": "宏普",
-      "symbol": "2536.TW"
-    },
-    {
-      "code": "2537",
-      "name": "聯上發",
-      "symbol": "2537.TW"
-    },
-    {
-      "code": "2538",
-      "name": "基泰",
-      "symbol": "2538.TW"
-    },
-    {
-      "code": "2539",
-      "name": "櫻花建",
-      "symbol": "2539.TW"
-    },
-    {
-      "code": "2540",
-      "name": "愛山林",
-      "symbol": "2540.TW"
+      "symbol": "2492.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2542",
       "name": "興富發",
-      "symbol": "2542.TW"
-    },
-    {
-      "code": "2543",
-      "name": "皇昌",
-      "symbol": "2543.TW"
-    },
-    {
-      "code": "2545",
-      "name": "皇翔",
-      "symbol": "2545.TW"
-    },
-    {
-      "code": "2546",
-      "name": "根基",
-      "symbol": "2546.TW"
-    },
-    {
-      "code": "2547",
-      "name": "日勝生",
-      "symbol": "2547.TW"
-    },
-    {
-      "code": "2548",
-      "name": "華固",
-      "symbol": "2548.TW"
-    },
-    {
-      "code": "2597",
-      "name": "潤弘",
-      "symbol": "2597.TW"
-    },
-    {
-      "code": "2601",
-      "name": "益航",
-      "symbol": "2601.TW"
+      "symbol": "2542.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2603",
       "name": "長榮",
-      "symbol": "2603.TW"
-    },
-    {
-      "code": "2605",
-      "name": "新興",
-      "symbol": "2605.TW"
-    },
-    {
-      "code": "2606",
-      "name": "裕民",
-      "symbol": "2606.TW"
-    },
-    {
-      "code": "2607",
-      "name": "榮運",
-      "symbol": "2607.TW"
-    },
-    {
-      "code": "2608",
-      "name": "嘉里大榮",
-      "symbol": "2608.TW"
+      "symbol": "2603.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2609",
       "name": "陽明",
-      "symbol": "2609.TW"
+      "symbol": "2609.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2610",
       "name": "華航",
-      "symbol": "2610.TW"
-    },
-    {
-      "code": "2611",
-      "name": "志信",
-      "symbol": "2611.TW"
-    },
-    {
-      "code": "2612",
-      "name": "中航",
-      "symbol": "2612.TW"
-    },
-    {
-      "code": "2613",
-      "name": "中櫃",
-      "symbol": "2613.TW"
-    },
-    {
-      "code": "2614",
-      "name": "東森",
-      "symbol": "2614.TW"
+      "symbol": "2610.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2615",
       "name": "萬海",
-      "symbol": "2615.TW"
-    },
-    {
-      "code": "2616",
-      "name": "山隆",
-      "symbol": "2616.TW"
-    },
-    {
-      "code": "2617",
-      "name": "台航",
-      "symbol": "2617.TW"
+      "symbol": "2615.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2618",
       "name": "長榮航",
-      "symbol": "2618.TW"
-    },
-    {
-      "code": "2630",
-      "name": "亞航",
-      "symbol": "2630.TW"
+      "symbol": "2618.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2633",
       "name": "台灣高鐵",
-      "symbol": "2633.TW"
-    },
-    {
-      "code": "2634",
-      "name": "漢翔",
-      "symbol": "2634.TW"
-    },
-    {
-      "code": "2636",
-      "name": "台驊控股",
-      "symbol": "2636.TW"
-    },
-    {
-      "code": "2637",
-      "name": "慧洋-KY",
-      "symbol": "2637.TW"
-    },
-    {
-      "code": "2642",
-      "name": "宅配通",
-      "symbol": "2642.TW"
+      "symbol": "2633.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2645",
       "name": "長榮航太",
-      "symbol": "2645.TW"
+      "symbol": "2645.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2646",
       "name": "星宇航空",
-      "symbol": "2646.TW"
-    },
-    {
-      "code": "2701",
-      "name": "萬企",
-      "symbol": "2701.TW"
-    },
-    {
-      "code": "2702",
-      "name": "華園",
-      "symbol": "2702.TW"
-    },
-    {
-      "code": "2704",
-      "name": "國賓",
-      "symbol": "2704.TW"
-    },
-    {
-      "code": "2705",
-      "name": "六福",
-      "symbol": "2705.TW"
-    },
-    {
-      "code": "2706",
-      "name": "第一店",
-      "symbol": "2706.TW"
-    },
-    {
-      "code": "2707",
-      "name": "晶華",
-      "symbol": "2707.TW"
-    },
-    {
-      "code": "2712",
-      "name": "遠雄來",
-      "symbol": "2712.TW"
-    },
-    {
-      "code": "2722",
-      "name": "夏都",
-      "symbol": "2722.TW"
-    },
-    {
-      "code": "2723",
-      "name": "美食-KY",
-      "symbol": "2723.TW"
-    },
-    {
-      "code": "2727",
-      "name": "王品",
-      "symbol": "2727.TW"
-    },
-    {
-      "code": "2731",
-      "name": "雄獅",
-      "symbol": "2731.TW"
-    },
-    {
-      "code": "2739",
-      "name": "寒舍",
-      "symbol": "2739.TW"
-    },
-    {
-      "code": "2748",
-      "name": "雲品",
-      "symbol": "2748.TW"
-    },
-    {
-      "code": "2753",
-      "name": "八方雲集",
-      "symbol": "2753.TW"
-    },
-    {
-      "code": "2762",
-      "name": "世界健身-KY",
-      "symbol": "2762.TW"
+      "symbol": "2646.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2801",
       "name": "彰銀",
-      "symbol": "2801.TW"
+      "symbol": "2801.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2812",
       "name": "台中銀",
-      "symbol": "2812.TW"
-    },
-    {
-      "code": "2816",
-      "name": "旺旺保",
-      "symbol": "2816.TW"
-    },
-    {
-      "code": "2820",
-      "name": "華票",
-      "symbol": "2820.TW"
-    },
-    {
-      "code": "2832",
-      "name": "台產",
-      "symbol": "2832.TW"
+      "symbol": "2812.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2834",
       "name": "臺企銀",
-      "symbol": "2834.TW"
-    },
-    {
-      "code": "2836",
-      "name": "高雄銀",
-      "symbol": "2836.TW"
+      "symbol": "2834.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2838",
       "name": "聯邦銀",
-      "symbol": "2838.TW"
-    },
-    {
-      "code": "2845",
-      "name": "遠東銀",
-      "symbol": "2845.TW"
-    },
-    {
-      "code": "2849",
-      "name": "安泰銀",
-      "symbol": "2849.TW"
-    },
-    {
-      "code": "2850",
-      "name": "新產",
-      "symbol": "2850.TW"
-    },
-    {
-      "code": "2851",
-      "name": "中再保",
-      "symbol": "2851.TW"
-    },
-    {
-      "code": "2852",
-      "name": "第一保",
-      "symbol": "2852.TW"
-    },
-    {
-      "code": "2855",
-      "name": "統一證",
-      "symbol": "2855.TW"
+      "symbol": "2838.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "2880",
       "name": "華南金",
-      "symbol": "2880.TW"
+      "symbol": "2880.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2881",
       "name": "富邦金",
-      "symbol": "2881.TW"
+      "symbol": "2881.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2882",
       "name": "國泰金",
-      "symbol": "2882.TW"
+      "symbol": "2882.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2883",
       "name": "凱基金",
-      "symbol": "2883.TW"
+      "symbol": "2883.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2884",
       "name": "玉山金",
-      "symbol": "2884.TW"
+      "symbol": "2884.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2885",
       "name": "元大金",
-      "symbol": "2885.TW"
+      "symbol": "2885.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2886",
       "name": "兆豐金",
-      "symbol": "2886.TW"
+      "symbol": "2886.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2887",
       "name": "台新新光金",
-      "symbol": "2887.TW"
-    },
-    {
-      "code": "2889",
-      "name": "國票金",
-      "symbol": "2889.TW"
+      "symbol": "2887.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2890",
       "name": "永豐金",
-      "symbol": "2890.TW"
+      "symbol": "2890.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2891",
       "name": "中信金",
-      "symbol": "2891.TW"
+      "symbol": "2891.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2892",
       "name": "第一金",
-      "symbol": "2892.TW"
-    },
-    {
-      "code": "2897",
-      "name": "王道銀行",
-      "symbol": "2897.TW"
-    },
-    {
-      "code": "2901",
-      "name": "欣欣",
-      "symbol": "2901.TW"
-    },
-    {
-      "code": "2903",
-      "name": "遠百",
-      "symbol": "2903.TW"
-    },
-    {
-      "code": "2904",
-      "name": "匯僑",
-      "symbol": "2904.TW"
-    },
-    {
-      "code": "2905",
-      "name": "三商",
-      "symbol": "2905.TW"
-    },
-    {
-      "code": "2906",
-      "name": "高林",
-      "symbol": "2906.TW"
-    },
-    {
-      "code": "2908",
-      "name": "特力",
-      "symbol": "2908.TW"
-    },
-    {
-      "code": "2910",
-      "name": "統領",
-      "symbol": "2910.TW"
-    },
-    {
-      "code": "2911",
-      "name": "麗嬰房",
-      "symbol": "2911.TW"
+      "symbol": "2892.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "2912",
       "name": "統一超",
-      "symbol": "2912.TW"
-    },
-    {
-      "code": "2913",
-      "name": "農林",
-      "symbol": "2913.TW"
-    },
-    {
-      "code": "2915",
-      "name": "潤泰全",
-      "symbol": "2915.TW"
-    },
-    {
-      "code": "2923",
-      "name": "鼎固-KY",
-      "symbol": "2923.TW"
-    },
-    {
-      "code": "2929",
-      "name": "淘帝-KY",
-      "symbol": "2929.TW"
-    },
-    {
-      "code": "2939",
-      "name": "永邑-KY",
-      "symbol": "2939.TW"
-    },
-    {
-      "code": "2945",
-      "name": "三商家購",
-      "symbol": "2945.TW"
-    },
-    {
-      "code": "3002",
-      "name": "歐格",
-      "symbol": "3002.TW"
-    },
-    {
-      "code": "3003",
-      "name": "健和興",
-      "symbol": "3003.TW"
-    },
-    {
-      "code": "3004",
-      "name": "豐達科",
-      "symbol": "3004.TW"
+      "symbol": "2912.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3005",
       "name": "神基",
-      "symbol": "3005.TW"
+      "symbol": "3005.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3006",
       "name": "晶豪科",
-      "symbol": "3006.TW"
+      "symbol": "3006.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3008",
       "name": "大立光",
-      "symbol": "3008.TW"
-    },
-    {
-      "code": "3010",
-      "name": "華立",
-      "symbol": "3010.TW"
-    },
-    {
-      "code": "3011",
-      "name": "今皓",
-      "symbol": "3011.TW"
-    },
-    {
-      "code": "3013",
-      "name": "晟銘電",
-      "symbol": "3013.TW"
-    },
-    {
-      "code": "3014",
-      "name": "聯陽",
-      "symbol": "3014.TW"
-    },
-    {
-      "code": "3015",
-      "name": "全漢",
-      "symbol": "3015.TW"
-    },
-    {
-      "code": "3016",
-      "name": "嘉晶",
-      "symbol": "3016.TW"
+      "symbol": "3008.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "3017",
       "name": "奇鋐",
-      "symbol": "3017.TW"
-    },
-    {
-      "code": "3018",
-      "name": "隆銘綠能",
-      "symbol": "3018.TW"
-    },
-    {
-      "code": "3019",
-      "name": "亞光",
-      "symbol": "3019.TW"
-    },
-    {
-      "code": "3021",
-      "name": "鴻名",
-      "symbol": "3021.TW"
-    },
-    {
-      "code": "3022",
-      "name": "威強電",
-      "symbol": "3022.TW"
+      "symbol": "3017.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "3023",
       "name": "信邦",
-      "symbol": "3023.TW"
-    },
-    {
-      "code": "3024",
-      "name": "憶聲",
-      "symbol": "3024.TW"
-    },
-    {
-      "code": "3025",
-      "name": "星通",
-      "symbol": "3025.TW"
+      "symbol": "3023.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3026",
       "name": "禾伸堂",
-      "symbol": "3026.TW"
-    },
-    {
-      "code": "3027",
-      "name": "盛達",
-      "symbol": "3027.TW"
-    },
-    {
-      "code": "3028",
-      "name": "增你強",
-      "symbol": "3028.TW"
-    },
-    {
-      "code": "3029",
-      "name": "零壹",
-      "symbol": "3029.TW"
+      "symbol": "3026.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3030",
       "name": "德律",
-      "symbol": "3030.TW"
-    },
-    {
-      "code": "3031",
-      "name": "佰鴻",
-      "symbol": "3031.TW"
-    },
-    {
-      "code": "3032",
-      "name": "偉訓",
-      "symbol": "3032.TW"
-    },
-    {
-      "code": "3033",
-      "name": "威健",
-      "symbol": "3033.TW"
+      "symbol": "3030.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3034",
       "name": "聯詠",
-      "symbol": "3034.TW"
-    },
-    {
-      "code": "3035",
-      "name": "智原",
-      "symbol": "3035.TW"
+      "symbol": "3034.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3036",
       "name": "文曄",
-      "symbol": "3036.TW"
+      "symbol": "3036.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3037",
       "name": "欣興",
-      "symbol": "3037.TW"
-    },
-    {
-      "code": "3038",
-      "name": "全台",
-      "symbol": "3038.TW"
-    },
-    {
-      "code": "3040",
-      "name": "遠見",
-      "symbol": "3040.TW"
-    },
-    {
-      "code": "3041",
-      "name": "揚智",
-      "symbol": "3041.TW"
-    },
-    {
-      "code": "3042",
-      "name": "晶技",
-      "symbol": "3042.TW"
-    },
-    {
-      "code": "3043",
-      "name": "科風",
-      "symbol": "3043.TW"
+      "symbol": "3037.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "3044",
       "name": "健鼎",
-      "symbol": "3044.TW"
+      "symbol": "3044.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3045",
       "name": "台灣大",
-      "symbol": "3045.TW"
+      "symbol": "3045.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "3046",
-      "name": "建碁",
-      "symbol": "3046.TW"
+      "code": "3078",
+      "name": "僑威",
+      "symbol": "3078.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3047",
-      "name": "訊舟",
-      "symbol": "3047.TW"
+      "code": "3081",
+      "name": "聯亞",
+      "symbol": "3081.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3048",
-      "name": "益登",
-      "symbol": "3048.TW"
+      "code": "3086",
+      "name": "華義*",
+      "symbol": "3086.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3049",
-      "name": "精金",
-      "symbol": "3049.TW"
+      "code": "3088",
+      "name": "艾訊",
+      "symbol": "3088.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3050",
-      "name": "鈺德",
-      "symbol": "3050.TW"
+      "code": "3105",
+      "name": "穩懋",
+      "symbol": "3105.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3051",
-      "name": "力特",
-      "symbol": "3051.TW"
+      "code": "3131",
+      "name": "弘塑",
+      "symbol": "3131.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3052",
-      "name": "夆典",
-      "symbol": "3052.TW"
+      "code": "3147",
+      "name": "大綜",
+      "symbol": "3147.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3054",
-      "name": "立萬利",
-      "symbol": "3054.TW"
+      "code": "3152",
+      "name": "璟德",
+      "symbol": "3152.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3055",
-      "name": "蔚華科",
-      "symbol": "3055.TW"
+      "code": "3162",
+      "name": "精確",
+      "symbol": "3162.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3056",
-      "name": "富華新",
-      "symbol": "3056.TW"
-    },
-    {
-      "code": "3057",
-      "name": "喬鼎",
-      "symbol": "3057.TW"
-    },
-    {
-      "code": "3058",
-      "name": "立德",
-      "symbol": "3058.TW"
-    },
-    {
-      "code": "3059",
-      "name": "華晶科",
-      "symbol": "3059.TW"
-    },
-    {
-      "code": "3060",
-      "name": "銘異",
-      "symbol": "3060.TW"
-    },
-    {
-      "code": "3062",
-      "name": "建漢",
-      "symbol": "3062.TW"
-    },
-    {
-      "code": "3090",
-      "name": "日電貿",
-      "symbol": "3090.TW"
-    },
-    {
-      "code": "3092",
-      "name": "鴻碩",
-      "symbol": "3092.TW"
-    },
-    {
-      "code": "3094",
-      "name": "聯傑",
-      "symbol": "3094.TW"
-    },
-    {
-      "code": "3130",
-      "name": "一零四",
-      "symbol": "3130.TW"
-    },
-    {
-      "code": "3135",
-      "name": "凌航",
-      "symbol": "3135.TW"
-    },
-    {
-      "code": "3138",
-      "name": "耀登",
-      "symbol": "3138.TW"
-    },
-    {
-      "code": "3149",
-      "name": "正達",
-      "symbol": "3149.TW"
-    },
-    {
-      "code": "3150",
-      "name": "鈺寶-創",
-      "symbol": "3150.TW"
-    },
-    {
-      "code": "3164",
-      "name": "景岳",
-      "symbol": "3164.TW"
+      "code": "3163",
+      "name": "波若威",
+      "symbol": "3163.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3167",
       "name": "大量",
-      "symbol": "3167.TW"
+      "symbol": "3167.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "3168",
-      "name": "眾福科",
-      "symbol": "3168.TW"
+      "code": "3169",
+      "name": "亞信",
+      "symbol": "3169.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3189",
       "name": "景碩",
-      "symbol": "3189.TW"
+      "symbol": "3189.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "3209",
-      "name": "全科",
-      "symbol": "3209.TW"
+      "code": "3211",
+      "name": "順達",
+      "symbol": "3211.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3229",
-      "name": "晟鈦",
-      "symbol": "3229.TW"
+      "code": "3217",
+      "name": "優群",
+      "symbol": "3217.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "3218",
+      "name": "大學光",
+      "symbol": "3218.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "3227",
+      "name": "原相",
+      "symbol": "3227.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "3228",
+      "name": "金麗科",
+      "symbol": "3228.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3231",
       "name": "緯創",
-      "symbol": "3231.TW"
+      "symbol": "3231.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "3257",
-      "name": "虹冠電",
-      "symbol": "3257.TW"
+      "code": "3234",
+      "name": "光環",
+      "symbol": "3234.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3266",
-      "name": "昇陽",
-      "symbol": "3266.TW"
+      "code": "3260",
+      "name": "威剛",
+      "symbol": "3260.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3296",
-      "name": "勝德",
-      "symbol": "3296.TW"
+      "code": "3264",
+      "name": "欣銓",
+      "symbol": "3264.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3305",
-      "name": "昇貿",
-      "symbol": "3305.TW"
+      "code": "3265",
+      "name": "台星科",
+      "symbol": "3265.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3308",
-      "name": "聯德",
-      "symbol": "3308.TW"
+      "code": "3289",
+      "name": "宜特",
+      "symbol": "3289.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3311",
-      "name": "閎暉",
-      "symbol": "3311.TW"
+      "code": "3293",
+      "name": "鈊象",
+      "symbol": "3293.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3312",
-      "name": "弘憶股",
-      "symbol": "3312.TW"
+      "code": "3324",
+      "name": "雙鴻",
+      "symbol": "3324.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3321",
-      "name": "同泰",
-      "symbol": "3321.TW"
+      "code": "3357",
+      "name": "臺慶科",
+      "symbol": "3357.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3338",
-      "name": "泰碩",
-      "symbol": "3338.TW"
+      "code": "3362",
+      "name": "先進光",
+      "symbol": "3362.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3346",
-      "name": "麗清",
-      "symbol": "3346.TW"
+      "code": "3363",
+      "name": "上詮",
+      "symbol": "3363.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3356",
-      "name": "奇偶",
-      "symbol": "3356.TW"
+      "code": "3374",
+      "name": "精材",
+      "symbol": "3374.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3376",
-      "name": "新日興",
-      "symbol": "3376.TW"
-    },
-    {
-      "code": "3380",
-      "name": "明泰",
-      "symbol": "3380.TW"
-    },
-    {
-      "code": "3406",
-      "name": "玉晶光",
-      "symbol": "3406.TW"
-    },
-    {
-      "code": "3413",
-      "name": "京鼎",
-      "symbol": "3413.TW"
-    },
-    {
-      "code": "3416",
-      "name": "融程電",
-      "symbol": "3416.TW"
-    },
-    {
-      "code": "3419",
-      "name": "譁裕",
-      "symbol": "3419.TW"
-    },
-    {
-      "code": "3432",
-      "name": "台端",
-      "symbol": "3432.TW"
-    },
-    {
-      "code": "3437",
-      "name": "榮創",
-      "symbol": "3437.TW"
+      "code": "3402",
+      "name": "漢科",
+      "symbol": "3402.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3443",
       "name": "創意",
-      "symbol": "3443.TW"
+      "symbol": "3443.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "3447",
-      "name": "展達",
-      "symbol": "3447.TW"
+      "code": "3455",
+      "name": "由田",
+      "symbol": "3455.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3450",
-      "name": "聯鈞",
-      "symbol": "3450.TW"
+      "code": "3479",
+      "name": "安勤",
+      "symbol": "3479.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3481",
       "name": "群創",
-      "symbol": "3481.TW"
+      "symbol": "3481.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "3494",
-      "name": "誠研",
-      "symbol": "3494.TW"
+      "code": "3483",
+      "name": "力致",
+      "symbol": "3483.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3501",
-      "name": "維熹",
-      "symbol": "3501.TW"
+      "code": "3485",
+      "name": "敘豐",
+      "symbol": "3485.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3504",
-      "name": "揚明光",
-      "symbol": "3504.TW"
+      "code": "3491",
+      "name": "昇達科",
+      "symbol": "3491.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3515",
-      "name": "華擎",
-      "symbol": "3515.TW"
+      "code": "3498",
+      "name": "陽程",
+      "symbol": "3498.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3518",
-      "name": "柏騰",
-      "symbol": "3518.TW"
+      "code": "3526",
+      "name": "凡甲",
+      "symbol": "3526.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3528",
-      "name": "安馳",
-      "symbol": "3528.TW"
-    },
-    {
-      "code": "3530",
-      "name": "晶相光",
-      "symbol": "3530.TW"
+      "code": "3529",
+      "name": "力旺",
+      "symbol": "3529.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3532",
       "name": "台勝科",
-      "symbol": "3532.TW"
+      "symbol": "3532.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "3533",
       "name": "嘉澤",
-      "symbol": "3533.TW"
+      "symbol": "3533.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "3535",
-      "name": "晶彩科",
-      "symbol": "3535.TW"
+      "code": "3551",
+      "name": "世禾",
+      "symbol": "3551.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3543",
-      "name": "州巧",
-      "symbol": "3543.TW"
+      "code": "3558",
+      "name": "神準",
+      "symbol": "3558.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3545",
-      "name": "敦泰",
-      "symbol": "3545.TW"
+      "code": "3587",
+      "name": "閎康",
+      "symbol": "3587.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3550",
-      "name": "聯穎",
-      "symbol": "3550.TW"
-    },
-    {
-      "code": "3557",
-      "name": "嘉威",
-      "symbol": "3557.TW"
-    },
-    {
-      "code": "3563",
-      "name": "牧德",
-      "symbol": "3563.TW"
-    },
-    {
-      "code": "3576",
-      "name": "聯合再生",
-      "symbol": "3576.TW"
-    },
-    {
-      "code": "3583",
-      "name": "辛耘",
-      "symbol": "3583.TW"
-    },
-    {
-      "code": "3588",
-      "name": "通嘉",
-      "symbol": "3588.TW"
-    },
-    {
-      "code": "3591",
-      "name": "艾笛森",
-      "symbol": "3591.TW"
-    },
-    {
-      "code": "3592",
-      "name": "瑞鼎",
-      "symbol": "3592.TW"
-    },
-    {
-      "code": "3593",
-      "name": "力銘",
-      "symbol": "3593.TW"
-    },
-    {
-      "code": "3596",
-      "name": "智易",
-      "symbol": "3596.TW"
-    },
-    {
-      "code": "3605",
-      "name": "宏致",
-      "symbol": "3605.TW"
-    },
-    {
-      "code": "3607",
-      "name": "谷崧",
-      "symbol": "3607.TW"
-    },
-    {
-      "code": "3617",
-      "name": "碩天",
-      "symbol": "3617.TW"
-    },
-    {
-      "code": "3622",
-      "name": "洋華",
-      "symbol": "3622.TW"
-    },
-    {
-      "code": "3645",
-      "name": "達邁",
-      "symbol": "3645.TW"
-    },
-    {
-      "code": "3652",
-      "name": "精聯",
-      "symbol": "3652.TW"
+      "code": "3624",
+      "name": "光頡",
+      "symbol": "3624.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3653",
       "name": "健策",
-      "symbol": "3653.TW"
+      "symbol": "3653.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
       "code": "3661",
       "name": "世芯-KY",
-      "symbol": "3661.TW"
+      "symbol": "3661.TW",
+      "indexes": [
+        "mid100"
+      ]
+    },
+    {
+      "code": "3663",
+      "name": "鑫科",
+      "symbol": "3663.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3665",
       "name": "貿聯-KY",
-      "symbol": "3665.TW"
+      "symbol": "3665.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "3669",
-      "name": "圓展",
-      "symbol": "3669.TW"
+      "code": "3675",
+      "name": "德微",
+      "symbol": "3675.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3679",
-      "name": "新至陞",
-      "symbol": "3679.TW"
+      "code": "3680",
+      "name": "家登",
+      "symbol": "3680.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3686",
-      "name": "達能",
-      "symbol": "3686.TW"
+      "code": "3689",
+      "name": "湧德",
+      "symbol": "3689.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3694",
-      "name": "海華",
-      "symbol": "3694.TW"
+      "code": "3691",
+      "name": "碩禾",
+      "symbol": "3691.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3701",
-      "name": "大眾控",
-      "symbol": "3701.TW"
+      "code": "3693",
+      "name": "營邦",
+      "symbol": "3693.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3702",
       "name": "大聯大",
-      "symbol": "3702.TW"
+      "symbol": "3702.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "3703",
-      "name": "欣陸",
-      "symbol": "3703.TW"
+      "code": "3707",
+      "name": "漢磊",
+      "symbol": "3707.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3704",
-      "name": "合勤控",
-      "symbol": "3704.TW"
-    },
-    {
-      "code": "3705",
-      "name": "永信",
-      "symbol": "3705.TW"
-    },
-    {
-      "code": "3706",
-      "name": "神達",
-      "symbol": "3706.TW"
-    },
-    {
-      "code": "3708",
-      "name": "上緯投控",
-      "symbol": "3708.TW"
+      "code": "3709",
+      "name": "鑫聯大投控",
+      "symbol": "3709.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "3711",
       "name": "日月光投控",
-      "symbol": "3711.TW"
+      "symbol": "3711.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "3712",
-      "name": "永崴投控",
-      "symbol": "3712.TW"
+      "code": "3718",
+      "name": "中光電投控",
+      "symbol": "3718.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3714",
-      "name": "富采",
-      "symbol": "3714.TW"
+      "code": "4105",
+      "name": "東洋",
+      "symbol": "4105.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3715",
-      "name": "定穎投控",
-      "symbol": "3715.TW"
+      "code": "4114",
+      "name": "健喬",
+      "symbol": "4114.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3716",
-      "name": "中化控股",
-      "symbol": "3716.TW"
+      "code": "4123",
+      "name": "晟德",
+      "symbol": "4123.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "3717",
-      "name": "聯嘉投控",
-      "symbol": "3717.TW"
+      "code": "4128",
+      "name": "中天",
+      "symbol": "4128.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4104",
-      "name": "佳醫",
-      "symbol": "4104.TW"
+      "code": "4129",
+      "name": "聯合",
+      "symbol": "4129.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4106",
-      "name": "雃博",
-      "symbol": "4106.TW"
+      "code": "4147",
+      "name": "中裕",
+      "symbol": "4147.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4108",
-      "name": "懷特",
-      "symbol": "4108.TW"
+      "code": "4162",
+      "name": "智擎",
+      "symbol": "4162.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4119",
-      "name": "旭富",
-      "symbol": "4119.TW"
+      "code": "4542",
+      "name": "科嶠",
+      "symbol": "4542.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4133",
-      "name": "亞諾法",
-      "symbol": "4133.TW"
+      "code": "4707",
+      "name": "磐亞",
+      "symbol": "4707.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4137",
-      "name": "麗豐-KY",
-      "symbol": "4137.TW"
+      "code": "4743",
+      "name": "合一",
+      "symbol": "4743.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4142",
-      "name": "國光生",
-      "symbol": "4142.TW"
+      "code": "4749",
+      "name": "新應材",
+      "symbol": "4749.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4148",
-      "name": "全宇生技-KY",
-      "symbol": "4148.TW"
+      "code": "4760",
+      "name": "勤凱",
+      "symbol": "4760.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4155",
-      "name": "訊映",
-      "symbol": "4155.TW"
+      "code": "4768",
+      "name": "晶呈科技",
+      "symbol": "4768.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4164",
-      "name": "承業醫",
-      "symbol": "4164.TW"
-    },
-    {
-      "code": "4169",
-      "name": "泰宗",
-      "symbol": "4169.TW"
-    },
-    {
-      "code": "4178",
-      "name": "永笙-KY",
-      "symbol": "4178.TW"
-    },
-    {
-      "code": "4190",
-      "name": "佐登-KY",
-      "symbol": "4190.TW"
-    },
-    {
-      "code": "4195",
-      "name": "基米-創",
-      "symbol": "4195.TW"
-    },
-    {
-      "code": "4306",
-      "name": "炎洲",
-      "symbol": "4306.TW"
-    },
-    {
-      "code": "4414",
-      "name": "如興",
-      "symbol": "4414.TW"
-    },
-    {
-      "code": "4426",
-      "name": "利勤",
-      "symbol": "4426.TW"
-    },
-    {
-      "code": "4438",
-      "name": "廣越",
-      "symbol": "4438.TW"
-    },
-    {
-      "code": "4439",
-      "name": "冠星-KY",
-      "symbol": "4439.TW"
-    },
-    {
-      "code": "4440",
-      "name": "宜新實業",
-      "symbol": "4440.TW"
-    },
-    {
-      "code": "4441",
-      "name": "振大環球",
-      "symbol": "4441.TW"
-    },
-    {
-      "code": "4526",
-      "name": "東台",
-      "symbol": "4526.TW"
-    },
-    {
-      "code": "4532",
-      "name": "瑞智",
-      "symbol": "4532.TW"
-    },
-    {
-      "code": "4536",
-      "name": "拓凱",
-      "symbol": "4536.TW"
-    },
-    {
-      "code": "4540",
-      "name": "全球傳動",
-      "symbol": "4540.TW"
-    },
-    {
-      "code": "4545",
-      "name": "銘鈺",
-      "symbol": "4545.TW"
-    },
-    {
-      "code": "4551",
-      "name": "智伸科",
-      "symbol": "4551.TW"
-    },
-    {
-      "code": "4552",
-      "name": "力達-KY",
-      "symbol": "4552.TW"
-    },
-    {
-      "code": "4555",
-      "name": "氣立",
-      "symbol": "4555.TW"
-    },
-    {
-      "code": "4557",
-      "name": "永新-KY",
-      "symbol": "4557.TW"
-    },
-    {
-      "code": "4560",
-      "name": "強信-KY",
-      "symbol": "4560.TW"
-    },
-    {
-      "code": "4562",
-      "name": "穎漢",
-      "symbol": "4562.TW"
-    },
-    {
-      "code": "4564",
-      "name": "元翎",
-      "symbol": "4564.TW"
-    },
-    {
-      "code": "4566",
-      "name": "時碩工業",
-      "symbol": "4566.TW"
-    },
-    {
-      "code": "4569",
-      "name": "六方科-KY",
-      "symbol": "4569.TW"
-    },
-    {
-      "code": "4571",
-      "name": "鈞興-KY",
-      "symbol": "4571.TW"
-    },
-    {
-      "code": "4572",
-      "name": "駐龍",
-      "symbol": "4572.TW"
-    },
-    {
-      "code": "4576",
-      "name": "大銀微系統",
-      "symbol": "4576.TW"
-    },
-    {
-      "code": "4581",
-      "name": "光隆精密-KY",
-      "symbol": "4581.TW"
-    },
-    {
-      "code": "4582",
-      "name": "聚恆-創",
-      "symbol": "4582.TW"
-    },
-    {
-      "code": "4583",
-      "name": "台灣精銳",
-      "symbol": "4583.TW"
-    },
-    {
-      "code": "4585",
-      "name": "達明",
-      "symbol": "4585.TW"
-    },
-    {
-      "code": "4588",
-      "name": "玖鼎電力",
-      "symbol": "4588.TW"
-    },
-    {
-      "code": "4590",
-      "name": "富田-創",
-      "symbol": "4590.TW"
-    },
-    {
-      "code": "4720",
-      "name": "德淵",
-      "symbol": "4720.TW"
-    },
-    {
-      "code": "4722",
-      "name": "國精化",
-      "symbol": "4722.TW"
-    },
-    {
-      "code": "4736",
-      "name": "泰博",
-      "symbol": "4736.TW"
-    },
-    {
-      "code": "4737",
-      "name": "華廣",
-      "symbol": "4737.TW"
-    },
-    {
-      "code": "4739",
-      "name": "康普",
-      "symbol": "4739.TW"
-    },
-    {
-      "code": "4746",
-      "name": "台耀",
-      "symbol": "4746.TW"
-    },
-    {
-      "code": "4755",
-      "name": "三福化",
-      "symbol": "4755.TW"
-    },
-    {
-      "code": "4763",
-      "name": "材料*-KY",
-      "symbol": "4763.TW"
-    },
-    {
-      "code": "4764",
-      "name": "雙鍵",
-      "symbol": "4764.TW"
-    },
-    {
-      "code": "4766",
-      "name": "南寶",
-      "symbol": "4766.TW"
-    },
-    {
-      "code": "4770",
-      "name": "上品",
-      "symbol": "4770.TW"
-    },
-    {
-      "code": "4771",
-      "name": "望隼",
-      "symbol": "4771.TW"
-    },
-    {
-      "code": "4807",
-      "name": "日成-KY",
-      "symbol": "4807.TW"
+      "code": "4772",
+      "name": "台特化",
+      "symbol": "4772.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "4904",
       "name": "遠傳",
-      "symbol": "4904.TW"
+      "symbol": "4904.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "4906",
-      "name": "正文",
-      "symbol": "4906.TW"
+      "code": "4908",
+      "name": "前鼎",
+      "symbol": "4908.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4912",
-      "name": "聯德控股-KY",
-      "symbol": "4912.TW"
-    },
-    {
-      "code": "4915",
-      "name": "致伸",
-      "symbol": "4915.TW"
-    },
-    {
-      "code": "4916",
-      "name": "事欣科",
-      "symbol": "4916.TW"
-    },
-    {
-      "code": "4919",
-      "name": "新唐",
-      "symbol": "4919.TW"
-    },
-    {
-      "code": "4927",
-      "name": "泰鼎-KY",
-      "symbol": "4927.TW"
-    },
-    {
-      "code": "4930",
-      "name": "燦星網",
-      "symbol": "4930.TW"
-    },
-    {
-      "code": "4934",
-      "name": "太極",
-      "symbol": "4934.TW"
-    },
-    {
-      "code": "4935",
-      "name": "茂林-KY",
-      "symbol": "4935.TW"
+      "code": "4931",
+      "name": "新盛力",
+      "symbol": "4931.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "4938",
       "name": "和碩",
-      "symbol": "4938.TW"
+      "symbol": "4938.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "4942",
-      "name": "嘉彰",
-      "symbol": "4942.TW"
-    },
-    {
-      "code": "4943",
-      "name": "康控-KY",
-      "symbol": "4943.TW"
-    },
-    {
-      "code": "4949",
-      "name": "有成精密",
-      "symbol": "4949.TW"
-    },
-    {
-      "code": "4952",
-      "name": "凌通",
-      "symbol": "4952.TW"
-    },
-    {
-      "code": "4956",
-      "name": "光鋐",
-      "symbol": "4956.TW"
+      "code": "4953",
+      "name": "緯致",
+      "symbol": "4953.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "4958",
       "name": "臻鼎-KY",
-      "symbol": "4958.TW"
+      "symbol": "4958.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "4960",
-      "name": "誠美材",
-      "symbol": "4960.TW"
+      "code": "4966",
+      "name": "譜瑞-KY",
+      "symbol": "4966.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4961",
-      "name": "天鈺",
-      "symbol": "4961.TW"
+      "code": "4971",
+      "name": "IET-KY",
+      "symbol": "4971.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4967",
-      "name": "十銓",
-      "symbol": "4967.TW"
+      "code": "4973",
+      "name": "廣穎",
+      "symbol": "4973.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4968",
-      "name": "立積",
-      "symbol": "4968.TW"
+      "code": "4979",
+      "name": "華星光",
+      "symbol": "4979.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4976",
-      "name": "佳凌",
-      "symbol": "4976.TW"
+      "code": "4991",
+      "name": "環宇-KY",
+      "symbol": "4991.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4977",
-      "name": "眾達-KY",
-      "symbol": "4977.TW"
+      "code": "5009",
+      "name": "榮剛",
+      "symbol": "5009.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "4989",
-      "name": "榮科",
-      "symbol": "4989.TW"
-    },
-    {
-      "code": "4994",
-      "name": "傳奇",
-      "symbol": "4994.TW"
-    },
-    {
-      "code": "4999",
-      "name": "鑫禾",
-      "symbol": "4999.TW"
-    },
-    {
-      "code": "5007",
-      "name": "三星",
-      "symbol": "5007.TW"
-    },
-    {
-      "code": "5203",
-      "name": "訊連",
-      "symbol": "5203.TW"
-    },
-    {
-      "code": "5215",
-      "name": "科嘉-KY",
-      "symbol": "5215.TW"
-    },
-    {
-      "code": "5222",
-      "name": "全訊",
-      "symbol": "5222.TW"
-    },
-    {
-      "code": "5225",
-      "name": "東科-KY",
-      "symbol": "5225.TW"
-    },
-    {
-      "code": "5234",
-      "name": "達興材料",
-      "symbol": "5234.TW"
-    },
-    {
-      "code": "5236",
-      "name": "凌陽創新",
-      "symbol": "5236.TW"
-    },
-    {
-      "code": "5243",
-      "name": "乙盛-KY",
-      "symbol": "5243.TW"
-    },
-    {
-      "code": "5244",
-      "name": "弘凱",
-      "symbol": "5244.TW"
-    },
-    {
-      "code": "5258",
-      "name": "虹堡",
-      "symbol": "5258.TW"
+      "code": "5263",
+      "name": "智崴",
+      "symbol": "5263.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "5269",
       "name": "祥碩",
-      "symbol": "5269.TW"
+      "symbol": "5269.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "5283",
-      "name": "禾聯碩",
-      "symbol": "5283.TW"
+      "code": "5274",
+      "name": "信驊",
+      "symbol": "5274.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5284",
-      "name": "jpp-KY",
-      "symbol": "5284.TW"
+      "code": "5289",
+      "name": "宜鼎",
+      "symbol": "5289.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5285",
-      "name": "界霖",
-      "symbol": "5285.TW"
+      "code": "5309",
+      "name": "系統電",
+      "symbol": "5309.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5288",
-      "name": "豐祥-KY",
-      "symbol": "5288.TW"
+      "code": "5314",
+      "name": "世紀*",
+      "symbol": "5314.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5292",
-      "name": "華懋",
-      "symbol": "5292.TW"
+      "code": "5328",
+      "name": "華容",
+      "symbol": "5328.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5306",
-      "name": "桂盟",
-      "symbol": "5306.TW"
+      "code": "5340",
+      "name": "建榮",
+      "symbol": "5340.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5388",
-      "name": "中磊",
-      "symbol": "5388.TW"
+      "code": "5347",
+      "name": "世界",
+      "symbol": "5347.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "5351",
+      "name": "鈺創",
+      "symbol": "5351.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "5386",
+      "name": "青雲",
+      "symbol": "5386.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "5392",
+      "name": "能率",
+      "symbol": "5392.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "5425",
+      "name": "台半",
+      "symbol": "5425.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "5434",
       "name": "崇越",
-      "symbol": "5434.TW"
+      "symbol": "5434.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "5469",
-      "name": "瀚宇博",
-      "symbol": "5469.TW"
+      "code": "5439",
+      "name": "高技",
+      "symbol": "5439.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5471",
-      "name": "松翰",
-      "symbol": "5471.TW"
+      "code": "5443",
+      "name": "均豪",
+      "symbol": "5443.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5484",
-      "name": "慧友",
-      "symbol": "5484.TW"
+      "code": "5475",
+      "name": "德宏",
+      "symbol": "5475.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5515",
-      "name": "建國",
-      "symbol": "5515.TW"
+      "code": "5483",
+      "name": "中美晶",
+      "symbol": "5483.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5519",
-      "name": "隆大",
-      "symbol": "5519.TW"
+      "code": "5498",
+      "name": "凱崴",
+      "symbol": "5498.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5521",
-      "name": "工信",
-      "symbol": "5521.TW"
+      "code": "5508",
+      "name": "永信建",
+      "symbol": "5508.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5522",
-      "name": "遠雄",
-      "symbol": "5522.TW"
+      "code": "5530",
+      "name": "龍巖",
+      "symbol": "5530.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5525",
-      "name": "順天",
-      "symbol": "5525.TW"
+      "code": "5536",
+      "name": "聖暉*",
+      "symbol": "5536.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5531",
-      "name": "鄉林",
-      "symbol": "5531.TW"
-    },
-    {
-      "code": "5533",
-      "name": "皇鼎",
-      "symbol": "5533.TW"
-    },
-    {
-      "code": "5534",
-      "name": "長虹",
-      "symbol": "5534.TW"
-    },
-    {
-      "code": "5538",
-      "name": "東明-KY",
-      "symbol": "5538.TW"
-    },
-    {
-      "code": "5546",
-      "name": "永固-KY",
-      "symbol": "5546.TW"
-    },
-    {
-      "code": "5607",
-      "name": "遠雄港",
-      "symbol": "5607.TW"
-    },
-    {
-      "code": "5608",
-      "name": "四維航",
-      "symbol": "5608.TW"
-    },
-    {
-      "code": "5706",
-      "name": "鳳凰",
-      "symbol": "5706.TW"
+      "code": "5864",
+      "name": "致和證",
+      "symbol": "5864.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "5871",
       "name": "中租-KY",
-      "symbol": "5871.TW"
+      "symbol": "5871.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "5876",
       "name": "上海商銀",
-      "symbol": "5876.TW"
+      "symbol": "5876.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "5880",
       "name": "合庫金",
-      "symbol": "5880.TW"
+      "symbol": "5880.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "5906",
-      "name": "台南-KY",
-      "symbol": "5906.TW"
+      "code": "5904",
+      "name": "寶雅*",
+      "symbol": "5904.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "5907",
-      "name": "大洋-KY",
-      "symbol": "5907.TW"
+      "code": "6016",
+      "name": "康和證",
+      "symbol": "6016.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6005",
-      "name": "群益證",
-      "symbol": "6005.TW"
+      "code": "6023",
+      "name": "元大期",
+      "symbol": "6023.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6024",
-      "name": "群益期",
-      "symbol": "6024.TW"
+      "code": "6104",
+      "name": "創惟",
+      "symbol": "6104.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6108",
-      "name": "競國",
-      "symbol": "6108.TW"
+      "code": "6121",
+      "name": "新普",
+      "symbol": "6121.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6112",
-      "name": "邁達特",
-      "symbol": "6112.TW"
+      "code": "6125",
+      "name": "廣運",
+      "symbol": "6125.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6115",
-      "name": "鎰勝",
-      "symbol": "6115.TW"
-    },
-    {
-      "code": "6116",
-      "name": "彩晶",
-      "symbol": "6116.TW"
-    },
-    {
-      "code": "6117",
-      "name": "迎廣",
-      "symbol": "6117.TW"
-    },
-    {
-      "code": "6120",
-      "name": "達運",
-      "symbol": "6120.TW"
-    },
-    {
-      "code": "6128",
-      "name": "上福",
-      "symbol": "6128.TW"
-    },
-    {
-      "code": "6133",
-      "name": "金橋",
-      "symbol": "6133.TW"
-    },
-    {
-      "code": "6136",
-      "name": "富爾特",
-      "symbol": "6136.TW"
+      "code": "6138",
+      "name": "茂達",
+      "symbol": "6138.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6139",
       "name": "亞翔",
-      "symbol": "6139.TW"
+      "symbol": "6139.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6141",
-      "name": "柏承",
-      "symbol": "6141.TW"
+      "code": "6143",
+      "name": "振曜",
+      "symbol": "6143.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6142",
-      "name": "友勁",
-      "symbol": "6142.TW"
+      "code": "6146",
+      "name": "耕興",
+      "symbol": "6146.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6152",
-      "name": "百一",
-      "symbol": "6152.TW"
+      "code": "6147",
+      "name": "頎邦",
+      "symbol": "6147.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6153",
-      "name": "嘉聯益",
-      "symbol": "6153.TW"
+      "code": "6173",
+      "name": "信昌電",
+      "symbol": "6173.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6155",
-      "name": "鈞寶",
-      "symbol": "6155.TW"
+      "code": "6175",
+      "name": "立敦",
+      "symbol": "6175.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6164",
-      "name": "華興",
-      "symbol": "6164.TW"
+      "code": "6180",
+      "name": "橘子",
+      "symbol": "6180.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6165",
-      "name": "浪凡",
-      "symbol": "6165.TW"
+      "code": "6182",
+      "name": "合晶",
+      "symbol": "6182.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6166",
-      "name": "凌華",
-      "symbol": "6166.TW"
+      "code": "6187",
+      "name": "萬潤",
+      "symbol": "6187.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6168",
-      "name": "宏齊",
-      "symbol": "6168.TW"
+      "code": "6188",
+      "name": "廣明",
+      "symbol": "6188.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6176",
-      "name": "瑞儀",
-      "symbol": "6176.TW"
-    },
-    {
-      "code": "6177",
-      "name": "達麗",
-      "symbol": "6177.TW"
-    },
-    {
-      "code": "6183",
-      "name": "關貿",
-      "symbol": "6183.TW"
-    },
-    {
-      "code": "6184",
-      "name": "大豐電",
-      "symbol": "6184.TW"
-    },
-    {
-      "code": "6189",
-      "name": "豐藝",
-      "symbol": "6189.TW"
-    },
-    {
-      "code": "6191",
-      "name": "精成科",
-      "symbol": "6191.TW"
-    },
-    {
-      "code": "6192",
-      "name": "巨路",
-      "symbol": "6192.TW"
+      "code": "6190",
+      "name": "萬泰科",
+      "symbol": "6190.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6196",
       "name": "帆宣",
-      "symbol": "6196.TW"
+      "symbol": "6196.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6197",
-      "name": "佳必琪",
-      "symbol": "6197.TW"
-    },
-    {
-      "code": "6201",
-      "name": "亞弘電",
-      "symbol": "6201.TW"
-    },
-    {
-      "code": "6202",
-      "name": "盛群",
-      "symbol": "6202.TW"
-    },
-    {
-      "code": "6205",
-      "name": "詮欣",
-      "symbol": "6205.TW"
-    },
-    {
-      "code": "6206",
-      "name": "飛捷",
-      "symbol": "6206.TW"
-    },
-    {
-      "code": "6209",
-      "name": "今國光",
-      "symbol": "6209.TW"
+      "code": "6207",
+      "name": "雷科",
+      "symbol": "6207.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6213",
       "name": "聯茂",
-      "symbol": "6213.TW"
+      "symbol": "6213.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6214",
-      "name": "精誠",
-      "symbol": "6214.TW"
+      "code": "6217",
+      "name": "中探針",
+      "symbol": "6217.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6215",
-      "name": "和椿",
-      "symbol": "6215.TW"
+      "code": "6223",
+      "name": "旺矽",
+      "symbol": "6223.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6216",
-      "name": "居易",
-      "symbol": "6216.TW"
+      "code": "6227",
+      "name": "茂綸",
+      "symbol": "6227.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6224",
-      "name": "聚鼎",
-      "symbol": "6224.TW"
-    },
-    {
-      "code": "6225",
-      "name": "天瀚",
-      "symbol": "6225.TW"
-    },
-    {
-      "code": "6226",
-      "name": "光鼎",
-      "symbol": "6226.TW"
-    },
-    {
-      "code": "6230",
-      "name": "尼得科超眾",
-      "symbol": "6230.TW"
-    },
-    {
-      "code": "6235",
-      "name": "華孚",
-      "symbol": "6235.TW"
+      "code": "6231",
+      "name": "系微",
+      "symbol": "6231.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6239",
       "name": "力成",
-      "symbol": "6239.TW"
+      "symbol": "6239.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6243",
-      "name": "迅杰",
-      "symbol": "6243.TW"
+      "code": "6244",
+      "name": "茂迪",
+      "symbol": "6244.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "6245",
+      "name": "立端",
+      "symbol": "6245.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6257",
       "name": "矽格",
-      "symbol": "6257.TW"
+      "symbol": "6257.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6269",
-      "name": "台郡",
-      "symbol": "6269.TW"
+      "code": "6261",
+      "name": "久元",
+      "symbol": "6261.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6271",
-      "name": "同欣電",
-      "symbol": "6271.TW"
+      "code": "6263",
+      "name": "普萊德",
+      "symbol": "6263.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6272",
-      "name": "驊陞",
-      "symbol": "6272.TW"
+      "code": "6274",
+      "name": "台燿",
+      "symbol": "6274.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6277",
-      "name": "宏正",
-      "symbol": "6277.TW"
+      "code": "6279",
+      "name": "胡連",
+      "symbol": "6279.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6278",
-      "name": "台表科",
-      "symbol": "6278.TW"
-    },
-    {
-      "code": "6281",
-      "name": "全國電",
-      "symbol": "6281.TW"
-    },
-    {
-      "code": "6282",
-      "name": "康舒",
-      "symbol": "6282.TW"
-    },
-    {
-      "code": "6283",
-      "name": "淳安",
-      "symbol": "6283.TW"
+      "code": "6284",
+      "name": "佳邦",
+      "symbol": "6284.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6285",
       "name": "啟碁",
-      "symbol": "6285.TW"
+      "symbol": "6285.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6405",
-      "name": "悅城",
-      "symbol": "6405.TW"
+      "code": "6290",
+      "name": "良維",
+      "symbol": "6290.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "6291",
+      "name": "沛亨",
+      "symbol": "6291.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6409",
       "name": "旭隼",
-      "symbol": "6409.TW"
+      "symbol": "6409.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6412",
-      "name": "群電",
-      "symbol": "6412.TW"
-    },
-    {
-      "code": "6414",
-      "name": "樺漢",
-      "symbol": "6414.TW"
+      "code": "6411",
+      "name": "晶焱",
+      "symbol": "6411.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6415",
       "name": "矽力*-KY",
-      "symbol": "6415.TW"
+      "symbol": "6415.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6416",
-      "name": "瑞祺電通",
-      "symbol": "6416.TW"
-    },
-    {
-      "code": "6426",
-      "name": "統新",
-      "symbol": "6426.TW"
-    },
-    {
-      "code": "6431",
-      "name": "光麗-KY",
-      "symbol": "6431.TW"
-    },
-    {
-      "code": "6438",
-      "name": "迅得",
-      "symbol": "6438.TW"
+      "code": "6435",
+      "name": "大中",
+      "symbol": "6435.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6442",
       "name": "光聖",
-      "symbol": "6442.TW"
-    },
-    {
-      "code": "6443",
-      "name": "元晶",
-      "symbol": "6443.TW"
+      "symbol": "6442.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "6446",
       "name": "藥華藥",
-      "symbol": "6446.TW"
+      "symbol": "6446.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "6449",
-      "name": "鈺邦",
-      "symbol": "6449.TW"
+      "code": "6462",
+      "name": "神盾",
+      "symbol": "6462.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6451",
-      "name": "訊芯-KY",
-      "symbol": "6451.TW"
+      "code": "6469",
+      "name": "大樹",
+      "symbol": "6469.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6456",
-      "name": "GIS-KY",
-      "symbol": "6456.TW"
+      "code": "6488",
+      "name": "環球晶",
+      "symbol": "6488.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6464",
-      "name": "台數科",
-      "symbol": "6464.TW"
-    },
-    {
-      "code": "6467",
-      "name": "泰合",
-      "symbol": "6467.TW"
-    },
-    {
-      "code": "6472",
-      "name": "保瑞",
-      "symbol": "6472.TW"
-    },
-    {
-      "code": "6477",
-      "name": "安集",
-      "symbol": "6477.TW"
-    },
-    {
-      "code": "6491",
-      "name": "晶碩",
-      "symbol": "6491.TW"
-    },
-    {
-      "code": "6504",
-      "name": "南六",
-      "symbol": "6504.TW"
+      "code": "6499",
+      "name": "益安",
+      "symbol": "6499.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6505",
       "name": "台塑化",
-      "symbol": "6505.TW"
+      "symbol": "6505.TW",
+      "indexes": [
+        "tw50"
+      ]
+    },
+    {
+      "code": "6509",
+      "name": "聚和",
+      "symbol": "6509.TWO",
+      "indexes": [
+        "otc200"
+      ]
+    },
+    {
+      "code": "6510",
+      "name": "精測",
+      "symbol": "6510.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6515",
       "name": "穎崴",
-      "symbol": "6515.TW"
-    },
-    {
-      "code": "6525",
-      "name": "捷敏-KY",
-      "symbol": "6525.TW"
+      "symbol": "6515.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "6526",
       "name": "達發",
-      "symbol": "6526.TW"
+      "symbol": "6526.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "6531",
       "name": "愛普*",
-      "symbol": "6531.TW"
+      "symbol": "6531.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6533",
-      "name": "晶心科",
-      "symbol": "6533.TW"
+      "code": "6535",
+      "name": "順藥",
+      "symbol": "6535.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6534",
-      "name": "正瀚-創",
-      "symbol": "6534.TW"
+      "code": "6538",
+      "name": "倉和",
+      "symbol": "6538.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6541",
-      "name": "泰福-KY",
-      "symbol": "6541.TW"
+      "code": "6547",
+      "name": "高端疫苗",
+      "symbol": "6547.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6550",
-      "name": "北極星藥業-KY",
-      "symbol": "6550.TW"
+      "code": "6548",
+      "name": "長科*",
+      "symbol": "6548.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6552",
-      "name": "易華電",
-      "symbol": "6552.TW"
+      "code": "6561",
+      "name": "是方",
+      "symbol": "6561.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6558",
-      "name": "興能高",
-      "symbol": "6558.TW"
+      "code": "6584",
+      "name": "南俊國際",
+      "symbol": "6584.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6573",
-      "name": "虹揚-KY",
-      "symbol": "6573.TW"
+      "code": "6613",
+      "name": "朋億*",
+      "symbol": "6613.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6579",
-      "name": "研揚",
-      "symbol": "6579.TW"
+      "code": "6617",
+      "name": "共信-KY",
+      "symbol": "6617.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6581",
-      "name": "鋼聯",
-      "symbol": "6581.TW"
+      "code": "6620",
+      "name": "漢達",
+      "symbol": "6620.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6582",
-      "name": "申豐",
-      "symbol": "6582.TW"
+      "code": "6640",
+      "name": "均華",
+      "symbol": "6640.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6585",
-      "name": "鼎基",
-      "symbol": "6585.TW"
+      "code": "6643",
+      "name": "M31",
+      "symbol": "6643.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6589",
-      "name": "台康生技",
-      "symbol": "6589.TW"
+      "code": "6664",
+      "name": "群翊",
+      "symbol": "6664.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6591",
-      "name": "動力-KY",
-      "symbol": "6591.TW"
-    },
-    {
-      "code": "6592",
-      "name": "和潤企業",
-      "symbol": "6592.TW"
-    },
-    {
-      "code": "6598",
-      "name": "ABC-KY",
-      "symbol": "6598.TW"
-    },
-    {
-      "code": "6605",
-      "name": "帝寶",
-      "symbol": "6605.TW"
-    },
-    {
-      "code": "6606",
-      "name": "建德工業",
-      "symbol": "6606.TW"
-    },
-    {
-      "code": "6614",
-      "name": "資拓宏宇",
-      "symbol": "6614.TW"
-    },
-    {
-      "code": "6625",
-      "name": "必應",
-      "symbol": "6625.TW"
-    },
-    {
-      "code": "6641",
-      "name": "基士德-KY",
-      "symbol": "6641.TW"
-    },
-    {
-      "code": "6645",
-      "name": "金萬林-創",
-      "symbol": "6645.TW"
-    },
-    {
-      "code": "6655",
-      "name": "科定",
-      "symbol": "6655.TW"
-    },
-    {
-      "code": "6657",
-      "name": "華安",
-      "symbol": "6657.TW"
-    },
-    {
-      "code": "6658",
-      "name": "聯策",
-      "symbol": "6658.TW"
-    },
-    {
-      "code": "6666",
-      "name": "羅麗芬-KY",
-      "symbol": "6666.TW"
-    },
-    {
-      "code": "6668",
-      "name": "中揚光",
-      "symbol": "6668.TW"
+      "code": "6667",
+      "name": "信紘科",
+      "symbol": "6667.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6669",
       "name": "緯穎",
-      "symbol": "6669.TW"
+      "symbol": "6669.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "6670",
-      "name": "復盛應用",
-      "symbol": "6670.TW"
+      "code": "6679",
+      "name": "鈺太",
+      "symbol": "6679.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6671",
-      "name": "三能-KY",
-      "symbol": "6671.TW"
-    },
-    {
-      "code": "6672",
-      "name": "騰輝電子-KY",
-      "symbol": "6672.TW"
-    },
-    {
-      "code": "6674",
-      "name": "鋐寶科技",
-      "symbol": "6674.TW"
-    },
-    {
-      "code": "6689",
-      "name": "伊雲谷",
-      "symbol": "6689.TW"
+      "code": "6683",
+      "name": "雍智科技",
+      "symbol": "6683.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6691",
       "name": "洋基工程",
-      "symbol": "6691.TW"
+      "symbol": "6691.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6695",
-      "name": "芯鼎",
-      "symbol": "6695.TW"
+      "code": "6712",
+      "name": "長聖",
+      "symbol": "6712.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6698",
-      "name": "旭暉應材",
-      "symbol": "6698.TW"
+      "code": "6725",
+      "name": "矽科宏晟",
+      "symbol": "6725.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6706",
-      "name": "惠特",
-      "symbol": "6706.TW"
+      "code": "6727",
+      "name": "亞泰金屬",
+      "symbol": "6727.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6715",
-      "name": "嘉基",
-      "symbol": "6715.TW"
+      "code": "6732",
+      "name": "昇佳電子",
+      "symbol": "6732.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6719",
-      "name": "力智",
-      "symbol": "6719.TW"
+      "code": "6739",
+      "name": "竹陞科技",
+      "symbol": "6739.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6722",
-      "name": "輝創",
-      "symbol": "6722.TW"
-    },
-    {
-      "code": "6742",
-      "name": "澤米",
-      "symbol": "6742.TW"
-    },
-    {
-      "code": "6743",
-      "name": "安普新",
-      "symbol": "6743.TW"
-    },
-    {
-      "code": "6753",
-      "name": "龍德造船",
-      "symbol": "6753.TW"
-    },
-    {
-      "code": "6754",
-      "name": "匯僑設計",
-      "symbol": "6754.TW"
-    },
-    {
-      "code": "6756",
-      "name": "威鋒電子",
-      "symbol": "6756.TW"
-    },
-    {
-      "code": "6757",
-      "name": "台灣虎航",
-      "symbol": "6757.TW"
-    },
-    {
-      "code": "6768",
-      "name": "志強-KY",
-      "symbol": "6768.TW"
+      "code": "6763",
+      "name": "綠界科技*",
+      "symbol": "6763.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6770",
       "name": "力積電",
-      "symbol": "6770.TW"
-    },
-    {
-      "code": "6771",
-      "name": "平和環保-創",
-      "symbol": "6771.TW"
-    },
-    {
-      "code": "6776",
-      "name": "展碁國際",
-      "symbol": "6776.TW"
+      "symbol": "6770.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "6781",
       "name": "AES-KY",
-      "symbol": "6781.TW"
+      "symbol": "6781.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6782",
-      "name": "視陽",
-      "symbol": "6782.TW"
+      "code": "6788",
+      "name": "華景電",
+      "symbol": "6788.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6789",
       "name": "采鈺",
-      "symbol": "6789.TW"
+      "symbol": "6789.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6790",
-      "name": "永豐實",
-      "symbol": "6790.TW"
-    },
-    {
-      "code": "6792",
-      "name": "詠業",
-      "symbol": "6792.TW"
-    },
-    {
-      "code": "6794",
-      "name": "向榮生技",
-      "symbol": "6794.TW"
-    },
-    {
-      "code": "6796",
-      "name": "晉弘",
-      "symbol": "6796.TW"
-    },
-    {
-      "code": "6799",
-      "name": "來頡",
-      "symbol": "6799.TW"
+      "code": "6803",
+      "name": "崑鼎",
+      "symbol": "6803.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6805",
       "name": "富世達",
-      "symbol": "6805.TW"
+      "symbol": "6805.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6807",
-      "name": "峰源-KY",
-      "symbol": "6807.TW"
+      "code": "6811",
+      "name": "宏碁資訊",
+      "symbol": "6811.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6830",
-      "name": "汎銓",
-      "symbol": "6830.TW"
+      "code": "6829",
+      "name": "千附精密",
+      "symbol": "6829.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6831",
-      "name": "邁科",
-      "symbol": "6831.TW"
+      "code": "6903",
+      "name": "巨漢",
+      "symbol": "6903.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "6834",
-      "name": "天二科技",
-      "symbol": "6834.TW"
-    },
-    {
-      "code": "6835",
-      "name": "圓裕",
-      "symbol": "6835.TW"
-    },
-    {
-      "code": "6838",
-      "name": "台新藥",
-      "symbol": "6838.TW"
-    },
-    {
-      "code": "6854",
-      "name": "錼創科技-KY創",
-      "symbol": "6854.TW"
-    },
-    {
-      "code": "6861",
-      "name": "睿生光電",
-      "symbol": "6861.TW"
-    },
-    {
-      "code": "6862",
-      "name": "三集瑞-KY",
-      "symbol": "6862.TW"
-    },
-    {
-      "code": "6863",
-      "name": "永道-KY",
-      "symbol": "6863.TW"
-    },
-    {
-      "code": "6869",
-      "name": "雲豹能源",
-      "symbol": "6869.TW"
-    },
-    {
-      "code": "6873",
-      "name": "泓德能源",
-      "symbol": "6873.TW"
-    },
-    {
-      "code": "6885",
-      "name": "全福生技",
-      "symbol": "6885.TW"
-    },
-    {
-      "code": "6887",
-      "name": "寶綠特-KY",
-      "symbol": "6887.TW"
-    },
-    {
-      "code": "6890",
-      "name": "來億-KY",
-      "symbol": "6890.TW"
-    },
-    {
-      "code": "6901",
-      "name": "鑽石投資",
-      "symbol": "6901.TW"
-    },
-    {
-      "code": "6902",
-      "name": "GOGOLOOK",
-      "symbol": "6902.TW"
-    },
-    {
-      "code": "6906",
-      "name": "現觀科",
-      "symbol": "6906.TW"
-    },
-    {
-      "code": "6908",
-      "name": "宏碁遊戲-創",
-      "symbol": "6908.TW"
-    },
-    {
-      "code": "6909",
-      "name": "創控",
-      "symbol": "6909.TW"
-    },
-    {
-      "code": "6914",
-      "name": "阜爾運通",
-      "symbol": "6914.TW"
-    },
-    {
-      "code": "6916",
-      "name": "華凌",
-      "symbol": "6916.TW"
-    },
-    {
-      "code": "6918",
-      "name": "愛派司",
-      "symbol": "6918.TW"
+      "code": "6907",
+      "name": "雅特力-KY",
+      "symbol": "6907.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6919",
       "name": "康霈*",
-      "symbol": "6919.TW"
+      "symbol": "6919.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6921",
-      "name": "嘉雨思-創",
-      "symbol": "6921.TW"
-    },
-    {
-      "code": "6923",
-      "name": "中台",
-      "symbol": "6923.TW"
-    },
-    {
-      "code": "6924",
-      "name": "榮惠-KY創",
-      "symbol": "6924.TW"
-    },
-    {
-      "code": "6928",
-      "name": "攸泰科技",
-      "symbol": "6928.TW"
-    },
-    {
-      "code": "6931",
-      "name": "青松健康",
-      "symbol": "6931.TW"
-    },
-    {
-      "code": "6933",
-      "name": "AMAX-KY",
-      "symbol": "6933.TW"
-    },
-    {
-      "code": "6934",
-      "name": "心誠鎂",
-      "symbol": "6934.TW"
-    },
-    {
-      "code": "6936",
-      "name": "永鴻生技",
-      "symbol": "6936.TW"
-    },
-    {
-      "code": "6937",
-      "name": "天虹",
-      "symbol": "6937.TW"
-    },
-    {
-      "code": "6944",
-      "name": "兆聯實業",
-      "symbol": "6944.TW"
-    },
-    {
-      "code": "6947",
-      "name": "台鎔科技",
-      "symbol": "6947.TW"
+      "code": "6945",
+      "name": "圓祥生技",
+      "symbol": "6945.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "6949",
       "name": "沛爾生醫*-創",
-      "symbol": "6949.TW"
+      "symbol": "6949.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "6951",
-      "name": "青新-創",
-      "symbol": "6951.TW"
-    },
-    {
-      "code": "6952",
-      "name": "大武山",
-      "symbol": "6952.TW"
-    },
-    {
-      "code": "6955",
-      "name": "邦睿生技-創",
-      "symbol": "6955.TW"
-    },
-    {
-      "code": "6957",
-      "name": "裕慶-KY",
-      "symbol": "6957.TW"
-    },
-    {
-      "code": "6958",
-      "name": "日盛台駿",
-      "symbol": "6958.TW"
-    },
-    {
-      "code": "6962",
-      "name": "奕力-KY",
-      "symbol": "6962.TW"
-    },
-    {
-      "code": "6965",
-      "name": "中傑-KY",
-      "symbol": "6965.TW"
-    },
-    {
-      "code": "6969",
-      "name": "成信實業*-創",
-      "symbol": "6969.TW"
-    },
-    {
-      "code": "6988",
-      "name": "威力暘-創",
-      "symbol": "6988.TW"
-    },
-    {
-      "code": "6994",
-      "name": "富威電力",
-      "symbol": "6994.TW"
+      "code": "6996",
+      "name": "力領科技",
+      "symbol": "6996.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "7610",
       "name": "聯友金屬-創",
-      "symbol": "7610.TW"
+      "symbol": "7610.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "7631",
-      "name": "聚賢研發-創",
-      "symbol": "7631.TW"
+      "code": "7703",
+      "name": "銳澤",
+      "symbol": "7703.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7689",
-      "name": "大鵬科CLMX",
-      "symbol": "7689.TW"
+      "code": "7717",
+      "name": "萊德光電-KY",
+      "symbol": "7717.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7705",
-      "name": "三商餐飲",
-      "symbol": "7705.TW"
+      "code": "7728",
+      "name": "光焱科技",
+      "symbol": "7728.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7710",
-      "name": "東擎科技",
-      "symbol": "7710.TW"
+      "code": "7734",
+      "name": "印能科技",
+      "symbol": "7734.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7711",
-      "name": "永擎",
-      "symbol": "7711.TW"
-    },
-    {
-      "code": "7721",
-      "name": "微程式",
-      "symbol": "7721.TW"
-    },
-    {
-      "code": "7722",
-      "name": "LINEPAY",
-      "symbol": "7722.TW"
-    },
-    {
-      "code": "7730",
-      "name": "暉盛-創",
-      "symbol": "7730.TW"
-    },
-    {
-      "code": "7732",
-      "name": "金興精密",
-      "symbol": "7732.TW"
-    },
-    {
-      "code": "7736",
-      "name": "虎山",
-      "symbol": "7736.TW"
-    },
-    {
-      "code": "7740",
-      "name": "熙特爾-創",
-      "symbol": "7740.TW"
-    },
-    {
-      "code": "7749",
-      "name": "意騰-KY",
-      "symbol": "7749.TW"
+      "code": "7744",
+      "name": "崴寶",
+      "symbol": "7744.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "7750",
       "name": "新代",
-      "symbol": "7750.TW"
+      "symbol": "7750.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "7760",
-      "name": "享溫馨",
-      "symbol": "7760.TW"
-    },
-    {
-      "code": "7765",
-      "name": "中華資安",
-      "symbol": "7765.TW"
-    },
-    {
-      "code": "7768",
-      "name": "頌勝科技",
-      "symbol": "7768.TW"
+      "code": "7751",
+      "name": "竑騰",
+      "symbol": "7751.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "7769",
       "name": "鴻勁",
-      "symbol": "7769.TW"
+      "symbol": "7769.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "7780",
-      "name": "大研生醫*",
-      "symbol": "7780.TW"
+      "code": "7792",
+      "name": "安葆",
+      "symbol": "7792.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7786",
-      "name": "東方風能",
-      "symbol": "7786.TW"
+      "code": "7805",
+      "name": "威聯通",
+      "symbol": "7805.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7788",
-      "name": "松川精密",
-      "symbol": "7788.TW"
+      "code": "7828",
+      "name": "創新服務",
+      "symbol": "7828.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7791",
-      "name": "皇家可口",
-      "symbol": "7791.TW"
+      "code": "7856",
+      "name": "漢測",
+      "symbol": "7856.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7795",
-      "name": "長廣",
-      "symbol": "7795.TW"
+      "code": "8027",
+      "name": "鈦昇",
+      "symbol": "8027.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7799",
-      "name": "禾榮科",
-      "symbol": "7799.TW"
+      "code": "8040",
+      "name": "九暘",
+      "symbol": "8040.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7803",
-      "name": "雲象科技-創",
-      "symbol": "7803.TW"
+      "code": "8042",
+      "name": "金山電",
+      "symbol": "8042.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "7812",
-      "name": "稜研科技*-創",
-      "symbol": "7812.TW"
-    },
-    {
-      "code": "7818",
-      "name": "溢泰實業",
-      "symbol": "7818.TW"
-    },
-    {
-      "code": "7821",
-      "name": "神數",
-      "symbol": "7821.TW"
-    },
-    {
-      "code": "7822",
-      "name": "倍利科",
-      "symbol": "7822.TW"
-    },
-    {
-      "code": "7823",
-      "name": "奧義賽博-KY創",
-      "symbol": "7823.TW"
-    },
-    {
-      "code": "7827",
-      "name": "漢康-KY創",
-      "symbol": "7827.TW"
-    },
-    {
-      "code": "7835",
-      "name": "永悅健康-創",
-      "symbol": "7835.TW"
-    },
-    {
-      "code": "7855",
-      "name": "和運租車",
-      "symbol": "7855.TW"
-    },
-    {
-      "code": "7867",
-      "name": "特力屋",
-      "symbol": "7867.TW"
-    },
-    {
-      "code": "8011",
-      "name": "台通",
-      "symbol": "8011.TW"
-    },
-    {
-      "code": "8016",
-      "name": "矽創",
-      "symbol": "8016.TW"
-    },
-    {
-      "code": "8021",
-      "name": "尖點",
-      "symbol": "8021.TW"
-    },
-    {
-      "code": "8028",
-      "name": "昇陽半導體",
-      "symbol": "8028.TW"
-    },
-    {
-      "code": "8033",
-      "name": "雷虎",
-      "symbol": "8033.TW"
-    },
-    {
-      "code": "8039",
-      "name": "台虹",
-      "symbol": "8039.TW"
-    },
-    {
-      "code": "8045",
-      "name": "達運光電",
-      "symbol": "8045.TW"
+      "code": "8043",
+      "name": "蜜望實",
+      "symbol": "8043.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "8046",
       "name": "南電",
-      "symbol": "8046.TW"
+      "symbol": "8046.TW",
+      "indexes": [
+        "tw50"
+      ]
     },
     {
-      "code": "8070",
-      "name": "長華*",
-      "symbol": "8070.TW"
+      "code": "8050",
+      "name": "廣積",
+      "symbol": "8050.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8072",
-      "name": "陞泰",
-      "symbol": "8072.TW"
+      "code": "8054",
+      "name": "安國",
+      "symbol": "8054.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8081",
-      "name": "致新",
-      "symbol": "8081.TW"
+      "code": "8064",
+      "name": "東捷",
+      "symbol": "8064.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8101",
-      "name": "華冠",
-      "symbol": "8101.TW"
+      "code": "8069",
+      "name": "元太",
+      "symbol": "8069.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8103",
-      "name": "瀚荃",
-      "symbol": "8103.TW"
+      "code": "8086",
+      "name": "宏捷科",
+      "symbol": "8086.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8104",
-      "name": "錸寶",
-      "symbol": "8104.TW"
+      "code": "8091",
+      "name": "翔名",
+      "symbol": "8091.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8105",
-      "name": "凌巨",
-      "symbol": "8105.TW"
+      "code": "8096",
+      "name": "擎亞",
+      "symbol": "8096.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8110",
-      "name": "華東",
-      "symbol": "8110.TW"
+      "code": "8109",
+      "name": "博大",
+      "symbol": "8109.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8112",
-      "name": "至上",
-      "symbol": "8112.TW"
-    },
-    {
-      "code": "8114",
-      "name": "振樺電",
-      "symbol": "8114.TW"
-    },
-    {
-      "code": "8131",
-      "name": "福懋科",
-      "symbol": "8131.TW"
-    },
-    {
-      "code": "8150",
-      "name": "南茂",
-      "symbol": "8150.TW"
-    },
-    {
-      "code": "8162",
-      "name": "微矽電子-創",
-      "symbol": "8162.TW"
-    },
-    {
-      "code": "8163",
-      "name": "達方",
-      "symbol": "8163.TW"
-    },
-    {
-      "code": "8201",
-      "name": "無敵",
-      "symbol": "8201.TW"
+      "code": "8155",
+      "name": "博智",
+      "symbol": "8155.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "8210",
       "name": "勤誠",
-      "symbol": "8210.TW"
+      "symbol": "8210.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "8213",
-      "name": "志超",
-      "symbol": "8213.TW"
+      "code": "8227",
+      "name": "巨有科技",
+      "symbol": "8227.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8215",
-      "name": "明基材",
-      "symbol": "8215.TW"
+      "code": "8234",
+      "name": "新漢",
+      "symbol": "8234.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8222",
-      "name": "寶一",
-      "symbol": "8222.TW"
+      "code": "8255",
+      "name": "朋程",
+      "symbol": "8255.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8249",
-      "name": "菱光",
-      "symbol": "8249.TW"
+      "code": "8299",
+      "name": "群聯",
+      "symbol": "8299.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8261",
-      "name": "富鼎",
-      "symbol": "8261.TW"
+      "code": "8358",
+      "name": "金居",
+      "symbol": "8358.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8271",
-      "name": "宇瞻",
-      "symbol": "8271.TW"
+      "code": "8390",
+      "name": "金益鼎",
+      "symbol": "8390.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8341",
-      "name": "日友",
-      "symbol": "8341.TW"
+      "code": "8415",
+      "name": "大國鋼",
+      "symbol": "8415.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8367",
-      "name": "建新國際",
-      "symbol": "8367.TW"
-    },
-    {
-      "code": "8374",
-      "name": "羅昇",
-      "symbol": "8374.TW"
-    },
-    {
-      "code": "8404",
-      "name": "百和興業-KY",
-      "symbol": "8404.TW"
-    },
-    {
-      "code": "8411",
-      "name": "福貞-KY",
-      "symbol": "8411.TW"
-    },
-    {
-      "code": "8422",
-      "name": "可寧衛*",
-      "symbol": "8422.TW"
-    },
-    {
-      "code": "8429",
-      "name": "金麗-KY",
-      "symbol": "8429.TW"
-    },
-    {
-      "code": "8438",
-      "name": "昶昕",
-      "symbol": "8438.TW"
-    },
-    {
-      "code": "8442",
-      "name": "威宏-KY",
-      "symbol": "8442.TW"
-    },
-    {
-      "code": "8443",
-      "name": "阿瘦",
-      "symbol": "8443.TW"
-    },
-    {
-      "code": "8454",
-      "name": "富邦媒",
-      "symbol": "8454.TW"
-    },
-    {
-      "code": "8462",
-      "name": "柏文",
-      "symbol": "8462.TW"
-    },
-    {
-      "code": "8463",
-      "name": "潤泰材",
-      "symbol": "8463.TW"
+      "code": "8436",
+      "name": "大江",
+      "symbol": "8436.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "8464",
       "name": "億豐",
-      "symbol": "8464.TW"
+      "symbol": "8464.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
-      "code": "8466",
-      "name": "美吉吉-KY",
-      "symbol": "8466.TW"
+      "code": "8927",
+      "name": "北基",
+      "symbol": "8927.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8467",
-      "name": "波力-KY",
-      "symbol": "8467.TW"
+      "code": "8932",
+      "name": "智通*",
+      "symbol": "8932.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8473",
-      "name": "山林水",
-      "symbol": "8473.TW"
+      "code": "8936",
+      "name": "國統",
+      "symbol": "8936.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
-      "code": "8476",
-      "name": "台境*",
-      "symbol": "8476.TW"
-    },
-    {
-      "code": "8478",
-      "name": "東哥遊艇",
-      "symbol": "8478.TW"
-    },
-    {
-      "code": "8481",
-      "name": "政伸",
-      "symbol": "8481.TW"
-    },
-    {
-      "code": "8482",
-      "name": "商億-KY",
-      "symbol": "8482.TW"
-    },
-    {
-      "code": "8487",
-      "name": "愛爾達-創",
-      "symbol": "8487.TW"
-    },
-    {
-      "code": "8488",
-      "name": "吉源-KY",
-      "symbol": "8488.TW"
-    },
-    {
-      "code": "8499",
-      "name": "鼎炫-KY",
-      "symbol": "8499.TW"
-    },
-    {
-      "code": "8908",
-      "name": "欣雄",
-      "symbol": "8908.TW"
-    },
-    {
-      "code": "8926",
-      "name": "台汽電",
-      "symbol": "8926.TW"
-    },
-    {
-      "code": "8940",
-      "name": "新天地",
-      "symbol": "8940.TW"
+      "code": "8937",
+      "name": "合騏*",
+      "symbol": "8937.TWO",
+      "indexes": [
+        "otc200"
+      ]
     },
     {
       "code": "8996",
       "name": "高力",
-      "symbol": "8996.TW"
-    },
-    {
-      "code": "9802",
-      "name": "鈺齊-KY",
-      "symbol": "9802.TW"
-    },
-    {
-      "code": "9902",
-      "name": "台火",
-      "symbol": "9902.TW"
+      "symbol": "8996.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "9904",
       "name": "寶成",
-      "symbol": "9904.TW"
-    },
-    {
-      "code": "9905",
-      "name": "大華",
-      "symbol": "9905.TW"
-    },
-    {
-      "code": "9906",
-      "name": "欣巴巴",
-      "symbol": "9906.TW"
-    },
-    {
-      "code": "9907",
-      "name": "統一實",
-      "symbol": "9907.TW"
-    },
-    {
-      "code": "9908",
-      "name": "大台北",
-      "symbol": "9908.TW"
+      "symbol": "9904.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "9910",
       "name": "豐泰",
-      "symbol": "9910.TW"
-    },
-    {
-      "code": "9911",
-      "name": "櫻花",
-      "symbol": "9911.TW"
-    },
-    {
-      "code": "9912",
-      "name": "偉聯",
-      "symbol": "9912.TW"
-    },
-    {
-      "code": "9914",
-      "name": "美利達",
-      "symbol": "9914.TW"
-    },
-    {
-      "code": "9917",
-      "name": "中保科",
-      "symbol": "9917.TW"
-    },
-    {
-      "code": "9918",
-      "name": "欣天然",
-      "symbol": "9918.TW"
-    },
-    {
-      "code": "9919",
-      "name": "康那香",
-      "symbol": "9919.TW"
-    },
-    {
-      "code": "9921",
-      "name": "巨大",
-      "symbol": "9921.TW"
-    },
-    {
-      "code": "9924",
-      "name": "福興",
-      "symbol": "9924.TW"
-    },
-    {
-      "code": "9925",
-      "name": "新保",
-      "symbol": "9925.TW"
-    },
-    {
-      "code": "9926",
-      "name": "新海",
-      "symbol": "9926.TW"
-    },
-    {
-      "code": "9927",
-      "name": "泰銘",
-      "symbol": "9927.TW"
-    },
-    {
-      "code": "9928",
-      "name": "中視",
-      "symbol": "9928.TW"
-    },
-    {
-      "code": "9929",
-      "name": "秋雨",
-      "symbol": "9929.TW"
-    },
-    {
-      "code": "9930",
-      "name": "中聯資源",
-      "symbol": "9930.TW"
-    },
-    {
-      "code": "9931",
-      "name": "欣高",
-      "symbol": "9931.TW"
-    },
-    {
-      "code": "9933",
-      "name": "中鼎",
-      "symbol": "9933.TW"
-    },
-    {
-      "code": "9934",
-      "name": "成霖",
-      "symbol": "9934.TW"
-    },
-    {
-      "code": "9935",
-      "name": "慶豐富",
-      "symbol": "9935.TW"
-    },
-    {
-      "code": "9937",
-      "name": "全國",
-      "symbol": "9937.TW"
-    },
-    {
-      "code": "9938",
-      "name": "百和",
-      "symbol": "9938.TW"
-    },
-    {
-      "code": "9939",
-      "name": "宏全",
-      "symbol": "9939.TW"
-    },
-    {
-      "code": "9940",
-      "name": "信義",
-      "symbol": "9940.TW"
-    },
-    {
-      "code": "9941",
-      "name": "裕融",
-      "symbol": "9941.TW"
-    },
-    {
-      "code": "9942",
-      "name": "茂順",
-      "symbol": "9942.TW"
-    },
-    {
-      "code": "9943",
-      "name": "好樂迪",
-      "symbol": "9943.TW"
-    },
-    {
-      "code": "9944",
-      "name": "新麗",
-      "symbol": "9944.TW"
+      "symbol": "9910.TW",
+      "indexes": [
+        "mid100"
+      ]
     },
     {
       "code": "9945",
       "name": "潤泰新",
-      "symbol": "9945.TW"
-    },
-    {
-      "code": "9946",
-      "name": "三發地產",
-      "symbol": "9946.TW"
-    },
-    {
-      "code": "9955",
-      "name": "佳龍",
-      "symbol": "9955.TW"
-    },
-    {
-      "code": "9958",
-      "name": "世紀鋼",
-      "symbol": "9958.TW"
+      "symbol": "9945.TW",
+      "indexes": [
+        "mid100"
+      ]
     }
   ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless 台股上市 daily scanner for local use and GitHub Actions.
+"""Headless 台灣50 / 中型100 / 富櫃200 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
   ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
@@ -14,7 +14,15 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from server import PACKS_DIR, ensure_packs_dir, fetch_listed_stocks, http_get
+from server import (
+    INDEX_IDS,
+    INDEX_LABELS,
+    PACKS_DIR,
+    canonical_index,
+    ensure_packs_dir,
+    fetch_listed_stocks,
+    http_get,
+)
 
 PIVOT_LEFT = 3
 PIVOT_RIGHT = 3
@@ -532,14 +540,18 @@ def slim_bar(bar: dict) -> dict:
     }
 
 
-def scan_listed(date_str: str, sleep_s: float) -> list[dict]:
+def scan_listed(date_str: str, sleep_s: float, index: str = "all") -> list[dict]:
     stocks = fetch_listed_stocks(refresh=True)
+    want = canonical_index(index) if index and index != "all" else ""
+    if want in INDEX_IDS:
+        stocks = [s for s in stocks if want in (s.get("indexes") or [])]
     results = []
     ok = 0
     total = len(stocks)
     for i, stock in enumerate(stocks, 1):
         sym = stock["symbol"]
         name = stock.get("name") or ""
+        idxs = [canonical_index(x) for x in (stock.get("indexes") or []) if canonical_index(x) in INDEX_IDS]
         print(f"[{i}/{total}] {sym} {name}", flush=True)
         try:
             full = fetch_daily_bars(sym)
@@ -553,6 +565,8 @@ def scan_listed(date_str: str, sleep_s: float) -> list[dict]:
             results.append({
                 "symbol": sym,
                 "name": name,
+                "index": idxs[0] if idxs else None,
+                "indexes": idxs,
                 "bars": [slim_bar(b) for b in bars],
                 "analysis": {
                     "window": analysis["window"],
@@ -564,23 +578,43 @@ def scan_listed(date_str: str, sleep_s: float) -> list[dict]:
             })
             ok += 1
         except Exception as e:
-            results.append({"symbol": sym, "name": name, "error": str(e)})
+            results.append({"symbol": sym, "name": name, "index": idxs[0] if idxs else None, "indexes": idxs, "error": str(e)})
             print(f"  fail: {e}", flush=True)
         time.sleep(sleep_s)
     saved_at = datetime.now(timezone.utc).isoformat()
+    by_index = {k: [] for k in INDEX_IDS}
+    for row in results:
+        for idx in row.get("indexes") or []:
+            if idx in by_index:
+                by_index[idx].append(row)
     packs = []
-    for shard, start in enumerate(range(0, len(results), SHARD_SIZE)):
-        chunk = results[start : start + SHARD_SIZE]
-        chunk_ok = sum(1 for r in chunk if r.get("bars"))
-        packs.append({
-            "date": date_str,
-            "index": f"listed{shard:02d}",
-            "indexLabel": "上市",
-            "savedAt": saved_at,
-            "count": chunk_ok,
-            "results": chunk,
-        })
-    print(f"listed ok {ok}/{total} · shards {len(packs)}", flush=True)
+    for idx in INDEX_IDS:
+        rows = by_index[idx]
+        if not rows:
+            continue
+        label = INDEX_LABELS[idx]
+        if len(rows) > SHARD_SIZE:
+            for shard, start in enumerate(range(0, len(rows), SHARD_SIZE)):
+                chunk = rows[start : start + SHARD_SIZE]
+                chunk_ok = sum(1 for r in chunk if r.get("bars"))
+                packs.append({
+                    "date": date_str,
+                    "index": f"{idx}{shard:02d}",
+                    "indexLabel": label,
+                    "savedAt": saved_at,
+                    "count": chunk_ok,
+                    "results": chunk,
+                })
+        else:
+            packs.append({
+                "date": date_str,
+                "index": idx,
+                "indexLabel": label,
+                "savedAt": saved_at,
+                "count": sum(1 for r in rows if r.get("bars")),
+                "results": rows,
+            })
+    print(f"scan ok {ok}/{total} · packs {len(packs)}", flush=True)
     return packs
 
 
@@ -637,7 +671,7 @@ def write_latest_md(out: Path, packs: list[dict]) -> None:
                 L = a.get(key)
                 if L and L.get("label"):
                     labels.append(L["label"])
-            sym = str(r.get("symbol") or "").removesuffix(".TW")
+            sym = str(r.get("symbol") or "").removesuffix(".TWO").removesuffix(".TW")
             name = r.get("name") or ""
             lines.append(f"| {sym} | {name} | {sig or '—'} | {' / '.join(labels) or '—'} |")
         lines.append("")
@@ -675,8 +709,8 @@ def write_manifest(out: Path) -> dict:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Scan all TWSE listed stocks daily trend lines")
-    p.add_argument("--index", default="listed", help="kept for compatibility; always scans 上市")
+    p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 富櫃200 daily trend lines")
+    p.add_argument("--index", default="all", help="all | tw50 | mid100 | otc200")
     p.add_argument("--date", default="", help="YYYY-MM-DD (UTC today if empty)")
     p.add_argument("--sleep", type=float, default=0.25, help="delay between Yahoo requests")
     p.add_argument("--out", default="", help="output directory (default chartpacks/)")
@@ -685,7 +719,7 @@ def main() -> None:
     out = Path(args.out) if args.out else PACKS_DIR
     out.mkdir(parents=True, exist_ok=True)
     ensure_packs_dir()
-    written = scan_listed(date_str, args.sleep)
+    written = scan_listed(date_str, args.sleep, args.index.strip() or "all")
     for pack in written:
         fp = out / f"{pack['index']}-{date_str}.json"
         fp.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
@@ -696,14 +730,23 @@ def main() -> None:
 
 
 def write_latest_md_merged(out: Path, date_str: str, packs: list[dict]) -> None:
-    merged = {
-        "indexLabel": "上市",
-        "index": "listed",
-        "date": date_str,
-        "count": sum(p.get("count", 0) for p in packs),
-        "results": [r for p in packs for r in (p.get("results") or [])],
-    }
-    write_latest_md(out, [merged])
+    by_label = {}
+    for pack in packs:
+        key = pack.get("indexLabel") or canonical_index(pack.get("index") or "") or pack.get("index")
+        rec = by_label.setdefault(key, {"indexLabel": key, "index": canonical_index(pack.get("index") or ""), "date": date_str, "count": 0, "results": []})
+        rec["count"] += pack.get("count", 0)
+        rec["results"].extend(pack.get("results") or [])
+    ordered = []
+    seen = set()
+    for idx in INDEX_IDS:
+        label = INDEX_LABELS[idx]
+        if label in by_label:
+            ordered.append(by_label[label])
+            seen.add(label)
+    for label, rec in by_label.items():
+        if label not in seen:
+            ordered.append(rec)
+    write_latest_md(out, ordered)
 
 
 if __name__ == "__main__":

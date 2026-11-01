@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local server for TWSE listed scanner — serves HTML, proxies Yahoo, saves chartpacks."""
+"""Local server for 台灣50 / 中型100 / 富櫃200 scanner — serves HTML, proxies Yahoo, saves chartpacks."""
 from __future__ import annotations
 
 import json
@@ -17,11 +17,14 @@ LISTED_PATH = ROOT / "listed.json"
 PORT = 8765
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-ISIN_URL = "https://isin.twse.com.tw/isin/C_public.jsp?strMode=2"
-ROW_RE = re.compile(r"<tr[^>]*>(.*?)</tr>", re.I | re.S)
-CELL_RE = re.compile(r"<td[^>]*>(.*?)</td>", re.I | re.S)
-TAG_RE = re.compile(r"<[^>]+>")
-CODE_RE = re.compile(r"^(\d{4})\s+")
+TPEX200_URL = "https://www.tpex.org.tw/www/zh-tw/indexInfo/r200?type=cnst"
+CELL_RE = re.compile(r"^(\d{4})\s+(.+)$")
+MDJ_NAME_RE = re.compile(r'<td class="col05">([^<]+)</td>')
+FINMIND_INFO_URL = "https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInfo"
+INDEX_IDS = ("tw50", "mid100", "otc200")
+INDEX_LABELS = {"tw50": "台灣50", "mid100": "中型100", "otc200": "富櫃200"}
+INDEX_MIN = {"tw50": 40, "mid100": 80, "otc200": 150}
+ETF_FOR_INDEX = {"tw50": "0050", "mid100": "0051"}
 
 
 def http_get(url: str, timeout: int = 30) -> bytes:
@@ -30,33 +33,131 @@ def http_get(url: str, timeout: int = 30) -> bytes:
         return resp.read()
 
 
-def _cell_text(raw: str) -> str:
-    return unescape(TAG_RE.sub("", raw)).replace("\xa0", " ").replace("&nbsp;", " ").strip()
-
-
-def parse_isin_listed(html: bytes) -> list[dict]:
-    text = html.decode("cp950", errors="replace")
+def parse_tpex200(payload: dict) -> list[dict]:
     out = []
     seen = set()
-    for row in ROW_RE.findall(text):
-        cells = [_cell_text(c) for c in CELL_RE.findall(row)]
-        if len(cells) < 6:
-            continue
-        if (cells[5] or "").upper() != "ESVUFR":
-            continue
-        m = CODE_RE.match(cells[0].replace("\u3000", " "))
-        if not m:
-            continue
-        code = m.group(1)
-        if code.startswith("00"):
-            continue
-        name = cells[0].replace("\u3000", " ")[len(code) :].strip()
-        if not name or code in seen:
-            continue
-        seen.add(code)
-        out.append({"code": code, "name": name, "symbol": f"{code}.TW"})
+    for table in payload.get("tables") or []:
+        for row in table.get("data") or []:
+            for i in range(1, len(row), 2):
+                cell = unescape(str(row[i])).replace("&nbsp;", " ").replace("\xa0", " ").strip()
+                m = CELL_RE.match(cell)
+                if not m:
+                    continue
+                code, name = m.group(1), m.group(2).strip()
+                if not name or code in seen:
+                    continue
+                seen.add(code)
+                out.append({"code": code, "name": name, "symbol": f"{code}.TWO", "indexes": ["otc200"]})
     out.sort(key=lambda x: x["code"])
     return out
+
+
+def names_from_moneydj(etf: str) -> list[str]:
+    html = http_get(f"https://www.moneydj.com/etf/x/basic/basic0007a.xdjhtm?etfid={etf}.tw", timeout=60).decode(
+        "utf-8", "replace"
+    )
+    names, seen = [], set()
+    for raw in MDJ_NAME_RE.findall(html):
+        name = unescape(raw).strip()
+        if name and name not in seen:
+            seen.add(name)
+            names.append(name)
+    return names
+
+
+def finmind_twse_by_name() -> dict[str, str]:
+    data = json.loads(http_get(FINMIND_INFO_URL, timeout=60).decode("utf-8")).get("data") or []
+    by_name: dict[str, str] = {}
+    for x in data:
+        name = x.get("stock_name") or ""
+        sid = x.get("stock_id") or ""
+        if x.get("type") == "twse" and re.fullmatch(r"\d{4}", sid) and not sid.startswith("00"):
+            by_name.setdefault(name, sid)
+    return by_name
+
+
+def map_names_to_twse(names: list[str], by_name: dict[str, str], index_id: str) -> list[dict]:
+    out = []
+    for name in names:
+        sid = by_name.get(name)
+        if not sid:
+            for k, v in by_name.items():
+                if k == name or k.startswith(name) or name.startswith(k):
+                    sid = v
+                    break
+        if not sid:
+            continue
+        out.append({"code": sid, "name": name, "symbol": f"{sid}.TW", "indexes": [index_id]})
+    out.sort(key=lambda x: x["code"])
+    return out
+
+
+def fetch_otc200() -> list[dict]:
+    payload = json.loads(http_get(TPEX200_URL, timeout=60).decode("utf-8"))
+    return parse_tpex200(payload)
+
+
+def fetch_index_etf(index_id: str) -> list[dict]:
+    etf = ETF_FOR_INDEX[index_id]
+    names = names_from_moneydj(etf)
+    by_name = finmind_twse_by_name()
+    return map_names_to_twse(names, by_name, index_id)
+
+
+def index_counts(stocks: list[dict]) -> dict[str, int]:
+    counts = {k: 0 for k in INDEX_IDS}
+    for s in stocks:
+        idxs = s.get("indexes")
+        if not idxs:
+            sym = str(s.get("symbol") or "")
+            if sym.endswith(".TWO"):
+                idxs = ["otc200"]
+            else:
+                idxs = []
+        for i in idxs:
+            if i in counts:
+                counts[i] += 1
+    return counts
+
+
+def stocks_complete(stocks: list[dict]) -> bool:
+    counts = index_counts(stocks)
+    return all(counts[k] >= INDEX_MIN[k] for k in INDEX_IDS)
+
+
+def cache_by_index(stocks: list[dict]) -> dict[str, list[dict]]:
+    grouped = {k: [] for k in INDEX_IDS}
+    for s in stocks:
+        idxs = list(s.get("indexes") or [])
+        if not idxs and str(s.get("symbol") or "").endswith(".TWO"):
+            idxs = ["otc200"]
+        for i in idxs:
+            if i in grouped:
+                grouped[i].append(
+                    {
+                        "code": s["code"],
+                        "name": s.get("name") or "",
+                        "symbol": s["symbol"],
+                        "indexes": [i],
+                    }
+                )
+    return grouped
+
+
+def merge_index_stocks(*groups: list[dict]) -> list[dict]:
+    by_sym: dict[str, dict] = {}
+    for rows in groups:
+        for s in rows or []:
+            rec = by_sym.setdefault(
+                s["symbol"],
+                {"code": s["code"], "name": s.get("name") or "", "symbol": s["symbol"], "indexes": []},
+            )
+            if s.get("name"):
+                rec["name"] = s["name"]
+            for i in s.get("indexes") or []:
+                if i not in rec["indexes"]:
+                    rec["indexes"].append(i)
+    return sorted(by_sym.values(), key=lambda x: (x["symbol"], x["code"]))
 
 
 def load_listed_file() -> list[dict]:
@@ -66,36 +167,64 @@ def load_listed_file() -> list[dict]:
         data = json.loads(LISTED_PATH.read_text(encoding="utf-8"))
     except Exception:
         return []
-    return data.get("stocks") or []
+    stocks = data.get("stocks") or []
+    for s in stocks:
+        if s.get("indexes"):
+            continue
+        if str(s.get("symbol") or "").endswith(".TWO"):
+            s["indexes"] = ["otc200"]
+    return stocks
 
 
 def save_listed(stocks: list[dict]) -> None:
-    LISTED_PATH.write_text(
-        json.dumps({"count": len(stocks), "stocks": stocks}, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    counts = index_counts(stocks)
+    payload = {
+        "count": len(stocks),
+        "indexes": {k: {"label": INDEX_LABELS[k], "count": counts[k]} for k in INDEX_IDS},
+        "stocks": stocks,
+    }
+    LISTED_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def fetch_listed_stocks(refresh: bool = False) -> list[dict]:
     cached = load_listed_file()
-    if cached and not refresh:
+    if cached and not refresh and stocks_complete(cached):
         return cached
-    try:
-        stocks = parse_isin_listed(http_get(ISIN_URL, timeout=60))
-        if len(stocks) >= 500:
-            save_listed(stocks)
-            return stocks
-    except Exception as e:
-        print(f"listed fetch failed: {e}", flush=True)
-    if cached:
+    cached_idx = cache_by_index(cached)
+    groups: dict[str, list[dict]] = {}
+    for index_id, fetcher in (
+        ("tw50", lambda: fetch_index_etf("tw50")),
+        ("mid100", lambda: fetch_index_etf("mid100")),
+        ("otc200", fetch_otc200),
+    ):
+        try:
+            rows = fetcher()
+            if len(rows) >= INDEX_MIN[index_id]:
+                groups[index_id] = rows
+                continue
+            print(f"{index_id} fetch too few ({len(rows)})", flush=True)
+        except Exception as e:
+            print(f"{index_id} fetch failed: {e}", flush=True)
+        if len(cached_idx[index_id]) >= INDEX_MIN[index_id]:
+            groups[index_id] = cached_idx[index_id]
+    stocks = merge_index_stocks(*(groups.get(k) or [] for k in INDEX_IDS))
+    if stocks_complete(stocks):
+        save_listed(stocks)
+        return stocks
+    if stocks_complete(cached):
         return cached
-    raise RuntimeError("no listed stocks")
+    if stocks:
+        save_listed(stocks)
+        return stocks
+    raise RuntimeError("no 台灣50 / 中型100 / 富櫃200 constituents")
 
 
 def listed_payload() -> dict:
     stocks = fetch_listed_stocks()
+    counts = index_counts(stocks)
     return {
         "count": len(stocks),
+        "indexes": {k: {"label": INDEX_LABELS[k], "count": counts[k]} for k in INDEX_IDS},
         "stocks": stocks,
         "symbols": [s["symbol"] for s in stocks],
     }
@@ -107,6 +236,14 @@ def ensure_packs_dir() -> None:
 
 def pack_path(date: str) -> Path:
     return PACKS_DIR / f"{date}.json"
+
+
+def canonical_index(index: str) -> str:
+    s = str(index or "")
+    for key in INDEX_IDS:
+        if s == key or s.startswith(key):
+            return key
+    return s
 
 
 def pack_files_for_date(date: str) -> list[Path]:
@@ -131,14 +268,21 @@ def merge_pack_files(date: str) -> dict | None:
         except Exception:
             continue
         saved_at = data.get("savedAt") or saved_at
+        idx = canonical_index(data.get("index") or fp.stem)
         for row in data.get("results") or []:
+            if idx:
+                row.setdefault("index", idx)
+                idxs = list(row.get("indexes") or [])
+                if idx not in idxs:
+                    idxs.append(idx)
+                row["indexes"] = idxs
             results.append(row)
             if row.get("bars"):
                 count += 1
     return {
         "date": date,
-        "index": "listed",
-        "indexLabel": "上市",
+        "index": "all",
+        "indexLabel": "台股",
         "savedAt": saved_at,
         "count": count,
         "results": results,
@@ -290,7 +434,7 @@ class Handler(BaseHTTPRequestHandler):
 def main() -> None:
     ensure_packs_dir()
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
-    print(f"台股上市掃描器 → http://127.0.0.1:{PORT}/")
+    print(f"台股掃描器（台灣50 / 中型100 / 富櫃200）→ http://127.0.0.1:{PORT}/")
     print(f"Chartpacks → {PACKS_DIR}")
     print("Ctrl+C to stop")
     try:

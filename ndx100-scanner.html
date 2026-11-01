@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>台股上市 日線掃描器 · 趨勢線 / Creek / Ice</title>
-<meta name="description" content="台股上市日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
+<title>台股日線掃描器 · 趨勢線 / Creek / Ice</title>
+<meta name="description" content="台灣50、中型100、富櫃200 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
 <meta name="theme-color" content="#161618" />
 <meta name="color-scheme" content="dark" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     TWSE listed scanner — data terminal
+     台股 scanner — data terminal
      平面深色、單一藍色強調（只做 1px 選取線）、數字等寬
      ============================================================ */
   :root {
@@ -896,7 +896,13 @@
         </div>
         <div class="filter-bar" aria-label="篩選條件">
           <span class="filter-bar-label">篩選</span>
-          <div class="filter-chips" role="group">
+          <div class="filter-chips" role="group" aria-label="指數">
+            <button type="button" class="filter-chip active" id="chipAll" data-index="all" aria-pressed="true">ALL</button>
+            <button type="button" class="filter-chip" id="chipTw50" data-index="tw50" aria-pressed="false">台灣50</button>
+            <button type="button" class="filter-chip" id="chipMid100" data-index="mid100" aria-pressed="false">中型100</button>
+            <button type="button" class="filter-chip" id="chipOtc200" data-index="otc200" aria-pressed="false">富櫃200</button>
+          </div>
+          <div class="filter-chips" role="group" aria-label="訊號">
             <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
             <button type="button" class="filter-chip" id="filterReclaim" data-filter="reclaim" aria-pressed="false" title="近 5 根先實體跌破，之後有一根實體完全回到線內">收回</button>
             <button type="button" class="filter-chip" id="filterTouch" data-filter="touch" aria-pressed="false">觸碰</button>
@@ -945,7 +951,7 @@
 
 <script>
 function displayCode(sym) {
-  return String(sym || "").replace(/\.TW$/i, "");
+  return String(sym || "").replace(/\.(TWO|TW)$/i, "");
 }
 
 function nameOf(sym) {
@@ -1018,8 +1024,21 @@ const CFG = {
 };
 
 /* ========== State ========== */
+const INDEXES = {
+  all: { label: "ALL" },
+  tw50: { label: "台灣50" },
+  mid100: { label: "中型100" },
+  otc200: { label: "富櫃200" }
+};
+const INDEX_CHIP_IDS = [
+  ["chipAll", "all"],
+  ["chipTw50", "tw50"],
+  ["chipMid100", "mid100"],
+  ["chipOtc200", "otc200"]
+];
+
 const state = {
-  index: "listed",
+  index: "all",
   names: {},
   symbols: [],
   results: [],
@@ -1036,13 +1055,41 @@ const state = {
 };
 
 function currentIndexConfig() {
-  return { label: "上市" };
+  return INDEXES[state.index] || INDEXES.all;
 }
 
-function setIndexChipsDisabled(_on) {}
+function canonicalIndex(id) {
+  const s = String(id || "");
+  if (s.startsWith("tw50")) return "tw50";
+  if (s.startsWith("mid100")) return "mid100";
+  if (s.startsWith("otc200")) return "otc200";
+  return s || null;
+}
+
+function setIndexChipsDisabled(on) {
+  for (const [id] of INDEX_CHIP_IDS) {
+    const el = $(id);
+    if (el) el.disabled = !!on;
+  }
+}
 
 function syncIndexUi() {
-  document.title = "台股上市 日線掃描器 · 趨勢線 / Creek / Ice";
+  for (const [id, key] of INDEX_CHIP_IDS) {
+    const el = $(id);
+    if (!el) continue;
+    const on = state.index === key;
+    el.classList.toggle("active", on);
+    el.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  const label = currentIndexConfig().label;
+  document.title = `${label === "ALL" ? "台股" : label} 日線掃描器 · 趨勢線 / Creek / Ice`;
+}
+
+function selectIndex(id) {
+  if (!INDEXES[id] || state.index === id) return;
+  state.index = id;
+  syncIndexUi();
+  applyFilters();
 }
 
 function rememberNames(stocks) {
@@ -1148,13 +1195,13 @@ async function fetchListedStocks() {
       if (!res.ok) continue;
       const json = await res.json();
       const stocks = json?.stocks;
-      if (Array.isArray(stocks) && stocks.length >= 500) {
+      if (Array.isArray(stocks) && stocks.length >= 150) {
         rememberNames(stocks);
         return stocks;
       }
     } catch (_) { /* try next */ }
   }
-  throw new Error("無法取得上市股票名單");
+  throw new Error("無法取得成分股名單");
 }
 
 async function fetchAllUniverseSymbols() {
@@ -1163,7 +1210,10 @@ async function fetchAllUniverseSymbols() {
   for (const s of stocks) {
     const sym = String(s.symbol || "").toUpperCase();
     if (!sym) continue;
-    membership.set(sym, ["listed"]);
+    const idxs = Array.isArray(s.indexes) && s.indexes.length
+      ? s.indexes.map(canonicalIndex).filter(Boolean)
+      : (String(s.symbol || "").endsWith(".TWO") ? ["otc200"] : []);
+    membership.set(sym, idxs.length ? idxs : ["otc200"]);
   }
   return membership;
 }
@@ -2137,13 +2187,16 @@ function anyFilterOn() {
 }
 
 function rowIndexes(row) {
-  if (Array.isArray(row?.indexes) && row.indexes.length) return row.indexes;
-  if (row?.index) return [row.index];
+  if (Array.isArray(row?.indexes) && row.indexes.length) return row.indexes.map(canonicalIndex);
+  if (row?.index) return [canonicalIndex(row.index)];
   return null;
 }
 
-function matchesIndex(_row) {
-  return true;
+function matchesIndex(row) {
+  if (state.index === "all") return true;
+  const idxs = rowIndexes(row);
+  if (!idxs || !idxs.length) return true;
+  return idxs.includes(state.index);
 }
 
 function matchesFilters(row) {
@@ -2541,9 +2594,9 @@ function updatePackButton() {
 function buildPackPayload(dateStr) {
   return {
     date: dateStr,
-    index: "listed",
-    indexLabel: "上市",
-    indexes: ["listed"],
+    index: "all",
+    indexLabel: "台股",
+    indexes: ["tw50", "mid100", "otc200"],
     savedAt: new Date().toISOString(),
     count: state.results.filter(r => r.bars).length,
     results: state.results.map(r => {
@@ -2637,8 +2690,8 @@ async function savePack(dateStr) {
 function mapPackRow(r, json) {
   const bars = r.bars || null;
   const analysis = bars && r.analysis ? rebaseAnalysis(r.analysis, bars.length) : (r.analysis || null);
-  const idx = r.index || json.index || null;
-  const indexes = r.indexes || (idx ? [idx] : null);
+  const idx = canonicalIndex(r.index || json.index || null);
+  const indexes = (r.indexes || (idx ? [idx] : null) || []).map(canonicalIndex).filter(Boolean);
   const name = r.name || nameOf(r.symbol);
   if (name) {
     state.names[String(r.symbol || "").toUpperCase()] = name;
@@ -2776,7 +2829,7 @@ async function runScan() {
   $("resultList").innerHTML = "";
   $("packView").innerHTML = "";
   showPane("emptyHint");
-  setViewerTitle("掃描中", "分析台股上市日線…");
+  setViewerTitle("掃描中", "分析台灣50 / 中型100 / 富櫃200日線…");
   if ($("listCount")) {
     $("listCount").textContent = "掃描中…";
     replayAnim($("listCount"), "is-swap");
@@ -2786,12 +2839,12 @@ async function runScan() {
   state.packDate = dateStr;
   $("packDate").value = dateStr;
 
-  setStatusText("取得全部上市公司…");
+  setStatusText("取得成分股名單…");
   let membership;
   try {
     membership = await fetchAllUniverseSymbols();
   } catch (e) {
-    setStatusText(`無法取得上市名單：${e.message || e}`);
+    setStatusText(`無法取得成分股名單：${e.message || e}`);
     membership = new Map();
   }
   state.symbols = [...membership.keys()];
@@ -2881,6 +2934,11 @@ $("packDate").onchange = () => {
   if (ON_PAGES) openPack(dateStr);
   else rebuildForDate(dateStr);
 };
+
+for (const [id, key] of INDEX_CHIP_IDS) {
+  const el = $(id);
+  if (el) el.onclick = () => selectIndex(key);
+}
 
 $("filterBreakout").onclick = () => {
   state.filters.breakout = !state.filters.breakout;
