@@ -46,14 +46,15 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+  html, body { height: auto; min-height: 100%; }
   body {
     font-family: var(--sans);
     font-size: 14px;
     line-height: 1.5;
     color: var(--text);
     background: var(--ground);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
@@ -71,10 +72,10 @@
 
   .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .app {
-    height: 100dvh;
+    min-height: 100dvh;
     min-width: 0;
     display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
   }
 
   /* ---------- Header ---------- */
@@ -176,11 +177,6 @@
     background: transparent;
   }
   button.is-busy { pointer-events: none; opacity: 0.6; }
-  button.line-mode.active {
-    border-color: var(--accent-line);
-    color: var(--accent);
-    background: rgba(74, 138, 214, 0.1);
-  }
 
   /* ---------- Status strip ---------- */
   .status {
@@ -242,15 +238,14 @@
     display: grid;
     grid-template-columns: 284px minmax(0, 1fr);
     min-width: 0;
-    min-height: 0;
-    overflow: hidden;
+    overflow: visible;
+    align-items: start;
   }
 
   /* ---------- Sidebar ---------- */
   .sidebar {
     display: flex;
     flex-direction: column;
-    min-height: 0;
     border-right: 1px solid var(--line);
     background: var(--surface);
   }
@@ -281,9 +276,10 @@
   }
   .filter-bar {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
     margin-top: 13px;
   }
   .filter-bar-label {
@@ -352,10 +348,7 @@
     color: var(--dim);
   }
   #resultList {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
   }
   #resultList:empty::before {
     content: "尚無結果";
@@ -417,8 +410,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    min-height: 0;
-    overflow-y: auto;
+    overflow: visible;
     padding: 16px 22px 26px;
     background: var(--ground);
   }
@@ -446,6 +438,20 @@
     font-size: 12px;
     color: var(--muted);
     line-height: 1.4;
+  }
+  .skip-chips {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+    gap: 2px 4px;
+    min-width: 0;
+    padding-bottom: 2px;
+  }
+  .skip-chips .filter-chip {
+    height: 28px;
+    font-size: 13px;
+    flex: 0 0 auto;
   }
   .seg { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
   .seg button {
@@ -726,7 +732,7 @@
     #statusCount { grid-column: 3; grid-row: 2; text-align: right; }
     main {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
     }
     .sidebar {
       order: 0;
@@ -808,6 +814,12 @@
       margin-bottom: 10px;
       padding-bottom: 8px;
     }
+    .skip-chips {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      padding-bottom: 0;
+    }
     .title-block h2 { font-size: 16px; }
     .empty { margin: 4vh auto 0; padding: 18px 16px; }
   }
@@ -834,9 +846,6 @@
         <button type="button" id="btnScan" class="primary">開始掃描</button>
         <button type="button" id="btnStop" class="ghost-danger" disabled>停止</button>
       </div>
-      <div class="tool-group" aria-label="畫線">
-        <button type="button" id="filterIgnoreLast10" class="line-mode" aria-pressed="false" title="另算一套線：所有圖表找線與畫線都不使用最新 10 根">忽略最新10根</button>
-      </div>
     </div>
   </header>
 
@@ -856,12 +865,10 @@
         </div>
         <div class="filter-bar" aria-label="篩選條件">
           <span class="filter-bar-label">篩選</span>
-          <div class="filter-chips" role="group" aria-label="指數">
+          <div class="filter-chips" role="group">
             <button type="button" class="filter-chip" id="filterIndexNdx" data-index="ndx100" aria-pressed="true">NDX100</button>
             <button type="button" class="filter-chip" id="filterIndexDji" data-index="dji30" aria-pressed="false">DJI30</button>
-          </div>
-          <div class="filter-chips" role="group" aria-label="訊號">
-            <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false">突破</button>
+            <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
             <button type="button" class="filter-chip" id="filterReclaim" data-filter="reclaim" aria-pressed="false" title="近 5 根先實體跌破，之後有一根實體完全回到線內">收回</button>
             <button type="button" class="filter-chip" id="filterTouch" data-filter="touch" aria-pressed="false">觸碰</button>
           </div>
@@ -877,6 +884,12 @@
         <div class="title-block" id="titleBlock">
           <h2 id="viewerTitle">圖表區</h2>
           <p id="viewerSub">選左側代號檢視單圖，或切換 Chartpack</p>
+        </div>
+        <div class="skip-chips" role="group" aria-label="做線條件">
+          <button type="button" class="filter-chip" id="filterSkip5" data-skip="5" aria-pressed="false" title="找線與畫線不使用最新 5 根">忽略5根</button>
+          <button type="button" class="filter-chip" id="filterSkip10" data-skip="10" aria-pressed="false" title="找線與畫線不使用最新 10 根">忽略10根</button>
+          <button type="button" class="filter-chip" id="filterSkip20" data-skip="20" aria-pressed="false" title="找線與畫線不使用最新 20 根">忽略20根</button>
+          <button type="button" class="filter-chip" id="filterRecent20" data-recent="20" aria-pressed="false" title="至少一觸點須落在最新 20 根內（關掉則改為最新 60 根）">最新20根</button>
         </div>
         <div class="seg" role="group" aria-label="檢視">
           <button type="button" id="btnSingle" disabled>單圖</button>
@@ -942,13 +955,13 @@ const CFG = {
   touchTolPct: 0.0045,       // 0.45% of price
   touchMergeBars: 5,         // 相鄰 ≤5 根內的觸點合併為 1
   maxTouchGapBars: 120,      // 相鄰觸點間隔不得超過 120 根 K
-  recentTouchBars: 60,       // 至少一觸點須落在最新 60 根內
+  recentTouchBars: 60,       // 至少一觸點須落在最新 60 根內（常開）
   maxBodyBreaks: 3,          // 成形後實體穿越最多 3 根
   maxWickBreaks: 5,          // 成形後引線穿越最多 5 根
   horizSlopePct: 0.015,      // |m|*bars / midPrice < 1.5% → near horizontal
   minTouches: 4,
   windows: [200, 300, 400, 500, 600, 800, 1000], // 做線視窗（由小到大）
-  lineIgnoreLastBars: 10, // 「忽略最新10根」另算線時略過的根數
+  skipLastBarsOptions: [5, 10, 20],
   chartWindow: 600, // 圖表固定顯示根數
   chartRightPadBars: 20, // 視窗右緣預留空白（根）
   colors: {
@@ -978,7 +991,8 @@ const state = {
   packDate: "",
   view: "single",
   filters: { breakout: false, reclaim: false, touch: false },
-  ignoreLast10: false,
+  ignoreLastBars: 0,
+  recentTouchBars: 60,
   chartSymbol: null,
   chartView: null
 };
@@ -1217,7 +1231,7 @@ function mergeTouchIndices(indices) {
   return clusters.map(cl => cl[0]);
 }
 
-function longestTouchSegment(indices) {
+function touchSegments(indices) {
   const merged = mergeTouchIndices(indices);
   if (!merged.length) return [];
   const segs = [[merged[0]]];
@@ -1227,8 +1241,36 @@ function longestTouchSegment(indices) {
     if (i - last[last.length - 1] > CFG.maxTouchGapBars) segs.push([i]);
     else last.push(i);
   }
-  segs.sort((a, b) => (b.length - a.length) || ((b[b.length - 1] - b[0]) - (a[a.length - 1] - a[0])));
-  return segs[0];
+  return segs;
+}
+
+function betterSeg(a, b) {
+  if (a.length !== b.length) return a.length > b.length;
+  return (a[a.length - 1] - a[0]) > (b[b.length - 1] - b[0]);
+}
+
+function chooseTouchSegment(indices, minTouches, recentLo) {
+  const segs = touchSegments(indices);
+  if (!segs.length) return { seg: [], fail: "touches", touches: 0 };
+  const pick = list => list.reduce((b, s) => (betterSeg(s, b) ? s : b));
+  const enough = segs.filter(s => s.length >= minTouches);
+  if (!enough.length) {
+    const best = pick(segs);
+    return { seg: best, fail: "touches", touches: best.length };
+  }
+  if (recentLo != null) {
+    const recent = enough.filter(s => s.some(i => i >= recentLo));
+    if (recent.length) return { seg: pick(recent) };
+    const best = pick(enough);
+    return { seg: best, fail: "recent", touches: best.length };
+  }
+  return { seg: pick(enough) };
+}
+
+function longestTouchSegment(indices) {
+  const segs = touchSegments(indices);
+  if (!segs.length) return [];
+  return segs.reduce((b, s) => (betterSeg(s, b) ? s : b));
 }
 
 function collectRawTouches(bars, line, resistance, startI, endI) {
@@ -1329,22 +1371,30 @@ function formatWhy(kind, miss, noWindow) {
     if (miss.wickN > CFG.maxWickBreaks) bits.push(`引線穿越 ${miss.wickN}（最多 ${CFG.maxWickBreaks}）`);
     return `${side}不成線：${bits.join("、") || "穿越過多"}`;
   }
-  if (miss.fail === "recent") return `${side}不成線：最新 ${CFG.recentTouchBars} 根沒有觸點`;
+  if (miss.fail === "recent") return `${side}不成線：最新 ${recentTouchN()} 根沒有觸點`;
   if ((miss.maxTouches || 0) < CFG.minTouches) {
     return `${side}不成線：觸點不足（最長 ${miss.maxTouches} 點，需 ≥${CFG.minTouches}）`;
   }
   return `${side}不成線：未通過四點成線規則`;
 }
 
-function evaluateCandidate(bars, line, kind, winLo, lookback) {
+function recentTouchN() {
+  const n = state.recentTouchBars | 0;
+  return n > 0 ? n : (CFG.recentTouchBars || 60);
+}
+
+function evaluateCandidate(bars, line, kind, winLo, lookback, opts = {}) {
+  const minTouches = opts.minTouches || CFG.minTouches;
+  const recentN = recentTouchN();
+  const requireRecent = opts.requireRecent !== false && recentN > 0;
   const n = bars.length;
   const lastI = n - 1;
   const resistance = kind === "resistance";
   const raw = collectRawTouches(bars, line, resistance, winLo, lastI);
-  const seg = longestTouchSegment(raw);
-  if (seg.length < CFG.minTouches) return { fail: "touches", touches: seg.length };
-  const recentLo = lastI - (CFG.recentTouchBars - 1);
-  if (!seg.some(i => i >= recentLo)) return { fail: "recent", touches: seg.length };
+  const recentLo = requireRecent ? lastI - (recentN - 1) : null;
+  const picked = chooseTouchSegment(raw, minTouches, recentLo);
+  if (picked.fail) return { fail: picked.fail, touches: picked.touches };
+  const seg = picked.seg;
   const firstI = seg[0];
   const br = pierceCounts(bars, line, resistance, firstI + 1, lastI);
   if (br.bodyBreaks > CFG.maxBodyBreaks || br.wickBreaks > CFG.maxWickBreaks) {
@@ -1376,7 +1426,7 @@ function pivotsInLookback(bars, lookback) {
   };
 }
 
-function collectSideLine(bars, lookback, kind) {
+function collectSideLine(bars, lookback, kind, opts = {}) {
   const n = bars.length;
   const actual = Math.min(lookback, n);
   const winLo = n - actual;
@@ -1390,10 +1440,8 @@ function collectSideLine(bars, lookback, kind) {
       if (i2 - i1 < 5) continue;
       const p1 = kind === "support" ? bars[i1].l : bars[i1].h;
       const p2 = kind === "support" ? bars[i2].l : bars[i2].h;
-      if (kind === "support" && p2 < p1) continue;
-      if (kind === "resistance" && p2 > p1) continue;
       const line = lineThrough(i1, p1, i2, p2);
-      const ev = evaluateCandidate(bars, line, kind, winLo, actual);
+      const ev = evaluateCandidate(bars, line, kind, winLo, actual, opts);
       if (ev.line) {
         if (!best || betterLine(ev.line, best)) best = ev.line;
       } else {
@@ -1420,23 +1468,24 @@ function analyzeSymbol(bars, mode, skipLast = 0) {
 
   const found = {};
   const why = { support: null, resistance: null, channel: null };
-  for (const kind of ["support", "resistance"]) {
+  function searchKind(kind, opts) {
     let miss = emptyMiss();
     let windowsTried = 0;
     for (const lookback of windows) {
       const actual = Math.min(lookback, fit.length);
       if (actual < 80 && lookback >= 80) continue;
       windowsTried++;
-      const got = collectSideLine(fit, actual, kind);
-      if (got.line) {
-        found[kind] = got.line;
-        miss = null;
-        break;
-      }
+      const got = collectSideLine(fit, actual, kind, opts);
+      if (got.line) return { line: got.line, miss: null, windowsTried };
       miss = mergeMiss(miss, got.miss);
       if (actual >= fit.length) break;
     }
-    if (!found[kind]) why[kind] = formatWhy(kind, miss, windowsTried === 0);
+    return { line: null, miss, windowsTried };
+  }
+  for (const kind of ["support", "resistance"]) {
+    const got = searchKind(kind, {});
+    if (got.line) found[kind] = got.line;
+    else why[kind] = formatWhy(kind, got.miss, got.windowsTried === 0);
   }
 
   const up = found.support || null;
@@ -1740,8 +1789,9 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
     ctx.fillRect(x - candleW / 2, y1, candleW, Math.max(1, y2 - y1));
   }
 
-  /* trend lines, touches and end labels */
-  const labelYs = [];
+  /* trend lines and touches */
+  const placedLabels = [];
+  const lineDraws = [];
   for (const L of lineObjs) {
     const color = lineColorOf(L, c);
     const absFrom = L.drawFrom ?? L.touches?.[0] ?? start;
@@ -1749,6 +1799,8 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
     if (iFrom > n - 1) continue;
     const xRight = left + pw;
     const iRight = n - 0.5;
+    const x0 = xAt(iFrom);
+    const y0 = yPx(yAt(L.line, start + iFrom));
 
     ctx.strokeStyle = color;
     ctx.lineWidth = L.type === "channel" ? 1.25 : 1.75;
@@ -1756,7 +1808,7 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
       L.type === "channel" ? [4, 4] : (L.type === "creek" || L.type === "ice") ? [7, 4] : []
     );
     ctx.beginPath();
-    ctx.moveTo(xAt(iFrom), yPx(yAt(L.line, start + iFrom)));
+    ctx.moveTo(x0, y0);
     ctx.lineTo(xRight, yPx(yAt(L.line, start + iRight)));
     ctx.stroke();
     ctx.setLineDash([]);
@@ -1772,22 +1824,81 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
       ctx.fill();
       ctx.stroke();
     }
+    lineDraws.push({ L, color, iFrom, x0, y0 });
+  }
 
-    const yEnd = yPx(yAt(L.line, start + iRight));
-    if (yEnd >= top + 6 && yEnd <= top + ph - 6) {
-      let ly = yEnd - 8;
-      while (labelYs.some(v => Math.abs(v - ly) < 13)) ly -= 13;
-      labelYs.push(ly);
-      const label = `${lineNameOf(L)} ${(L.touches || []).length}`;
-      ctx.font = sans(labelSize, 600);
-      const tw = ctx.measureText(label).width;
-      ctx.fillStyle = "rgba(14,15,18,0.82)";
-      ctx.fillRect(left + pw - tw - 12, ly - 7, tw + 8, 14);
-      ctx.fillStyle = color;
-      ctx.textAlign = "right";
-      ctx.textBaseline = "middle";
-      ctx.fillText(label, left + pw - 6, ly);
+  const boxHitsLine = (bx, by, bw, bh, L, iFrom) => {
+    const pad = 3;
+    for (let i = visFrom; i < visTo; i++) {
+      const x = xAt(i - start);
+      if (x < bx - pad || x > bx + bw + pad) continue;
+      const y = yPx(yAt(L.line, i));
+      if (y >= by - pad && y <= by + bh + pad) return true;
     }
+    return false;
+  };
+  const boxHitsCandle = (bx, by, bw, bh) => {
+    const pad = 2;
+    for (let i = visFrom; i < visTo; i++) {
+      const x = xAt(i - start);
+      if (x < bx - candleW - pad || x > bx + bw + candleW + pad) continue;
+      const b = bars[i];
+      const yHi = yPx(b.h);
+      const yLo = yPx(b.l);
+      const topC = Math.min(yHi, yLo);
+      const botC = Math.max(yHi, yLo);
+      if (botC >= by - pad && topC <= by + bh + pad) return true;
+    }
+    return false;
+  };
+  const boxHitsLabel = (bx, by, bw, bh) => {
+    const gap = 4;
+    return placedLabels.some(p =>
+      bx < p.x + p.w + gap && bx + bw + gap > p.x &&
+      by < p.y + p.h + gap && by + bh + gap > p.y
+    );
+  };
+
+  ctx.font = sans(labelSize, 600);
+  for (const { L, color, iFrom, x0, y0 } of lineDraws) {
+    const label = `${lineNameOf(L)} ${(L.touches || []).length}`;
+    const tw = ctx.measureText(label).width;
+    const boxW = tw + 10;
+    const boxH = compact ? 14 : 16;
+    const preferBelow = L.kind !== "resistance";
+    const alongs = [10, 18, 26, 4, 34, -6];
+    const dists = [12, 18, 24, 30, 8, 36];
+    const signs = preferBelow ? [1, -1] : [-1, 1];
+    let placed = null;
+    for (const ax of alongs) {
+      for (const sign of signs) {
+        for (const dist of dists) {
+          let bx = x0 + ax;
+          let by = y0 + sign * dist - boxH / 2;
+          bx = Math.max(left + 2, Math.min(left + pw - boxW - 2, bx));
+          by = Math.max(top + 2, Math.min(top + ph - boxH - 2, by));
+          if (boxHitsLine(bx, by, boxW, boxH, L, iFrom)) continue;
+          if (boxHitsCandle(bx, by, boxW, boxH)) continue;
+          if (boxHitsLabel(bx, by, boxW, boxH)) continue;
+          placed = { x: bx, y: by, w: boxW, h: boxH };
+          break;
+        }
+        if (placed) break;
+      }
+      if (placed) break;
+    }
+    if (!placed) {
+      const by = Math.max(top + 2, Math.min(top + ph - boxH - 2, y0 + (preferBelow ? 14 : -14) - boxH / 2));
+      const bx = Math.max(left + 2, Math.min(left + pw - boxW - 2, x0 + 10));
+      placed = { x: bx, y: by, w: boxW, h: boxH };
+    }
+    placedLabels.push(placed);
+    ctx.fillStyle = "rgba(14,15,18,0.88)";
+    ctx.fillRect(placed.x, placed.y, placed.w, placed.h);
+    ctx.fillStyle = color;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(label, placed.x + 5, placed.y + placed.h / 2 + 0.5);
   }
 
   /* close marker：跟隨視窗內最右一根實際 K，不鎖死全序列最新根 */
@@ -1961,7 +2072,7 @@ function setProgress(done, total) {
   $("statusCount").textContent = total ? `${done} / ${total}` : "";
 }
 
-/** 近 lookback 根：突破／收回／觸碰（收回 = 實體跌破後，之後有一根實體完全回到線內） */
+/** 近 lookback 根：突破／收回／觸碰（突破 = 實體完全穿越；收回 = 實體跌破後，之後有一根實體完全回到線內） */
 function recentLineEvents(row, lookback = 5) {
   const analysis = rowAnalysis(row);
   if (!row?.bars?.length || !analysis) return { touch: false, breakout: false, reclaim: false };
@@ -1981,7 +2092,7 @@ function recentLineEvents(row, lookback = 5) {
       const bar = bars[i];
       const bodyBrk = bodyFullCross(bar, y, resistance);
       const wickBrk = wickOnlyCross(bar, y, resistance);
-      if (bodyBrk || wickBrk) breakout = true;
+      if (bodyBrk) breakout = true;
       if (bodyBrk && bodyBrokeAt < 0) bodyBrokeAt = i;
       else if (!bodyBrk && !wickBrk && isTouchBar(bar, y, resistance)) touch = true;
       if (bodyBrokeAt >= 0 && i > bodyBrokeAt && bodyFullyHeld(bar, y, resistance)) reclaim = true;
@@ -2024,11 +2135,20 @@ function syncFilterChips(opts = {}) {
     el.setAttribute("aria-pressed", on ? "true" : "false");
     if (opts.popKey === key) replayAnim(el, "is-pop");
   }
-  const skipEl = $("filterIgnoreLast10");
-  if (skipEl) {
-    skipEl.classList.toggle("active", !!state.ignoreLast10);
-    skipEl.setAttribute("aria-pressed", state.ignoreLast10 ? "true" : "false");
-    if (opts.popKey === "ignoreLast10") replayAnim(skipEl, "is-pop");
+  for (const nSkip of (CFG.skipLastBarsOptions || [5, 10, 20])) {
+    const el = $("filterSkip" + nSkip);
+    if (!el) continue;
+    const on = state.ignoreLastBars === nSkip;
+    el.classList.toggle("active", on);
+    el.setAttribute("aria-pressed", on ? "true" : "false");
+    if (opts.popKey === "skip" + nSkip) replayAnim(el, "is-pop");
+  }
+  const recent20 = $("filterRecent20");
+  if (recent20) {
+    const on = recentTouchN() === 20;
+    recent20.classList.toggle("active", on);
+    recent20.setAttribute("aria-pressed", on ? "true" : "false");
+    if (opts.popKey === "recent20") replayAnim(recent20, "is-pop");
   }
   const ok = state.results.filter(r => r.bars).length;
   const n = filteredResults().filter(r => r.bars).length;
@@ -2038,10 +2158,13 @@ function syncFilterChips(opts = {}) {
     if (state.filters.breakout) tags.push("突破");
     if (state.filters.reclaim) tags.push("收回");
     if (state.filters.touch) tags.push("觸碰");
-    const skip = state.ignoreLast10 ? "略過最新 10 根 · " : "";
+    const skip = state.ignoreLastBars ? `略過最新 ${state.ignoreLastBars} 根 · ` : "";
+    const recentN = recentTouchN();
+    const recent = recentN === 20 ? `最新 20 根須有觸點 · ` : "";
+    const mode = skip + recent;
     meta.innerHTML = tags.length
-      ? `${skip}篩選 <strong>${tags.join(" + ")}</strong> · <strong>${n}</strong> / ${ok} 檔`
-      : `${skip}顯示全部 · <strong>${ok}</strong> 檔`;
+      ? `${mode}篩選 <strong>${tags.join(" + ")}</strong> · <strong>${n}</strong> / ${ok} 檔`
+      : `${mode}顯示全部 · <strong>${ok}</strong> 檔`;
     replayAnim(meta, "is-swap");
   }
 }
@@ -2168,11 +2291,14 @@ function renderList(opts = {}) {
 
 function rowAnalysis(row) {
   if (!row?.bars) return row?.analysis || null;
-  if (!state.ignoreLast10) return row.analysis;
-  if (!row._skipAnalysis) {
-    row._skipAnalysis = analyzeSymbol(row.bars, "auto", CFG.lineIgnoreLastBars);
+  const skip = state.ignoreLastBars | 0;
+  const recent = recentTouchN();
+  const key = skip + ":" + recent;
+  if (!row._skipBy) row._skipBy = {};
+  if (!row._skipBy[key]) {
+    row._skipBy[key] = analyzeSymbol(row.bars, "auto", skip);
   }
-  return row._skipAnalysis;
+  return row._skipBy[key];
 }
 
 function analyzeRow(symbol, fullBars, dateStr) {
@@ -2689,10 +2815,29 @@ $("filterTouch").onclick = () => {
   applyFilters({ popKey: "touch" });
 };
 syncFilterChips();
-$("filterIgnoreLast10").onclick = () => {
-  state.ignoreLast10 = !state.ignoreLast10;
-  applyFilters({ popKey: "ignoreLast10" });
-};
+function applyLineMode(pop) {
+  if (state.view === "single" && state.selected) {
+    syncFilterChips(pop);
+    renderList({ animate: true });
+    const row = state.results.find(r => r.symbol === state.selected);
+    if (row) showSingle(row);
+    return;
+  }
+  applyFilters(pop);
+}
+function selectSkipLast(n) {
+  state.ignoreLastBars = state.ignoreLastBars === n ? 0 : n;
+  applyLineMode({ popKey: "skip" + n });
+}
+function selectRecentTouch(n) {
+  const base = CFG.recentTouchBars || 60;
+  state.recentTouchBars = recentTouchN() === n ? base : n;
+  applyLineMode({ popKey: "recent" + n });
+}
+$("filterSkip5").onclick = () => selectSkipLast(5);
+$("filterSkip10").onclick = () => selectSkipLast(10);
+$("filterSkip20").onclick = () => selectSkipLast(20);
+$("filterRecent20").onclick = () => selectRecentTouch(20);
 
 /** 視窗尺寸變動時重繪（canvas 依實際寬度計算，避免字被縮小） */
 let __resizeTimer = 0;

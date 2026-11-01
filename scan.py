@@ -2,7 +2,7 @@
 """Headless NDX100 / DJI30 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
-  ≥4 merged wick touches, support slope ≥ 0, resistance slope ≤ 0.
+  ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
   Draw from the first touch through the latest bar of the search window.
   Creek / Ice naming stays Wyckoff for the existing UI (Creek = support, Ice = resistance).
 """
@@ -200,7 +200,7 @@ def merge_touch_indices(indices):
     return [cl[0] for cl in clusters]
 
 
-def longest_touch_segment(indices):
+def _touch_segments(indices):
     merged = merge_touch_indices(indices)
     if not merged:
         return []
@@ -210,7 +210,35 @@ def longest_touch_segment(indices):
             segs.append([i])
         else:
             segs[-1].append(i)
-    return max(segs, key=lambda s: (len(s), s[-1] - s[0]))
+    return segs
+
+
+def _seg_key(s):
+    return (len(s), s[-1] - s[0])
+
+
+def choose_touch_segment(indices, min_touches, recent_lo=None):
+    segs = _touch_segments(indices)
+    if not segs:
+        return {"seg": [], "fail": "touches", "touches": 0}
+    enough = [s for s in segs if len(s) >= min_touches]
+    if not enough:
+        best = max(segs, key=_seg_key)
+        return {"seg": best, "fail": "touches", "touches": len(best)}
+    if recent_lo is not None:
+        recent = [s for s in enough if any(i >= recent_lo for i in s)]
+        if recent:
+            return {"seg": max(recent, key=_seg_key)}
+        best = max(enough, key=_seg_key)
+        return {"seg": best, "fail": "recent", "touches": len(best)}
+    return {"seg": max(enough, key=_seg_key)}
+
+
+def longest_touch_segment(indices):
+    segs = _touch_segments(indices)
+    if not segs:
+        return []
+    return max(segs, key=_seg_key)
 
 
 def collect_raw_touches(bars, line, resistance, start_i, end_i):
@@ -313,17 +341,17 @@ def format_why(kind, miss, no_window=False):
     return f"{side}不成線：未通過四點成線規則"
 
 
-def evaluate_candidate(bars, line, kind, win_lo, lookback):
+def evaluate_candidate(bars, line, kind, win_lo, lookback, min_touches=None, require_recent=True):
+    min_touches = MIN_TOUCHES if min_touches is None else min_touches
     n = len(bars)
     last_i = n - 1
     resistance = kind == "resistance"
     raw = collect_raw_touches(bars, line, resistance, win_lo, last_i)
-    seg = longest_touch_segment(raw)
-    if len(seg) < MIN_TOUCHES:
-        return {"fail": "touches", "touches": len(seg)}
-    recent_lo = last_i - (RECENT_TOUCH_BARS - 1)
-    if not any(i >= recent_lo for i in seg):
-        return {"fail": "recent", "touches": len(seg)}
+    recent_lo = (last_i - (RECENT_TOUCH_BARS - 1)) if (require_recent and RECENT_TOUCH_BARS > 0) else None
+    picked = choose_touch_segment(raw, min_touches, recent_lo)
+    if picked.get("fail"):
+        return {"fail": picked["fail"], "touches": picked.get("touches", 0)}
+    seg = picked["seg"]
     first_i = seg[0]
     body_n, wick_n = pierce_counts(bars, line, resistance, first_i + 1, last_i)
     if body_n > MAX_BODY_BREAKS or wick_n > MAX_WICK_BREAKS:
@@ -351,7 +379,7 @@ def _pivots_in_lookback(bars, lookback):
     return [i + start_idx for i in highs], [i + start_idx for i in lows]
 
 
-def collect_side_line(bars, lookback, kind):
+def collect_side_line(bars, lookback, kind, min_touches=None, require_recent=True):
     n = len(bars)
     actual = min(lookback, n)
     win_lo = n - actual
@@ -366,12 +394,11 @@ def collect_side_line(bars, lookback, kind):
                 continue
             p1 = bars[i1]["l"] if kind == "support" else bars[i1]["h"]
             p2 = bars[i2]["l"] if kind == "support" else bars[i2]["h"]
-            if kind == "support" and p2 < p1:
-                continue
-            if kind == "resistance" and p2 > p1:
-                continue
             line = line_through(i1, p1, i2, p2)
-            ev = evaluate_candidate(bars, line, kind, win_lo, actual)
+            ev = evaluate_candidate(
+                bars, line, kind, win_lo, actual,
+                min_touches=min_touches, require_recent=require_recent,
+            )
             cand = ev.get("line")
             if cand is None:
                 _note_miss(miss, ev)
@@ -427,7 +454,8 @@ def analyze_symbol(bars, windows=None):
     n = len(bars)
     found = {}
     why = {"support": None, "resistance": None, "channel": None}
-    for kind in ("support", "resistance"):
+
+    def search_kind(kind, min_touches=None, require_recent=True):
         miss = _empty_miss()
         windows_tried = 0
         for lookback in windows:
@@ -435,15 +463,21 @@ def analyze_symbol(bars, windows=None):
             if actual < 80 and lookback >= 80:
                 continue
             windows_tried += 1
-            line, side_miss = collect_side_line(bars, actual, kind)
+            line, got_miss = collect_side_line(
+                bars, actual, kind, min_touches=min_touches, require_recent=require_recent
+            )
             if line:
-                found[kind] = line
-                miss = None
-                break
-            miss = _merge_miss(miss, side_miss)
+                return line, None, windows_tried
+            miss = _merge_miss(miss, got_miss)
             if actual >= n:
                 break
-        if kind not in found:
+        return None, miss, windows_tried
+
+    for kind in ("support", "resistance"):
+        line, miss, windows_tried = search_kind(kind)
+        if line:
+            found[kind] = line
+        else:
             why[kind] = format_why(kind, miss, windows_tried == 0)
     up = found.get("support")
     down = found.get("resistance")
@@ -576,7 +610,7 @@ def recent_signal(row: dict, lookback: int = TREND_SIGNAL_BARS) -> str:
             bar = bars[i]
             body_brk = body_full_cross(bar, y, resistance)
             wick_brk = wick_only_cross(bar, y, resistance)
-            if body_brk or wick_brk:
+            if body_brk:
                 breakout = True
             if body_brk and body_broke_at < 0:
                 body_broke_at = i
