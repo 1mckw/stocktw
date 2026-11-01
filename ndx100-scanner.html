@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>NDX100 日線掃描器 · 趨勢線 / Creek / Ice</title>
-<meta name="description" content="NDX100 / DJI30 成分股日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
+<meta name="description" content="NDX100 / DJI30 / CRYPTO30 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
 <meta name="theme-color" content="#161618" />
 <meta name="color-scheme" content="dark" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -866,8 +866,10 @@
         <div class="filter-bar" aria-label="篩選條件">
           <span class="filter-bar-label">篩選</span>
           <div class="filter-chips" role="group">
-            <button type="button" class="filter-chip" id="filterIndexNdx" data-index="ndx100" aria-pressed="true">NDX100</button>
+            <button type="button" class="filter-chip" id="filterIndexAll" data-index="all" aria-pressed="true">ALL</button>
+            <button type="button" class="filter-chip" id="filterIndexNdx" data-index="ndx100" aria-pressed="false">NDX100</button>
             <button type="button" class="filter-chip" id="filterIndexDji" data-index="dji30" aria-pressed="false">DJI30</button>
+            <button type="button" class="filter-chip" id="filterIndexCrypto" data-index="crypto30" aria-pressed="false">CRYPTO30</button>
             <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
             <button type="button" class="filter-chip" id="filterReclaim" data-filter="reclaim" aria-pressed="false" title="近 5 根先實體跌破，之後有一根實體完全回到線內">收回</button>
             <button type="button" class="filter-chip" id="filterTouch" data-filter="touch" aria-pressed="false">觸碰</button>
@@ -934,6 +936,16 @@ const DJI30_FALLBACK = [
   "MRK","MSFT","NKE","NVDA","PG","TRV","UNH","V","VZ","WMT"
 ];
 
+/** Crypto 市值前 30（不含穩定幣；Yahoo -USD） */
+const CRYPTO30_FALLBACK = [
+  "BTC-USD","ETH-USD","BNB-USD","XRP-USD","SOL-USD",
+  "TRX-USD","HYPE32196-USD","ZEC-USD","DOGE-USD","XMR-USD",
+  "LINK-USD","LEO-USD","ADA-USD","XLM-USD","NEAR-USD",
+  "BCH-USD","UNI7083-USD","LTC-USD","AVAX-USD","SUI20947-USD",
+  "TON-USD","HBAR-USD","SHIB-USD","TAO22974-USD","CRO-USD",
+  "ENA-USD","QNT-USD","OKB-USD","AAVE-USD","PEPE24478-USD"
+];
+
 const INDEXES = {
   ndx100: {
     label: "NDX100",
@@ -946,8 +958,18 @@ const INDEXES = {
     fallback: DJI30_FALLBACK,
     apiPath: "/api/dji30",
     minRows: 25
+  },
+  crypto30: {
+    label: "CRYPTO30",
+    fallback: CRYPTO30_FALLBACK,
+    apiPath: "/api/crypto30",
+    minRows: 20
   }
 };
+
+function displaySymbol(sym) {
+  return String(sym || "").replace(/-USD$/i, "").replace(/\d+$/, "");
+}
 
 const CFG = {
   pivotLeft: 3,
@@ -981,8 +1003,15 @@ const CFG = {
 };
 
 /* ========== State ========== */
+const INDEX_CHIP_IDS = [
+  ["filterIndexAll", "all"],
+  ["filterIndexNdx", "ndx100"],
+  ["filterIndexDji", "dji30"],
+  ["filterIndexCrypto", "crypto30"]
+];
+
 const state = {
-  index: "ndx100",
+  index: "all",
   symbols: [...NDX100_FALLBACK],
   results: [],
   cache: {},          // symbol → 完整日線（未截斷）
@@ -998,11 +1027,12 @@ const state = {
 };
 
 function currentIndexConfig() {
+  if (state.index === "all") return { label: "ALL" };
   return INDEXES[state.index] || INDEXES.ndx100;
 }
 
 function setIndexChipsDisabled(on) {
-  for (const id of ["filterIndexNdx", "filterIndexDji"]) {
+  for (const [id] of INDEX_CHIP_IDS) {
     const el = $(id);
     if (el) el.disabled = !!on;
   }
@@ -1011,7 +1041,7 @@ function setIndexChipsDisabled(on) {
 function syncIndexUi() {
   const cfg = currentIndexConfig();
   document.title = `${cfg.label} 日線掃描器 · 趨勢線 / Creek / Ice`;
-  for (const [id, key] of [["filterIndexNdx", "ndx100"], ["filterIndexDji", "dji30"]]) {
+  for (const [id, key] of INDEX_CHIP_IDS) {
     const el = $(id);
     if (!el) continue;
     const on = state.index === key;
@@ -1021,13 +1051,22 @@ function syncIndexUi() {
 }
 
 function selectIndex(v) {
-  if (!INDEXES[v] || v === state.index) return;
+  if ((v !== "all" && !INDEXES[v]) || v === state.index) return;
   state.index = v;
   syncIndexUi();
-  state.symbols = [...currentIndexConfig().fallback];
-  refreshSavedPacks().then((dates) => {
-    if (ON_PAGES && dates[0]) openPack(dates[0]);
-    else setStatusText(`已選 ${currentIndexConfig().label} — 選日期後開始掃描`);
+  refreshSavedPacks(state.packDate).then((dates) => {
+    if (ON_PAGES) {
+      const d = state.packDate || $("packDate").value || dates[0];
+      if (d) openPack(d);
+      return;
+    }
+    if (state.results.some(r => r.bars)) {
+      applyFilters();
+      const n = filteredResults().filter(r => r.bars).length;
+      setStatusText(`顯示 ${currentIndexConfig().label} · ${n} 檔`);
+      return;
+    }
+    setStatusText(`已選 ${currentIndexConfig().label} — 掃描會跑全部指數`);
   });
 }
 
@@ -1106,10 +1145,10 @@ function parseYahooBars(json) {
   return bars;
 }
 
-async function fetchIndexSymbols() {
-  const cfg = currentIndexConfig();
+async function fetchIndexSymbols(indexKey = state.index) {
+  const cfg = INDEXES[indexKey] || INDEXES.ndx100;
   const urls =
-    state.index === "ndx100"
+    indexKey === "ndx100"
       ? [
           `${LOCAL_BASE}${cfg.apiPath}`,
           "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://api.nasdaq.com/api/quote/list-type/nasdaq100"),
@@ -1122,10 +1161,11 @@ async function fetchIndexSymbols() {
       const res = await fetch(url, { headers: { Accept: "application/json" } });
       if (!res.ok) continue;
       const json = await res.json();
-      if (state.index === "dji30") {
+      if (indexKey === "dji30" || indexKey === "crypto30") {
         const syms = json?.symbols;
         if (Array.isArray(syms) && syms.length >= cfg.minRows) {
-          return syms.map(s => String(s).toUpperCase()).filter(Boolean).sort();
+          const mapped = syms.map(s => String(s).toUpperCase()).filter(Boolean);
+          return indexKey === "crypto30" ? mapped : mapped.sort();
         }
         continue;
       }
@@ -1136,6 +1176,23 @@ async function fetchIndexSymbols() {
     } catch (_) { /* try next */ }
   }
   return [...cfg.fallback];
+}
+
+async function fetchAllUniverseSymbols() {
+  const membership = new Map();
+  for (const key of Object.keys(INDEXES)) {
+    let syms;
+    try {
+      syms = await fetchIndexSymbols(key);
+    } catch (_) {
+      syms = [...INDEXES[key].fallback];
+    }
+    for (const s of syms) {
+      if (!membership.has(s)) membership.set(s, []);
+      if (!membership.get(s).includes(key)) membership.get(s).push(key);
+    }
+  }
+  return membership;
 }
 
 async function fetchDailyBars(symbol) {
@@ -1941,9 +1998,9 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
     ctx.textAlign = "left";
     ctx.font = mono(13, 600);
     ctx.fillStyle = c.textStrong;
-    ctx.fillText(symbol, left, 22);
+    ctx.fillText(displaySymbol(symbol), left, 22);
     if (!narrow) {
-      const symW = ctx.measureText(symbol).width;
+      const symW = ctx.measureText(displaySymbol(symbol)).width;
       ctx.font = sans(11.5, 400);
       ctx.fillStyle = c.text;
       ctx.fillText(`日線 · ${dateStr} · 顯示 ${win} 根 · 做線 ${lineWin} 根`, left + symW + 12, 22);
@@ -2106,7 +2163,21 @@ function anyFilterOn() {
   return !!(state.filters.breakout || state.filters.reclaim || state.filters.touch);
 }
 
+function rowIndexes(row) {
+  if (Array.isArray(row?.indexes) && row.indexes.length) return row.indexes;
+  if (row?.index && INDEXES[row.index]) return [row.index];
+  return null;
+}
+
+function matchesIndex(row) {
+  if (state.index === "all") return true;
+  const idxs = rowIndexes(row);
+  if (!idxs) return true;
+  return idxs.includes(state.index);
+}
+
 function matchesFilters(row) {
+  if (!matchesIndex(row)) return false;
   if (!anyFilterOn()) return true;
   if (row.error || !row.bars) return false;
   const ev = recentLineEvents(row);
@@ -2190,7 +2261,8 @@ function renderList(opts = {}) {
   const box = $("resultList");
   box.innerHTML = "";
   if (opts.animate) replayAnim(box, "is-swap");
-  const ok = state.results.filter(r => r.bars).length;
+  const universe = state.results.filter(matchesIndex);
+  const ok = universe.filter(r => r.bars).length;
   const filtered = filteredResults();
   // 更新篩選列計數（避免與 applyFilters 循環：此處只刷新 meta 文字）
   const meta = $("filterMeta");
@@ -2209,7 +2281,7 @@ function renderList(opts = {}) {
     const active = anyFilterOn();
     const next = active
       ? `${filtered.filter(r => r.bars).length} / ${ok} 檔`
-      : `${ok} / ${state.results.length} 檔`;
+      : `${ok} / ${universe.length} 檔`;
     if (listCount.textContent !== next) {
       listCount.textContent = next;
       replayAnim(listCount, "is-swap");
@@ -2223,7 +2295,7 @@ function renderList(opts = {}) {
       + (r.error ? " err" : "");
     const symEl = document.createElement("span");
     symEl.className = "sym";
-    symEl.textContent = r.symbol;
+    symEl.textContent = displaySymbol(r.symbol);
     el.appendChild(symEl);
 
     const tagBox = document.createElement("span");
@@ -2355,7 +2427,7 @@ function showSingle(r) {
   btnS?.classList.toggle("active", true);
   btnP?.classList.toggle("active", false);
   setViewerTitle(
-    r.symbol || "單圖",
+    displaySymbol(r.symbol) || "單圖",
     r.error
       ? String(r.error)
       : ((state.packDate ? `日線 · ${state.packDate}` : "日線單圖") + " · 滾輪縮放 · 拖曳平移 · 雙擊還原")
@@ -2394,7 +2466,7 @@ function renderPack() {
     const ev = recentLineEvents(r);
     const symEl = document.createElement("span");
     symEl.className = "sym";
-    symEl.textContent = r.symbol;
+    symEl.textContent = displaySymbol(r.symbol);
     const dateEl = document.createElement("span");
     dateEl.className = "pack-date";
     dateEl.textContent = state.packDate || "";
@@ -2488,7 +2560,7 @@ function setView(v) {
   }
   showPane("singleView");
   setViewerTitle(
-    state.selected || "單圖",
+    displaySymbol(state.selected) || "單圖",
     state.packDate ? `日線 · ${state.packDate}` : "日線單圖"
   );
 }
@@ -2505,14 +2577,17 @@ function buildPackPayload(dateStr) {
     date: dateStr,
     index: state.index,
     indexLabel: currentIndexConfig().label,
+    indexes: Object.keys(INDEXES),
     savedAt: new Date().toISOString(),
     count: state.results.filter(r => r.bars).length,
     results: state.results.map(r => {
       if (r.error || !r.bars) {
-        return { symbol: r.symbol, error: r.error || "no data" };
+        return { symbol: r.symbol, error: r.error || "no data", index: r.index, indexes: r.indexes };
       }
       return {
         symbol: r.symbol,
+        index: r.index,
+        indexes: r.indexes,
         bars: r.bars,
         analysis: {
           window: r.analysis.window,
@@ -2533,7 +2608,10 @@ async function refreshSavedPacks(selectDate) {
     if (ON_PAGES) {
       const res = await fetch(packAsset("manifest.json"), { cache: "no-store" });
       const json = await res.json();
-      const packs = (json.packs || []).filter(p => !state.index || p.index === state.index);
+      const packs = (json.packs || []).filter(p => {
+        if (!state.index || state.index === "all") return true;
+        return p.index === state.index;
+      });
       dates = [...new Set(packs.map(p => p.date))];
     } else {
       const res = await fetch(`${LOCAL_BASE}/api/packs`);
@@ -2592,6 +2670,29 @@ async function savePack(dateStr) {
   }
 }
 
+function mapPackRow(r, json) {
+  const bars = r.bars || null;
+  const analysis = bars && r.analysis ? rebaseAnalysis(r.analysis, bars.length) : (r.analysis || null);
+  const idx = r.index || json.index || null;
+  const indexes = r.indexes || (idx ? [idx] : null);
+  return {
+    symbol: r.symbol,
+    error: r.error || null,
+    index: idx,
+    indexes,
+    bars,
+    analysis
+  };
+}
+
+async function fetchPackJson(file) {
+  const res = await fetch(packAsset(file), { cache: "no-store" });
+  if (!res.ok) return null;
+  const json = await res.json();
+  if (json?.error) return null;
+  return json;
+}
+
 async function openPack(dateStr) {
   const d = dateStr || $("savedPacks").value || $("packDate").value;
   if (!d) {
@@ -2600,37 +2701,67 @@ async function openPack(dateStr) {
   }
   setStatusText(`開啟 ${d} Chartpack…`);
   try {
-    let res;
+    let json = null;
     if (ON_PAGES) {
-      const files = [`${state.index}-${d}.json`, `${d}.json`];
-      res = null;
-      for (const f of files) {
-        const tryRes = await fetch(packAsset(f), { cache: "no-store" });
-        if (tryRes.ok) { res = tryRes; break; }
+      if (state.index === "all") {
+        const bySym = new Map();
+        for (const key of Object.keys(INDEXES)) {
+          const part = await fetchPackJson(`${key}-${d}.json`);
+          if (!part) continue;
+          json = json || part;
+          for (const r of part.results || []) {
+            const row = mapPackRow(r, part);
+            const prev = bySym.get(row.symbol);
+            if (!prev) {
+              bySym.set(row.symbol, row);
+              continue;
+            }
+            const merged = new Set([...(prev.indexes || []), ...(row.indexes || [])]);
+            prev.indexes = [...merged];
+            if (!prev.bars && row.bars) {
+              prev.bars = row.bars;
+              prev.analysis = row.analysis;
+              prev.error = row.error;
+            }
+          }
+        }
+        const fallback = json ? null : await fetchPackJson(`${d}.json`);
+        if (fallback) {
+          json = fallback;
+          for (const r of fallback.results || []) {
+            if (!bySym.has(r.symbol)) bySym.set(r.symbol, mapPackRow(r, fallback));
+          }
+        }
+        if (!json && !bySym.size) throw new Error("找不到該日 Chartpack");
+        json = json || { date: d, results: [] };
+        json.results = [...bySym.values()];
+      } else {
+        const files = [`${state.index}-${d}.json`, `${d}.json`];
+        for (const f of files) {
+          json = await fetchPackJson(f);
+          if (json) break;
+        }
+        if (!json) throw new Error("找不到該日 Chartpack");
       }
-      if (!res) throw new Error("找不到該日 Chartpack");
     } else {
-      res = await fetch(`${LOCAL_BASE}/api/packs/${encodeURIComponent(d)}`);
+      const res = await fetch(`${LOCAL_BASE}/api/packs/${encodeURIComponent(d)}`);
+      json = await res.json();
+      if (!res.ok || json.error) throw new Error(json.error || ("HTTP " + res.status));
     }
-    const json = await res.json();
-    if (!res.ok || json.error) throw new Error(json.error || ("HTTP " + res.status));
     state.packDate = json.date || d;
     $("packDate").value = state.packDate;
-    if (json.index && INDEXES[json.index]) {
+    if (
+      state.index !== "all" &&
+      json.index &&
+      INDEXES[json.index] &&
+      !(Array.isArray(json.indexes) && json.indexes.length > 1)
+    ) {
       state.index = json.index;
       syncIndexUi();
     }
-    state.results = (json.results || []).map(r => {
-      const bars = r.bars || null;
-      const analysis = bars && r.analysis ? rebaseAnalysis(r.analysis, bars.length) : (r.analysis || null);
-      return {
-        symbol: r.symbol,
-        error: r.error || null,
-        bars,
-        analysis
-      };
-    });
-    state.selected = state.results.find(r => r.bars)?.symbol || null;
+    state.results = (json.results || []).map(r => mapPackRow(r, json));
+    state.selected = filteredResults().find(r => r.bars)?.symbol
+      || state.results.find(r => r.bars)?.symbol || null;
     state.cache = {};
     renderList();
     updatePackButton();
@@ -2665,15 +2796,20 @@ async function rebuildForDate(dateStr) {
     }
     return;
   }
+  const prevIdx = {};
+  for (const r of state.results) {
+    if (r.indexes?.length) prevIdx[r.symbol] = r.indexes;
+  }
   state.results = [];
   state.selected = null;
   setStatusText(`重算 ${dateStr} Chartpack…`);
   for (const sym of syms) {
     try {
       const row = analyzeRow(sym, state.cache[sym], dateStr);
+      if (prevIdx[sym]) row.indexes = prevIdx[sym];
       state.results.push(row);
     } catch (e) {
-      state.results.push({ symbol: sym, error: String(e.message || e) });
+      state.results.push({ symbol: sym, error: String(e.message || e), indexes: prevIdx[sym] });
     }
   }
   renderList({ animate: true });
@@ -2702,8 +2838,7 @@ async function runScan() {
   $("resultList").innerHTML = "";
   $("packView").innerHTML = "";
   showPane("emptyHint");
-  const idxLabel = currentIndexConfig().label;
-  setViewerTitle("掃描中", `分析 ${idxLabel} 日線…`);
+  setViewerTitle("掃描中", "分析 NDX100 · DJI30 · CRYPTO30 日線…");
   if ($("listCount")) {
     $("listCount").textContent = "掃描中…";
     replayAnim($("listCount"), "is-swap");
@@ -2713,12 +2848,20 @@ async function runScan() {
   state.packDate = dateStr;
   $("packDate").value = dateStr;
 
-  setStatusText(`取得 ${idxLabel} 成分股…`);
+  setStatusText("取得全部成分股…");
+  let membership;
   try {
-    state.symbols = await fetchIndexSymbols();
+    membership = await fetchAllUniverseSymbols();
   } catch (_) {
-    state.symbols = [...currentIndexConfig().fallback];
+    membership = new Map();
+    for (const key of Object.keys(INDEXES)) {
+      for (const s of INDEXES[key].fallback) {
+        if (!membership.has(s)) membership.set(s, []);
+        if (!membership.get(s).includes(key)) membership.get(s).push(key);
+      }
+    }
   }
+  state.symbols = [...membership.keys()];
 
   const total = state.symbols.length;
   let done = 0;
@@ -2731,6 +2874,7 @@ async function runScan() {
       const full = await fetchDailyBars(sym);
       state.cache[sym] = full;
       const row = analyzeRow(sym, full, dateStr);
+      row.indexes = membership.get(sym) || [state.index];
       state.results.push(row);
       // 掃描中先顯示單圖，完成後切 Chartpack
       if (!state.selected) {
@@ -2739,7 +2883,11 @@ async function runScan() {
         setView("single");
       }
     } catch (e) {
-      state.results.push({ symbol: sym, error: String(e.message || e) });
+      state.results.push({
+        symbol: sym,
+        error: String(e.message || e),
+        indexes: membership.get(sym) || [state.index]
+      });
     }
     done++;
     setProgress(done, total);
@@ -2772,8 +2920,10 @@ async function runScan() {
 
 $("packDate").value = todayISO();
 $("packDate").max = todayISO();
+$("filterIndexAll").onclick = () => selectIndex("all");
 $("filterIndexNdx").onclick = () => selectIndex("ndx100");
 $("filterIndexDji").onclick = () => selectIndex("dji30");
+$("filterIndexCrypto").onclick = () => selectIndex("crypto30");
 syncIndexUi();
 $("btnScan").onclick = () => runScan();
 $("btnStop").onclick = () => { state.stop = true; };

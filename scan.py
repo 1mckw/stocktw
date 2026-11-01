@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless NDX100 / DJI30 daily scanner for local use and GitHub Actions.
+"""Headless NDX100 / DJI30 / CRYPTO30 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
   ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
@@ -14,7 +14,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from server import DJI30_SYMBOLS, PACKS_DIR, ensure_packs_dir, http_get
+from server import CRYPTO30_SYMBOLS, DJI30_SYMBOLS, PACKS_DIR, ensure_packs_dir, http_get
 
 NDX100_FALLBACK = [
     "AAPL", "ABNB", "ADBE", "ADI", "ADP", "ADSK", "AEP", "ALAB", "ALNY", "AMAT", "AMD", "AMGN", "AMZN", "APP",
@@ -548,6 +548,9 @@ def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
     if index == "dji30":
         symbols = list(DJI30_SYMBOLS)
         label = "DJI30"
+    elif index == "crypto30":
+        symbols = list(CRYPTO30_SYMBOLS)
+        label = "CRYPTO30"
     else:
         symbols = fetch_ndx_symbols()
         label = "NDX100"
@@ -680,8 +683,8 @@ def write_manifest(out: Path) -> dict:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Scan NDX100 / DJI30 daily trend lines")
-    p.add_argument("--index", choices=["ndx100", "dji30", "both"], default="both")
+    p = argparse.ArgumentParser(description="Scan NDX100 / DJI30 / CRYPTO30 daily trend lines")
+    p.add_argument("--index", choices=["ndx100", "dji30", "crypto30", "both"], default="both")
     p.add_argument("--date", default="", help="YYYY-MM-DD (UTC today if empty)")
     p.add_argument("--sleep", type=float, default=0.25, help="delay between Yahoo requests")
     p.add_argument("--out", default="", help="output directory (default chartpacks/)")
@@ -690,7 +693,7 @@ def main() -> None:
     out = Path(args.out) if args.out else PACKS_DIR
     out.mkdir(parents=True, exist_ok=True)
     ensure_packs_dir()
-    indexes = ["ndx100", "dji30"] if args.index == "both" else [args.index]
+    indexes = ["ndx100", "dji30", "crypto30"] if args.index == "both" else [args.index]
     written = []
     for idx in indexes:
         pack = scan_index(idx, date_str, args.sleep)

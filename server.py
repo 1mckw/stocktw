@@ -23,6 +23,16 @@ DJI30_SYMBOLS = [
     "MRK", "MSFT", "NKE", "NVDA", "PG", "TRV", "UNH", "V", "VZ", "WMT",
 ]
 
+# Crypto top 30 by market cap, no stablecoins. Yahoo -USD tickers (2026-11).
+CRYPTO30_SYMBOLS = [
+    "BTC-USD", "ETH-USD", "BNB-USD", "XRP-USD", "SOL-USD",
+    "TRX-USD", "HYPE32196-USD", "ZEC-USD", "DOGE-USD", "XMR-USD",
+    "LINK-USD", "LEO-USD", "ADA-USD", "XLM-USD", "NEAR-USD",
+    "BCH-USD", "UNI7083-USD", "LTC-USD", "AVAX-USD", "SUI20947-USD",
+    "TON-USD", "HBAR-USD", "SHIB-USD", "TAO22974-USD", "CRO-USD",
+    "ENA-USD", "QNT-USD", "OKB-USD", "AAVE-USD", "PEPE24478-USD",
+]
+
 
 def http_get(url: str, timeout: int = 30) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json,*/*"})
@@ -105,6 +115,10 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/api/dji30":
             self._json(200, {"symbols": DJI30_SYMBOLS, "count": len(DJI30_SYMBOLS)})
+            return
+
+        if path == "/api/crypto30":
+            self._json(200, {"symbols": CRYPTO30_SYMBOLS, "count": len(CRYPTO30_SYMBOLS)})
             return
 
         if path == "/api/chart":
