@@ -1,6 +1,6 @@
 # stocktw
 
-台灣50 / 中型100 / 高股息 日線掃描器：四點成線趨勢線、Creek / Ice、平行通道，可存 Chartpack。商品為台股上市成分股（Yahoo `.TW`）。
+台股**上市**公司日線掃描器：四點成線趨勢線、Creek / Ice、平行通道，可存 Chartpack。名單為證交所全部上市普通股（Yahoo `.TW`），清單與圖表代號旁顯示公司名稱。
 
 ## 本機執行
 
@@ -10,7 +10,8 @@ python server.py
 
 瀏覽器開啟 [http://127.0.0.1:8765/](http://127.0.0.1:8765/)
 
-- `server.py`：靜態頁面、Yahoo 圖表代理、上市指數成分股、Chartpack 存檔
+- `server.py`：靜態頁面、Yahoo 圖表代理、上市名單、Chartpack 存檔
+- `listed.json`：上市代號與公司名稱
 - `ndx100-scanner.html`：掃描與圖表 UI（含手機版面）
 
 ## GitHub Actions
@@ -20,10 +21,10 @@ python server.py
 無介面掃描（與網頁同一套規則：四點成線、間隔 ≤120K、最新 60K 須有觸點）：
 
 ```bash
-python scan.py --index both
+python scan.py
 ```
 
-在 GitHub 只跑 **Actions → Scan → Run workflow**，會掃描 台灣50 + 中型100 + 高股息 並更新網站。
+在 GitHub 只跑 **Actions → Scan → Run workflow**，會掃描全部上市公司並更新網站。
 
 平日自動兩次：**10:30 UTC**、**22:30 UTC**（掃描 + 更新網站）。
 

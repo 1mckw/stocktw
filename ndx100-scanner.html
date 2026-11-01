@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>台灣50 日線掃描器 · 趨勢線 / Creek / Ice</title>
-<meta name="description" content="台灣50 / 中型100 / 高股息 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
+<title>台股上市 日線掃描器 · 趨勢線 / Creek / Ice</title>
+<meta name="description" content="台股上市日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
 <meta name="theme-color" content="#161618" />
 <meta name="color-scheme" content="dark" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -388,7 +388,26 @@
     background: var(--accent-line);
   }
   .list-item.err { opacity: 0.55; }
-  .list-item .sym { flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+  .list-item .sym {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  .list-item .code { flex: 0 0 auto; }
+  .list-item .cname {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .list-item.active .cname,
+  .list-item:hover .cname { color: var(--text); }
   .list-item .tags {
     display: flex;
     gap: 8px;
@@ -588,6 +607,18 @@
     font-size: 13.5px;
     font-weight: 600;
     color: var(--text);
+  }
+  .pack-card header .sym {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
+  }
+  .pack-card header .cname {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--muted);
   }
   .pack-card header .pack-date {
     font-family: var(--mono);
@@ -866,10 +897,6 @@
         <div class="filter-bar" aria-label="篩選條件">
           <span class="filter-bar-label">篩選</span>
           <div class="filter-chips" role="group">
-            <button type="button" class="filter-chip" id="filterIndexAll" data-index="all" aria-pressed="true">ALL</button>
-            <button type="button" class="filter-chip" id="filterIndexNdx" data-index="tw50" aria-pressed="false">台灣50</button>
-            <button type="button" class="filter-chip" id="filterIndexDji" data-index="mid100" aria-pressed="false">中型100</button>
-            <button type="button" class="filter-chip" id="filterIndexCrypto" data-index="hdiv" aria-pressed="false">高股息</button>
             <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
             <button type="button" class="filter-chip" id="filterReclaim" data-filter="reclaim" aria-pressed="false" title="近 5 根先實體跌破，之後有一根實體完全回到線內">收回</button>
             <button type="button" class="filter-chip" id="filterTouch" data-filter="touch" aria-pressed="false">觸碰</button>
@@ -877,7 +904,7 @@
         </div>
         <span class="filter-meta" id="filterMeta">顯示全部</span>
       </div>
-      <div class="list-head" aria-hidden="true"><span>代號</span><span>近 5 根訊號</span></div>
+      <div class="list-head" aria-hidden="true"><span>代號 名稱</span><span>近 5 根訊號</span></div>
       <div id="resultList"></div>
     </aside>
 
@@ -917,61 +944,46 @@
 </div>
 
 <script>
-/* ========== 成分股 fallback ========== */
-const TW50_FALLBACK = [
-  "2330.TW","2454.TW","2308.TW","2317.TW","3711.TW","2303.TW","3037.TW","2383.TW","1303.TW","2881.TW",
-  "2891.TW","3017.TW","2882.TW","2887.TW","2345.TW","2382.TW","2327.TW","2360.TW","2885.TW","2884.TW",
-  "2059.TW","2408.TW","2357.TW","3443.TW","6669.TW","2883.TW","3653.TW","2886.TW","2890.TW","2344.TW",
-  "3008.TW","3231.TW","2301.TW","2412.TW","3665.TW","2892.TW","2880.TW","4958.TW","2368.TW","6446.TW",
-  "1216.TW","2395.TW","2449.TW","8046.TW","7769.TW","5880.TW","2603.TW","4904.TW","3045.TW","6505.TW"
-];
-
-/** 臺灣中型100（上市 · 對照 0051 2026-09-30） */
-const MID100_FALLBACK = [
-  "3481.TW","2379.TW","3189.TW","3034.TW","3661.TW","1301.TW","6770.TW","2313.TW","1326.TW","2409.TW",
-  "2337.TW","2404.TW","3044.TW","2801.TW","2002.TW","6239.TW","2376.TW","5876.TW","4938.TW","1101.TW",
-  "1590.TW","3702.TW","2615.TW","3036.TW","2324.TW","6515.TW","2207.TW","3533.TW","5871.TW","2356.TW",
-  "6213.TW","6415.TW","2834.TW","6805.TW","8996.TW","2347.TW","6139.TW","2618.TW","6257.TW","1605.TW",
-  "2912.TW","1519.TW","1560.TW","2609.TW","2377.TW","3026.TW","2455.TW","2049.TW","6531.TW","5434.TW",
-  "2353.TW","2474.TW","6442.TW","1402.TW","2027.TW","6285.TW","1102.TW","2492.TW","1504.TW","6919.TW",
-  "2812.TW","2315.TW","7750.TW","3023.TW","2385.TW","3006.TW","2354.TW","1513.TW","2610.TW","6409.TW",
-  "7610.TW","8464.TW","1717.TW","1802.TW","6196.TW","9904.TW","2451.TW","3167.TW","5269.TW","8210.TW",
-  "1503.TW","1476.TW","2105.TW","2542.TW","6691.TW","6789.TW","2633.TW","2467.TW","9945.TW","3005.TW",
-  "1229.TW","3030.TW","6526.TW","6949.TW","6781.TW","3532.TW","9910.TW","2646.TW","2838.TW","2645.TW"
-];
-
-/** 臺灣高股息（上市 · 對照 0056 2026-09-30） */
-const HDIV_FALLBACK = [
-  "1303.TW","2408.TW","2357.TW","2890.TW","2880.TW","2344.TW","2891.TW","3231.TW","2382.TW","2886.TW",
-  "2603.TW","2883.TW","2887.TW","2885.TW","2884.TW","2301.TW","1216.TW","2303.TW","2379.TW","2317.TW",
-  "3045.TW","4904.TW","3034.TW","3044.TW","3036.TW","3711.TW","2454.TW","2376.TW","4938.TW","5876.TW",
-  "2618.TW","6239.TW","2449.TW","2356.TW","3702.TW","2347.TW","2324.TW","2377.TW","6285.TW","1102.TW",
-  "2474.TW","2027.TW","2105.TW","2353.TW","1513.TW","3023.TW","2385.TW","3005.TW","9904.TW","2645.TW"
-];
-
-const INDEXES = {
-  tw50: {
-    label: "台灣50",
-    fallback: TW50_FALLBACK,
-    apiPath: "/api/tw50",
-    minRows: 40
-  },
-  mid100: {
-    label: "中型100",
-    fallback: MID100_FALLBACK,
-    apiPath: "/api/mid100",
-    minRows: 80
-  },
-  hdiv: {
-    label: "高股息",
-    fallback: HDIV_FALLBACK,
-    apiPath: "/api/hdiv",
-    minRows: 40
-  }
-};
-
-function displaySymbol(sym) {
+function displayCode(sym) {
   return String(sym || "").replace(/\.TW$/i, "");
+}
+
+function nameOf(sym) {
+  const s = String(sym || "").toUpperCase();
+  return state.names[s] || state.names[displayCode(s)] || "";
+}
+
+function tickerLabel(rowOrSym, name) {
+  if (rowOrSym && typeof rowOrSym === "object") {
+    const code = displayCode(rowOrSym.symbol);
+    const n = rowOrSym.name || name || nameOf(rowOrSym.symbol);
+    return n ? `${code} ${n}` : code;
+  }
+  const code = displayCode(rowOrSym);
+  const n = name || nameOf(rowOrSym);
+  return n ? `${code} ${n}` : code;
+}
+
+function displaySymbol(sym, name) {
+  return tickerLabel(sym, name);
+}
+
+function fillNameEl(parent, row) {
+  const wrap = document.createElement("span");
+  wrap.className = "sym";
+  const codeEl = document.createElement("span");
+  codeEl.className = "code";
+  codeEl.textContent = displayCode(row?.symbol);
+  wrap.appendChild(codeEl);
+  const n = row?.name || nameOf(row?.symbol);
+  if (n) {
+    const nameEl = document.createElement("span");
+    nameEl.className = "cname";
+    nameEl.textContent = n;
+    wrap.appendChild(nameEl);
+  }
+  parent.appendChild(wrap);
+  return wrap;
 }
 
 const CFG = {
@@ -1006,16 +1018,10 @@ const CFG = {
 };
 
 /* ========== State ========== */
-const INDEX_CHIP_IDS = [
-  ["filterIndexAll", "all"],
-  ["filterIndexNdx", "tw50"],
-  ["filterIndexDji", "mid100"],
-  ["filterIndexCrypto", "hdiv"]
-];
-
 const state = {
-  index: "all",
-  symbols: [...TW50_FALLBACK],
+  index: "listed",
+  names: {},
+  symbols: [],
   results: [],
   cache: {},          // symbol → 完整日線（未截斷）
   selected: null,
@@ -1030,47 +1036,24 @@ const state = {
 };
 
 function currentIndexConfig() {
-  if (state.index === "all") return { label: "ALL" };
-  return INDEXES[state.index] || INDEXES.tw50;
+  return { label: "上市" };
 }
 
-function setIndexChipsDisabled(on) {
-  for (const [id] of INDEX_CHIP_IDS) {
-    const el = $(id);
-    if (el) el.disabled = !!on;
-  }
-}
+function setIndexChipsDisabled(_on) {}
 
 function syncIndexUi() {
-  const cfg = currentIndexConfig();
-  document.title = `${cfg.label} 日線掃描器 · 趨勢線 / Creek / Ice`;
-  for (const [id, key] of INDEX_CHIP_IDS) {
-    const el = $(id);
-    if (!el) continue;
-    const on = state.index === key;
-    el.classList.toggle("active", on);
-    el.setAttribute("aria-pressed", on ? "true" : "false");
-  }
+  document.title = "台股上市 日線掃描器 · 趨勢線 / Creek / Ice";
 }
 
-function selectIndex(v) {
-  if ((v !== "all" && !INDEXES[v]) || v === state.index) return;
-  state.index = v;
-  syncIndexUi();
-  refreshSavedPacks(state.packDate).then((dates) => {
-    if (ON_PAGES) {
-      const d = state.packDate || $("packDate").value || dates[0];
-      if (d) openPack(d);
-      return;
-    }
-    if (state.results.some(r => r.bars)) {
-      applyFilters();
-      const n = filteredResults().filter(r => r.bars).length;
-      setStatusText(`顯示 ${currentIndexConfig().label} · ${n} 檔`);
-      return;
-    }
-    setStatusText(`已選 ${currentIndexConfig().label} — 掃描會跑全部指數`);
-  });
+function rememberNames(stocks) {
+  for (const s of stocks || []) {
+    const sym = String(s.symbol || "").toUpperCase();
+    const code = String(s.code || displayCode(sym));
+    const name = s.name || "";
+    if (!sym || !name) continue;
+    state.names[sym] = name;
+    state.names[code] = name;
+  }
 }
 
 function todayISO() {
@@ -1106,6 +1089,13 @@ function packAsset(file) {
     ? location.pathname
     : location.pathname.replace(/[^/]*$/, "");
   return `${location.origin}${path}chartpacks/${encodeURIComponent(file)}`;
+}
+
+function listedAsset() {
+  const path = location.pathname.endsWith("/")
+    ? location.pathname
+    : location.pathname.replace(/[^/]*$/, "");
+  return `${location.origin}${path}listed.json`;
 }
 
 function medianGapDays(bars) {
@@ -1148,34 +1138,32 @@ function parseYahooBars(json) {
   return bars;
 }
 
-async function fetchIndexSymbols(indexKey = state.index) {
-  const cfg = INDEXES[indexKey] || INDEXES.tw50;
-  try {
-    const res = await fetch(`${LOCAL_BASE}${cfg.apiPath}`, { headers: { Accept: "application/json" } });
-    if (res.ok) {
+async function fetchListedStocks() {
+  const urls = ON_PAGES
+    ? [listedAsset()]
+    : [`${LOCAL_BASE}/api/listed`, listedAsset()];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { headers: { Accept: "application/json" } });
+      if (!res.ok) continue;
       const json = await res.json();
-      const syms = json?.symbols;
-      if (Array.isArray(syms) && syms.length >= cfg.minRows) {
-        return syms.map(s => String(s).toUpperCase()).filter(Boolean);
+      const stocks = json?.stocks;
+      if (Array.isArray(stocks) && stocks.length >= 500) {
+        rememberNames(stocks);
+        return stocks;
       }
-    }
-  } catch (_) { /* fallback */ }
-  return [...cfg.fallback];
+    } catch (_) { /* try next */ }
+  }
+  throw new Error("無法取得上市股票名單");
 }
 
 async function fetchAllUniverseSymbols() {
+  const stocks = await fetchListedStocks();
   const membership = new Map();
-  for (const key of Object.keys(INDEXES)) {
-    let syms;
-    try {
-      syms = await fetchIndexSymbols(key);
-    } catch (_) {
-      syms = [...INDEXES[key].fallback];
-    }
-    for (const s of syms) {
-      if (!membership.has(s)) membership.set(s, []);
-      if (!membership.get(s).includes(key)) membership.get(s).push(key);
-    }
+  for (const s of stocks) {
+    const sym = String(s.symbol || "").toUpperCase();
+    if (!sym) continue;
+    membership.set(sym, ["listed"]);
   }
   return membership;
 }
@@ -1983,9 +1971,9 @@ function drawChart(canvas, bars, analysis, symbol, opts = {}) {
     ctx.textAlign = "left";
     ctx.font = mono(13, 600);
     ctx.fillStyle = c.textStrong;
-    ctx.fillText(displaySymbol(symbol), left, 22);
+    ctx.fillText(opts.label || displaySymbol(symbol, opts.name), left, 22);
     if (!narrow) {
-      const symW = ctx.measureText(displaySymbol(symbol)).width;
+      const symW = ctx.measureText(opts.label || displaySymbol(symbol, opts.name)).width;
       ctx.font = sans(11.5, 400);
       ctx.fillStyle = c.text;
       ctx.fillText(`日線 · ${dateStr} · 顯示 ${win} 根 · 做線 ${lineWin} 根`, left + symW + 12, 22);
@@ -2150,15 +2138,12 @@ function anyFilterOn() {
 
 function rowIndexes(row) {
   if (Array.isArray(row?.indexes) && row.indexes.length) return row.indexes;
-  if (row?.index && INDEXES[row.index]) return [row.index];
+  if (row?.index) return [row.index];
   return null;
 }
 
-function matchesIndex(row) {
-  if (state.index === "all") return true;
-  const idxs = rowIndexes(row);
-  if (!idxs) return true;
-  return idxs.includes(state.index);
+function matchesIndex(_row) {
+  return true;
 }
 
 function matchesFilters(row) {
@@ -2278,10 +2263,7 @@ function renderList(opts = {}) {
     el.className = "list-item"
       + (state.selected === r.symbol ? " active" : "")
       + (r.error ? " err" : "");
-    const symEl = document.createElement("span");
-    symEl.className = "sym";
-    symEl.textContent = displaySymbol(r.symbol);
-    el.appendChild(symEl);
+    fillNameEl(el, r);
 
     const tagBox = document.createElement("span");
     tagBox.className = "tags";
@@ -2322,7 +2304,7 @@ function renderList(opts = {}) {
     }
     el.appendChild(tagBox);
     el.tabIndex = 0;
-    el.title = r.error || (hints.length ? `${r.symbol} · ${hints.join(" · ")}` : r.symbol);
+    el.title = r.error || (hints.length ? `${tickerLabel(r)} · ${hints.join(" · ")}` : tickerLabel(r));
     el.setAttribute("role", "button");
     el.style.animationDelay = `${Math.min(idx, 40) * 14}ms`;
     el.onclick = () => {
@@ -2364,7 +2346,7 @@ function analyzeRow(symbol, fullBars, dateStr) {
   const analysis = analyzeSymbol(bars, "auto");
   if (analysis.up) analysis.up.windowSize = analysis.up.windowSize || analysis.window;
   if (analysis.down) analysis.down.windowSize = analysis.down.windowSize || analysis.window;
-  return { symbol, bars, analysis };
+  return { symbol, name: nameOf(symbol), bars, analysis };
 }
 
 const CHART_ZOOM_MIN = 20;
@@ -2398,7 +2380,9 @@ function redrawMainChart(row) {
     date: state.packDate,
     window: v.win,
     end: v.end,
-    yRange: state.chartY
+    yRange: state.chartY,
+    name: r.name,
+    label: tickerLabel(r)
   });
 }
 
@@ -2412,7 +2396,7 @@ function showSingle(r) {
   btnS?.classList.toggle("active", true);
   btnP?.classList.toggle("active", false);
   setViewerTitle(
-    displaySymbol(r.symbol) || "單圖",
+    tickerLabel(r) || "單圖",
     r.error
       ? String(r.error)
       : ((state.packDate ? `日線 · ${state.packDate}` : "日線單圖") + " · 滾輪縮放 · 拖曳平移 · 雙擊還原")
@@ -2449,9 +2433,6 @@ function renderPack() {
     canvas.height = 486;
     const head = document.createElement("header");
     const ev = recentLineEvents(r);
-    const symEl = document.createElement("span");
-    symEl.className = "sym";
-    symEl.textContent = displaySymbol(r.symbol);
     const dateEl = document.createElement("span");
     dateEl.className = "pack-date";
     dateEl.textContent = state.packDate || "";
@@ -2459,7 +2440,7 @@ function renderPack() {
     headLeft.style.display = "flex";
     headLeft.style.alignItems = "baseline";
     headLeft.style.gap = "8px";
-    headLeft.appendChild(symEl);
+    fillNameEl(headLeft, r);
     headLeft.appendChild(dateEl);
     const tagBox = document.createElement("span");
     tagBox.className = "tags";
@@ -2501,7 +2482,7 @@ function renderPack() {
       }
     };
     box.appendChild(card);
-    drawChart(canvas, r.bars, rowAnalysis(r), r.symbol, { date: state.packDate, compact: true });
+    drawChart(canvas, r.bars, rowAnalysis(r), r.symbol, { date: state.packDate, compact: true, name: r.name, label: tickerLabel(r) });
   }
   if (!box.children.length) {
     const active = anyFilterOn();
@@ -2545,7 +2526,7 @@ function setView(v) {
   }
   showPane("singleView");
   setViewerTitle(
-    displaySymbol(state.selected) || "單圖",
+    tickerLabel(state.results.find(r => r.symbol === state.selected) || state.selected) || "單圖",
     state.packDate ? `日線 · ${state.packDate}` : "日線單圖"
   );
 }
@@ -2560,17 +2541,18 @@ function updatePackButton() {
 function buildPackPayload(dateStr) {
   return {
     date: dateStr,
-    index: state.index,
-    indexLabel: currentIndexConfig().label,
-    indexes: Object.keys(INDEXES),
+    index: "listed",
+    indexLabel: "上市",
+    indexes: ["listed"],
     savedAt: new Date().toISOString(),
     count: state.results.filter(r => r.bars).length,
     results: state.results.map(r => {
       if (r.error || !r.bars) {
-        return { symbol: r.symbol, error: r.error || "no data", index: r.index, indexes: r.indexes };
+        return { symbol: r.symbol, name: r.name || nameOf(r.symbol), error: r.error || "no data", index: r.index, indexes: r.indexes };
       }
       return {
         symbol: r.symbol,
+        name: r.name || nameOf(r.symbol),
         index: r.index,
         indexes: r.indexes,
         bars: r.bars,
@@ -2593,10 +2575,7 @@ async function refreshSavedPacks(selectDate) {
     if (ON_PAGES) {
       const res = await fetch(packAsset("manifest.json"), { cache: "no-store" });
       const json = await res.json();
-      const packs = (json.packs || []).filter(p => {
-        if (!state.index || state.index === "all") return true;
-        return p.index === state.index;
-      });
+      const packs = json.packs || [];
       dates = [...new Set(packs.map(p => p.date))];
     } else {
       const res = await fetch(`${LOCAL_BASE}/api/packs`);
@@ -2660,8 +2639,14 @@ function mapPackRow(r, json) {
   const analysis = bars && r.analysis ? rebaseAnalysis(r.analysis, bars.length) : (r.analysis || null);
   const idx = r.index || json.index || null;
   const indexes = r.indexes || (idx ? [idx] : null);
+  const name = r.name || nameOf(r.symbol);
+  if (name) {
+    state.names[String(r.symbol || "").toUpperCase()] = name;
+    state.names[displayCode(r.symbol)] = name;
+  }
   return {
     symbol: r.symbol,
+    name,
     error: r.error || null,
     index: idx,
     indexes,
@@ -2688,46 +2673,23 @@ async function openPack(dateStr) {
   try {
     let json = null;
     if (ON_PAGES) {
-      if (state.index === "all") {
-        const bySym = new Map();
-        for (const key of Object.keys(INDEXES)) {
-          const part = await fetchPackJson(`${key}-${d}.json`);
-          if (!part) continue;
-          json = json || part;
-          for (const r of part.results || []) {
-            const row = mapPackRow(r, part);
-            const prev = bySym.get(row.symbol);
-            if (!prev) {
-              bySym.set(row.symbol, row);
-              continue;
-            }
-            const merged = new Set([...(prev.indexes || []), ...(row.indexes || [])]);
-            prev.indexes = [...merged];
-            if (!prev.bars && row.bars) {
-              prev.bars = row.bars;
-              prev.analysis = row.analysis;
-              prev.error = row.error;
-            }
-          }
+      const manRes = await fetch(packAsset("manifest.json"), { cache: "no-store" });
+      const man = manRes.ok ? await manRes.json() : { packs: [] };
+      const files = [...new Set((man.packs || []).filter(p => p.date === d).map(p => p.file))];
+      if (!files.length) files.push(`${d}.json`);
+      const bySym = new Map();
+      for (const file of files) {
+        const part = await fetchPackJson(file);
+        if (!part) continue;
+        json = json || part;
+        for (const r of part.results || []) {
+          const row = mapPackRow(r, part);
+          if (!bySym.has(row.symbol)) bySym.set(row.symbol, row);
         }
-        const fallback = json ? null : await fetchPackJson(`${d}.json`);
-        if (fallback) {
-          json = fallback;
-          for (const r of fallback.results || []) {
-            if (!bySym.has(r.symbol)) bySym.set(r.symbol, mapPackRow(r, fallback));
-          }
-        }
-        if (!json && !bySym.size) throw new Error("找不到該日 Chartpack");
-        json = json || { date: d, results: [] };
-        json.results = [...bySym.values()];
-      } else {
-        const files = [`${state.index}-${d}.json`, `${d}.json`];
-        for (const f of files) {
-          json = await fetchPackJson(f);
-          if (json) break;
-        }
-        if (!json) throw new Error("找不到該日 Chartpack");
       }
+      if (!json && !bySym.size) throw new Error("找不到該日 Chartpack");
+      json = json || { date: d, results: [] };
+      json.results = [...bySym.values()];
     } else {
       const res = await fetch(`${LOCAL_BASE}/api/packs/${encodeURIComponent(d)}`);
       json = await res.json();
@@ -2735,15 +2697,6 @@ async function openPack(dateStr) {
     }
     state.packDate = json.date || d;
     $("packDate").value = state.packDate;
-    if (
-      state.index !== "all" &&
-      json.index &&
-      INDEXES[json.index] &&
-      !(Array.isArray(json.indexes) && json.indexes.length > 1)
-    ) {
-      state.index = json.index;
-      syncIndexUi();
-    }
     state.results = (json.results || []).map(r => mapPackRow(r, json));
     state.selected = filteredResults().find(r => r.bars)?.symbol
       || state.results.find(r => r.bars)?.symbol || null;
@@ -2823,7 +2776,7 @@ async function runScan() {
   $("resultList").innerHTML = "";
   $("packView").innerHTML = "";
   showPane("emptyHint");
-  setViewerTitle("掃描中", "分析 台灣50 · 中型100 · 高股息 日線…");
+  setViewerTitle("掃描中", "分析台股上市日線…");
   if ($("listCount")) {
     $("listCount").textContent = "掃描中…";
     replayAnim($("listCount"), "is-swap");
@@ -2833,18 +2786,13 @@ async function runScan() {
   state.packDate = dateStr;
   $("packDate").value = dateStr;
 
-  setStatusText("取得全部成分股…");
+  setStatusText("取得全部上市公司…");
   let membership;
   try {
     membership = await fetchAllUniverseSymbols();
-  } catch (_) {
+  } catch (e) {
+    setStatusText(`無法取得上市名單：${e.message || e}`);
     membership = new Map();
-    for (const key of Object.keys(INDEXES)) {
-      for (const s of INDEXES[key].fallback) {
-        if (!membership.has(s)) membership.set(s, []);
-        if (!membership.get(s).includes(key)) membership.get(s).push(key);
-      }
-    }
   }
   state.symbols = [...membership.keys()];
 
@@ -2854,7 +2802,7 @@ async function runScan() {
 
   for (const sym of state.symbols) {
     if (state.stop) break;
-    setStatusText(`分析 ${sym} · ${dateStr}…`, { animate: false });
+    setStatusText(`分析 ${tickerLabel(sym)} · ${dateStr}…`, { animate: false });
     try {
       const full = await fetchDailyBars(sym);
       state.cache[sym] = full;
@@ -2870,6 +2818,7 @@ async function runScan() {
     } catch (e) {
       state.results.push({
         symbol: sym,
+        name: nameOf(sym),
         error: String(e.message || e),
         indexes: membership.get(sym) || [state.index]
       });
@@ -2905,10 +2854,6 @@ async function runScan() {
 
 $("packDate").value = todayISO();
 $("packDate").max = todayISO();
-$("filterIndexAll").onclick = () => selectIndex("all");
-$("filterIndexNdx").onclick = () => selectIndex("tw50");
-$("filterIndexDji").onclick = () => selectIndex("mid100");
-$("filterIndexCrypto").onclick = () => selectIndex("hdiv");
 syncIndexUi();
 $("btnScan").onclick = () => runScan();
 $("btnStop").onclick = () => { state.stop = true; };
@@ -3139,7 +3084,10 @@ window.visualViewport?.addEventListener("resize", onViewportResize);
   });
 })();
 
-refreshSavedPacks().then((dates) => {
+Promise.all([
+  refreshSavedPacks(),
+  fetchListedStocks().catch(() => [])
+]).then(([dates]) => {
   if (ON_PAGES && dates[0]) openPack(dates[0]);
 });
 </script>

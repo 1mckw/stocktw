@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless 台灣50 / 中型100 / 高股息 daily scanner for local use and GitHub Actions.
+"""Headless 台股上市 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
   ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
@@ -14,7 +14,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from server import HDIV_SYMBOLS, MID100_SYMBOLS, PACKS_DIR, TW50_SYMBOLS, ensure_packs_dir, http_get
+from server import PACKS_DIR, ensure_packs_dir, fetch_listed_stocks, http_get
 
 PIVOT_LEFT = 3
 PIVOT_RIGHT = 3
@@ -30,6 +30,7 @@ MIN_TOUCHES = 4
 WINDOWS = [200, 300, 400, 500, 600, 800, 1000]
 CHART_WINDOW = 600
 TREND_SIGNAL_BARS = 5
+SHARD_SIZE = 80
 
 
 def today_iso() -> str:
@@ -520,21 +521,26 @@ def slim_line(L):
     }
 
 
-def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
-    if index == "mid100":
-        symbols = list(MID100_SYMBOLS)
-        label = "中型100"
-    elif index == "hdiv":
-        symbols = list(HDIV_SYMBOLS)
-        label = "高股息"
-    else:
-        symbols = list(TW50_SYMBOLS)
-        label = "台灣50"
-        index = "tw50"
+def slim_bar(bar: dict) -> dict:
+    return {
+        "t": bar["t"],
+        "o": round(bar["o"], 4),
+        "h": round(bar["h"], 4),
+        "l": round(bar["l"], 4),
+        "c": round(bar["c"], 4),
+        "v": int(bar.get("v") or 0),
+    }
+
+
+def scan_listed(date_str: str, sleep_s: float) -> list[dict]:
+    stocks = fetch_listed_stocks(refresh=True)
     results = []
     ok = 0
-    for i, sym in enumerate(symbols, 1):
-        print(f"[{i}/{len(symbols)}] {sym}", flush=True)
+    total = len(stocks)
+    for i, stock in enumerate(stocks, 1):
+        sym = stock["symbol"]
+        name = stock.get("name") or ""
+        print(f"[{i}/{total}] {sym} {name}", flush=True)
         try:
             full = fetch_daily_bars(sym)
             bars = bars_as_of(full, date_str)
@@ -546,7 +552,8 @@ def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
                 bars = bars[-CHART_WINDOW:]
             results.append({
                 "symbol": sym,
-                "bars": bars,
+                "name": name,
+                "bars": [slim_bar(b) for b in bars],
                 "analysis": {
                     "window": analysis["window"],
                     "up": slim_line(analysis["up"]),
@@ -557,17 +564,24 @@ def scan_index(index: str, date_str: str, sleep_s: float) -> dict:
             })
             ok += 1
         except Exception as e:
-            results.append({"symbol": sym, "error": str(e)})
+            results.append({"symbol": sym, "name": name, "error": str(e)})
             print(f"  fail: {e}", flush=True)
         time.sleep(sleep_s)
-    return {
-        "date": date_str,
-        "index": index,
-        "indexLabel": label,
-        "savedAt": datetime.now(timezone.utc).isoformat(),
-        "count": ok,
-        "results": results,
-    }
+    saved_at = datetime.now(timezone.utc).isoformat()
+    packs = []
+    for shard, start in enumerate(range(0, len(results), SHARD_SIZE)):
+        chunk = results[start : start + SHARD_SIZE]
+        chunk_ok = sum(1 for r in chunk if r.get("bars"))
+        packs.append({
+            "date": date_str,
+            "index": f"listed{shard:02d}",
+            "indexLabel": "上市",
+            "savedAt": saved_at,
+            "count": chunk_ok,
+            "results": chunk,
+        })
+    print(f"listed ok {ok}/{total} · shards {len(packs)}", flush=True)
+    return packs
 
 
 def recent_signal(row: dict, lookback: int = TREND_SIGNAL_BARS) -> str:
@@ -613,8 +627,8 @@ def write_latest_md(out: Path, packs: list[dict]) -> None:
         lines.append("")
         lines.append(f"可用圖表 **{pack.get('count', 0)}** 檔。在 GitHub Pages 開啟掃描器檢視圖表。")
         lines.append("")
-        lines.append("| 代號 | 近 5 根 | 線 |")
-        lines.append("| --- | --- | --- |")
+        lines.append("| 代號 | 名稱 | 近 5 根 | 線 |")
+        lines.append("| --- | --- | --- | --- |")
         for r in pack.get("results") or []:
             sig = recent_signal(r) if r.get("bars") else (r.get("error") or "無資料")
             a = r.get("analysis") or {}
@@ -624,7 +638,8 @@ def write_latest_md(out: Path, packs: list[dict]) -> None:
                 if L and L.get("label"):
                     labels.append(L["label"])
             sym = str(r.get("symbol") or "").removesuffix(".TW")
-            lines.append(f"| {sym} | {sig or '—'} | {' / '.join(labels) or '—'} |")
+            name = r.get("name") or ""
+            lines.append(f"| {sym} | {name} | {sig or '—'} | {' / '.join(labels) or '—'} |")
         lines.append("")
     (out.parent / "LATEST.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -660,8 +675,8 @@ def write_manifest(out: Path) -> dict:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 高股息 daily trend lines")
-    p.add_argument("--index", choices=["tw50", "mid100", "hdiv", "both"], default="both")
+    p = argparse.ArgumentParser(description="Scan all TWSE listed stocks daily trend lines")
+    p.add_argument("--index", default="listed", help="kept for compatibility; always scans 上市")
     p.add_argument("--date", default="", help="YYYY-MM-DD (UTC today if empty)")
     p.add_argument("--sleep", type=float, default=0.25, help="delay between Yahoo requests")
     p.add_argument("--out", default="", help="output directory (default chartpacks/)")
@@ -670,17 +685,25 @@ def main() -> None:
     out = Path(args.out) if args.out else PACKS_DIR
     out.mkdir(parents=True, exist_ok=True)
     ensure_packs_dir()
-    indexes = ["tw50", "mid100", "hdiv"] if args.index == "both" else [args.index]
-    written = []
-    for idx in indexes:
-        pack = scan_index(idx, date_str, args.sleep)
-        fp = out / f"{idx}-{date_str}.json"
+    written = scan_listed(date_str, args.sleep)
+    for pack in written:
+        fp = out / f"{pack['index']}-{date_str}.json"
         fp.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
         print(f"wrote {fp} · {pack['count']} ok", flush=True)
-        written.append(pack)
+    write_latest_md_merged(out, date_str, written)
     write_manifest(out)
-    write_latest_md(out, written)
     print("wrote chartpacks/manifest.json and LATEST.md", flush=True)
+
+
+def write_latest_md_merged(out: Path, date_str: str, packs: list[dict]) -> None:
+    merged = {
+        "indexLabel": "上市",
+        "index": "listed",
+        "date": date_str,
+        "count": sum(p.get("count", 0) for p in packs),
+        "results": [r for p in packs for r in (p.get("results") or [])],
+    }
+    write_latest_md(out, [merged])
 
 
 if __name__ == "__main__":

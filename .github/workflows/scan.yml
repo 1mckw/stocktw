@@ -26,7 +26,7 @@ jobs:
   site:
     if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 180
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -40,12 +40,11 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           PYTHONUNBUFFERED: "1"
-        run: python scan.py --index both --sleep 0.3
-        # 台灣50 + 中型100 + 高股息（台股上市）
+        run: python scan.py --sleep 0.25
       - name: Commit results
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
-          git add chartpacks LATEST.md
+          git add chartpacks LATEST.md listed.json
           if git diff --cached --quiet; then
             echo "No result changes"
             exit 0
@@ -58,6 +57,7 @@ jobs:
         run: |
           mkdir -p _site/chartpacks
           cp ndx100-scanner.html _site/index.html
+          cp listed.json _site/ 2>/dev/null || true
           cp LATEST.md _site/ 2>/dev/null || true
           cp chartpacks/* _site/chartpacks/ 2>/dev/null || true
       - uses: actions/configure-pages@v5
