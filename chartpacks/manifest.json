@@ -15,6 +15,13 @@
       "count": 30
     },
     {
+      "index": "crypto30",
+      "date": "2026-11-01",
+      "file": "crypto30-2026-11-01.json",
+      "label": "CRYPTO30",
+      "count": 30
+    },
+    {
       "index": "ndx100",
       "date": "2026-10-31",
       "file": "ndx100-2026-10-31.json",
