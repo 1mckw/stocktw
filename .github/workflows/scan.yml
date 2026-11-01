@@ -2,11 +2,6 @@ name: Scan
 
 on:
   workflow_dispatch:
-    inputs:
-      date:
-        description: As-of date YYYY-MM-DD (empty = UTC today)
-        required: false
-        default: ""
   schedule:
     - cron: "30 10 * * 1-5"
     - cron: "30 22 * * 1-5"
@@ -45,9 +40,7 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
           PYTHONUNBUFFERED: "1"
-        run: |
-          DATE="${{ github.event.inputs.date }}"
-          python scan.py --index both --date "$DATE" --sleep 0.3
+        run: python scan.py --index both --sleep 0.3
       - name: Commit results
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |

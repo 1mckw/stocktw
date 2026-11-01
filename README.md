@@ -23,7 +23,7 @@ python server.py
 python scan.py --index both
 ```
 
-在 GitHub 只跑 **Actions → Scan → Run workflow**，預設會掃描 NDX100 + DJI30 並更新網站。
+在 GitHub 只跑 **Actions → Scan → Run workflow**，會掃描 NDX100 + DJI30 並更新網站。
 
 平日自動兩次：**10:30 UTC**、**22:30 UTC**（掃描 + 更新網站）。
 
