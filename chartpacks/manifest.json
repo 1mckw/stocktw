@@ -1,6 +1,48 @@
 {
   "packs": [
     {
+      "index": "tw50",
+      "date": "2026-11-01",
+      "file": "tw50-2026-11-01.json",
+      "label": "台灣50",
+      "count": 50
+    },
+    {
+      "index": "otc20002",
+      "date": "2026-11-01",
+      "file": "otc20002-2026-11-01.json",
+      "label": "富櫃200",
+      "count": 39
+    },
+    {
+      "index": "otc20001",
+      "date": "2026-11-01",
+      "file": "otc20001-2026-11-01.json",
+      "label": "富櫃200",
+      "count": 80
+    },
+    {
+      "index": "otc20000",
+      "date": "2026-11-01",
+      "file": "otc20000-2026-11-01.json",
+      "label": "富櫃200",
+      "count": 79
+    },
+    {
+      "index": "mid10001",
+      "date": "2026-11-01",
+      "file": "mid10001-2026-11-01.json",
+      "label": "中型100",
+      "count": 20
+    },
+    {
+      "index": "mid10000",
+      "date": "2026-11-01",
+      "file": "mid10000-2026-11-01.json",
+      "label": "中型100",
+      "count": 79
+    },
+    {
       "index": "listed13",
       "date": "2026-11-01",
       "file": "listed13-2026-11-01.json",
