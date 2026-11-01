@@ -1,3 +1,102 @@
 {
-  "packs": []
+  "packs": [
+    {
+      "index": "listed13",
+      "date": "2026-11-01",
+      "file": "listed13-2026-11-01.json",
+      "label": "上市",
+      "count": 48
+    },
+    {
+      "index": "listed12",
+      "date": "2026-11-01",
+      "file": "listed12-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed11",
+      "date": "2026-11-01",
+      "file": "listed11-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed10",
+      "date": "2026-11-01",
+      "file": "listed10-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed09",
+      "date": "2026-11-01",
+      "file": "listed09-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed08",
+      "date": "2026-11-01",
+      "file": "listed08-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed07",
+      "date": "2026-11-01",
+      "file": "listed07-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed06",
+      "date": "2026-11-01",
+      "file": "listed06-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed05",
+      "date": "2026-11-01",
+      "file": "listed05-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed04",
+      "date": "2026-11-01",
+      "file": "listed04-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed03",
+      "date": "2026-11-01",
+      "file": "listed03-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed02",
+      "date": "2026-11-01",
+      "file": "listed02-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed01",
+      "date": "2026-11-01",
+      "file": "listed01-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    },
+    {
+      "index": "listed00",
+      "date": "2026-11-01",
+      "file": "listed00-2026-11-01.json",
+      "label": "上市",
+      "count": 80
+    }
+  ]
 }
