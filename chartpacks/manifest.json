@@ -8,25 +8,11 @@
       "count": 50
     },
     {
-      "index": "otc20002",
+      "index": "otc50",
       "date": "2026-11-02",
-      "file": "otc20002-2026-11-02.json",
-      "label": "富櫃200",
-      "count": 39
-    },
-    {
-      "index": "otc20001",
-      "date": "2026-11-02",
-      "file": "otc20001-2026-11-02.json",
-      "label": "富櫃200",
-      "count": 80
-    },
-    {
-      "index": "otc20000",
-      "date": "2026-11-02",
-      "file": "otc20000-2026-11-02.json",
-      "label": "富櫃200",
-      "count": 79
+      "file": "otc50-2026-11-02.json",
+      "label": "富櫃50",
+      "count": 48
     },
     {
       "index": "mid10001",
@@ -48,27 +34,6 @@
       "file": "tw50-2026-11-01.json",
       "label": "台灣50",
       "count": 50
-    },
-    {
-      "index": "otc20002",
-      "date": "2026-11-01",
-      "file": "otc20002-2026-11-01.json",
-      "label": "富櫃200",
-      "count": 39
-    },
-    {
-      "index": "otc20001",
-      "date": "2026-11-01",
-      "file": "otc20001-2026-11-01.json",
-      "label": "富櫃200",
-      "count": 80
-    },
-    {
-      "index": "otc20000",
-      "date": "2026-11-01",
-      "file": "otc20000-2026-11-01.json",
-      "label": "富櫃200",
-      "count": 79
     },
     {
       "index": "mid10001",
