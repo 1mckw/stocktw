@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>台股日線掃描器 · 趨勢線 / Creek / Ice</title>
-<meta name="description" content="台灣50、中型100、富櫃200 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
+<meta name="description" content="台灣50、中型100、富櫃50 日線四點成線掃描器：向上／向下趨勢線、Creek、Ice 與平行通道，附逐日 Chartpack。" />
 <meta name="theme-color" content="#161618" />
 <meta name="color-scheme" content="dark" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -911,7 +911,7 @@
             <button type="button" class="filter-chip active" id="chipAll" data-index="all" aria-pressed="true">ALL</button>
             <button type="button" class="filter-chip" id="chipTw50" data-index="tw50" aria-pressed="false">台灣50</button>
             <button type="button" class="filter-chip" id="chipMid100" data-index="mid100" aria-pressed="false">中型100</button>
-            <button type="button" class="filter-chip" id="chipOtc200" data-index="otc200" aria-pressed="false">富櫃200</button>
+            <button type="button" class="filter-chip" id="chipOtc50" data-index="otc50" aria-pressed="false">富櫃50</button>
           </div>
           <div class="filter-chips" role="group" aria-label="訊號">
             <button type="button" class="filter-chip" id="filterBreakout" data-filter="breakout" aria-pressed="false" title="近 5 根實體完全穿越趨勢線">突破</button>
@@ -1039,13 +1039,13 @@ const INDEXES = {
   all: { label: "ALL" },
   tw50: { label: "台灣50" },
   mid100: { label: "中型100" },
-  otc200: { label: "富櫃200" }
+  otc50: { label: "富櫃50" }
 };
 const INDEX_CHIP_IDS = [
   ["chipAll", "all"],
   ["chipTw50", "tw50"],
   ["chipMid100", "mid100"],
-  ["chipOtc200", "otc200"]
+  ["chipOtc50", "otc50"]
 ];
 
 const state = {
@@ -1074,7 +1074,7 @@ function canonicalIndex(id) {
   if (/-\d{4}-\d{2}-\d{2}$/.test(s)) s = s.slice(0, -11);
   if (s.startsWith("tw50")) return "tw50";
   if (s.startsWith("mid100")) return "mid100";
-  if (s.startsWith("otc200")) return "otc200";
+  if (s.startsWith("otc50")) return "otc50";
   return null;
 }
 
@@ -2618,7 +2618,7 @@ function buildPackPayload(dateStr) {
     date: dateStr,
     index: "all",
     indexLabel: "台股",
-    indexes: ["tw50", "mid100", "otc200"],
+    indexes: ["tw50", "mid100", "otc50"],
     savedAt: new Date().toISOString(),
     count: state.results.filter(r => r.bars).length,
     results: state.results.map(r => {
@@ -2852,7 +2852,7 @@ async function runScan() {
   $("resultList").innerHTML = "";
   $("packView").innerHTML = "";
   showPane("emptyHint");
-  setViewerTitle("掃描中", "分析台灣50 / 中型100 / 富櫃200日線…");
+  setViewerTitle("掃描中", "分析台灣50 / 中型100 / 富櫃50日線…");
   if ($("listCount")) {
     $("listCount").textContent = "掃描中…";
     replayAnim($("listCount"), "is-swap");

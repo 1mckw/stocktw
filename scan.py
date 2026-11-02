@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Headless 台灣50 / 中型100 / 富櫃200 daily scanner for local use and GitHub Actions.
+"""Headless 台灣50 / 中型100 / 富櫃50 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
   ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
@@ -711,8 +711,8 @@ def write_manifest(out: Path) -> dict:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 富櫃200 daily trend lines")
-    p.add_argument("--index", default="all", help="all | tw50 | mid100 | otc200")
+    p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 富櫃50 daily trend lines")
+    p.add_argument("--index", default="all", help="all | tw50 | mid100 | otc50")
     p.add_argument("--date", default="", help="YYYY-MM-DD (UTC today if empty)")
     p.add_argument("--sleep", type=float, default=0.25, help="delay between Yahoo requests")
     p.add_argument("--out", default="", help="output directory (default chartpacks/)")

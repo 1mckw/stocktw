@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local server for 台灣50 / 中型100 / 富櫃200 scanner — serves HTML, proxies Yahoo, saves chartpacks."""
+"""Local server for 台灣50 / 中型100 / 富櫃50 scanner — serves HTML, proxies Yahoo, saves chartpacks."""
 from __future__ import annotations
 
 import json
@@ -17,13 +17,13 @@ LISTED_PATH = ROOT / "listed.json"
 PORT = 8765
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-TPEX200_URL = "https://www.tpex.org.tw/www/zh-tw/indexInfo/r200?type=cnst"
+TPEX50_URL = "https://www.tpex.org.tw/www/zh-tw/indexInfo/r50?type=cnst"
 CELL_RE = re.compile(r"^(\d{4})\s+(.+)$")
 MDJ_NAME_RE = re.compile(r'<td class="col05">([^<]+)</td>')
 FINMIND_INFO_URL = "https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInfo"
-INDEX_IDS = ("tw50", "mid100", "otc200")
-INDEX_LABELS = {"tw50": "台灣50", "mid100": "中型100", "otc200": "富櫃200"}
-INDEX_MIN = {"tw50": 40, "mid100": 80, "otc200": 150}
+INDEX_IDS = ("tw50", "mid100", "otc50")
+INDEX_LABELS = {"tw50": "台灣50", "mid100": "中型100", "otc50": "富櫃50"}
+INDEX_MIN = {"tw50": 40, "mid100": 80, "otc50": 40}
 ETF_FOR_INDEX = {"tw50": "0050", "mid100": "0051"}
 
 
@@ -33,7 +33,7 @@ def http_get(url: str, timeout: int = 30) -> bytes:
         return resp.read()
 
 
-def parse_tpex200(payload: dict) -> list[dict]:
+def parse_tpex50(payload: dict) -> list[dict]:
     out = []
     seen = set()
     for table in payload.get("tables") or []:
@@ -47,7 +47,7 @@ def parse_tpex200(payload: dict) -> list[dict]:
                 if not name or code in seen:
                     continue
                 seen.add(code)
-                out.append({"code": code, "name": name, "symbol": f"{code}.TWO", "indexes": ["otc200"]})
+                out.append({"code": code, "name": name, "symbol": f"{code}.TWO", "indexes": ["otc50"]})
     out.sort(key=lambda x: x["code"])
     return out
 
@@ -92,9 +92,9 @@ def map_names_to_twse(names: list[str], by_name: dict[str, str], index_id: str) 
     return out
 
 
-def fetch_otc200() -> list[dict]:
-    payload = json.loads(http_get(TPEX200_URL, timeout=60).decode("utf-8"))
-    return parse_tpex200(payload)
+def fetch_otc50() -> list[dict]:
+    payload = json.loads(http_get(TPEX50_URL, timeout=60).decode("utf-8"))
+    return parse_tpex50(payload)
 
 
 def fetch_index_etf(index_id: str) -> list[dict]:
@@ -185,7 +185,7 @@ def fetch_listed_stocks(refresh: bool = False) -> list[dict]:
     for index_id, fetcher in (
         ("tw50", lambda: fetch_index_etf("tw50")),
         ("mid100", lambda: fetch_index_etf("mid100")),
-        ("otc200", fetch_otc200),
+        ("otc50", fetch_otc50),
     ):
         try:
             rows = fetcher()
@@ -206,7 +206,7 @@ def fetch_listed_stocks(refresh: bool = False) -> list[dict]:
     if stocks:
         save_listed(stocks)
         return stocks
-    raise RuntimeError("no 台灣50 / 中型100 / 富櫃200 constituents")
+    raise RuntimeError("no 台灣50 / 中型100 / 富櫃50 constituents")
 
 
 def listed_payload() -> dict:
@@ -454,7 +454,7 @@ class Handler(BaseHTTPRequestHandler):
 def main() -> None:
     ensure_packs_dir()
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
-    print(f"台股掃描器（台灣50 / 中型100 / 富櫃200）→ http://127.0.0.1:{PORT}/")
+    print(f"台股掃描器（台灣50 / 中型100 / 富櫃50）→ http://127.0.0.1:{PORT}/")
     print(f"Chartpacks → {PACKS_DIR}")
     print("Ctrl+C to stop")
     try:

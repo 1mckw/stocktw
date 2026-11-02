@@ -1,5 +1,5 @@
 {
-  "count": 350,
+  "count": 200,
   "indexes": {
     "tw50": {
       "label": "台灣50",
@@ -9,9 +9,9 @@
       "label": "中型100",
       "count": 100
     },
-    "otc200": {
-      "label": "富櫃200",
-      "count": 200
+    "otc50": {
+      "label": "富櫃50",
+      "count": 50
     }
   },
   "stocks": [
@@ -45,14 +45,6 @@
       "symbol": "1229.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "1268",
-      "name": "漢來美食",
-      "symbol": "1268.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -136,14 +128,6 @@
       ]
     },
     {
-      "code": "1569",
-      "name": "濱川",
-      "symbol": "1569.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "1590",
       "name": "亞德客-KY",
       "symbol": "1590.TW",
@@ -172,7 +156,7 @@
       "name": "光洋科",
       "symbol": "1785.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -188,7 +172,7 @@
       "name": "富喬",
       "symbol": "1815.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -832,35 +816,11 @@
       ]
     },
     {
-      "code": "3078",
-      "name": "僑威",
-      "symbol": "3078.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3081",
       "name": "聯亞",
       "symbol": "3081.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3086",
-      "name": "華義*",
-      "symbol": "3086.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3088",
-      "name": "艾訊",
-      "symbol": "3088.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -868,7 +828,7 @@
       "name": "穩懋",
       "symbol": "3105.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -876,31 +836,7 @@
       "name": "弘塑",
       "symbol": "3131.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3147",
-      "name": "大綜",
-      "symbol": "3147.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3152",
-      "name": "璟德",
-      "symbol": "3152.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3162",
-      "name": "精確",
-      "symbol": "3162.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -908,7 +844,7 @@
       "name": "波若威",
       "symbol": "3163.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -917,14 +853,6 @@
       "symbol": "3167.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "3169",
-      "name": "亞信",
-      "symbol": "3169.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -940,23 +868,7 @@
       "name": "順達",
       "symbol": "3211.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3217",
-      "name": "優群",
-      "symbol": "3217.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3218",
-      "name": "大學光",
-      "symbol": "3218.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -964,15 +876,7 @@
       "name": "原相",
       "symbol": "3227.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3228",
-      "name": "金麗科",
-      "symbol": "3228.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -984,19 +888,11 @@
       ]
     },
     {
-      "code": "3234",
-      "name": "光環",
-      "symbol": "3234.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3260",
       "name": "威剛",
       "symbol": "3260.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1004,23 +900,7 @@
       "name": "欣銓",
       "symbol": "3264.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3265",
-      "name": "台星科",
-      "symbol": "3265.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3289",
-      "name": "宜特",
-      "symbol": "3289.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1028,7 +908,7 @@
       "name": "鈊象",
       "symbol": "3293.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1036,31 +916,7 @@
       "name": "雙鴻",
       "symbol": "3324.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3357",
-      "name": "臺慶科",
-      "symbol": "3357.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3362",
-      "name": "先進光",
-      "symbol": "3362.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3363",
-      "name": "上詮",
-      "symbol": "3363.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1068,15 +924,7 @@
       "name": "精材",
       "symbol": "3374.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3402",
-      "name": "漢科",
-      "symbol": "3402.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1088,22 +936,6 @@
       ]
     },
     {
-      "code": "3455",
-      "name": "由田",
-      "symbol": "3455.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3479",
-      "name": "安勤",
-      "symbol": "3479.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3481",
       "name": "群創",
       "symbol": "3481.TW",
@@ -1112,43 +944,11 @@
       ]
     },
     {
-      "code": "3483",
-      "name": "力致",
-      "symbol": "3483.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3485",
-      "name": "敘豐",
-      "symbol": "3485.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3491",
       "name": "昇達科",
       "symbol": "3491.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3498",
-      "name": "陽程",
-      "symbol": "3498.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3526",
-      "name": "凡甲",
-      "symbol": "3526.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1156,7 +956,7 @@
       "name": "力旺",
       "symbol": "3529.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1176,38 +976,6 @@
       ]
     },
     {
-      "code": "3551",
-      "name": "世禾",
-      "symbol": "3551.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3558",
-      "name": "神準",
-      "symbol": "3558.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3587",
-      "name": "閎康",
-      "symbol": "3587.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3624",
-      "name": "光頡",
-      "symbol": "3624.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3653",
       "name": "健策",
       "symbol": "3653.TW",
@@ -1224,14 +992,6 @@
       ]
     },
     {
-      "code": "3663",
-      "name": "鑫科",
-      "symbol": "3663.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3665",
       "name": "貿聯-KY",
       "symbol": "3665.TW",
@@ -1240,43 +1000,11 @@
       ]
     },
     {
-      "code": "3675",
-      "name": "德微",
-      "symbol": "3675.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "3680",
       "name": "家登",
       "symbol": "3680.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3689",
-      "name": "湧德",
-      "symbol": "3689.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3691",
-      "name": "碩禾",
-      "symbol": "3691.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3693",
-      "name": "營邦",
-      "symbol": "3693.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1285,22 +1013,6 @@
       "symbol": "3702.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "3707",
-      "name": "漢磊",
-      "symbol": "3707.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "3709",
-      "name": "鑫聯大投控",
-      "symbol": "3709.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -1316,87 +1028,7 @@
       "name": "中光電投控",
       "symbol": "3718.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4105",
-      "name": "東洋",
-      "symbol": "4105.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4114",
-      "name": "健喬",
-      "symbol": "4114.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4123",
-      "name": "晟德",
-      "symbol": "4123.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4128",
-      "name": "中天",
-      "symbol": "4128.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4129",
-      "name": "聯合",
-      "symbol": "4129.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4147",
-      "name": "中裕",
-      "symbol": "4147.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4162",
-      "name": "智擎",
-      "symbol": "4162.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4542",
-      "name": "科嶠",
-      "symbol": "4542.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4707",
-      "name": "磐亞",
-      "symbol": "4707.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4743",
-      "name": "合一",
-      "symbol": "4743.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1404,23 +1036,7 @@
       "name": "新應材",
       "symbol": "4749.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4760",
-      "name": "勤凱",
-      "symbol": "4760.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4768",
-      "name": "晶呈科技",
-      "symbol": "4768.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1428,7 +1044,7 @@
       "name": "台特化",
       "symbol": "4772.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1440,35 +1056,11 @@
       ]
     },
     {
-      "code": "4908",
-      "name": "前鼎",
-      "symbol": "4908.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4931",
-      "name": "新盛力",
-      "symbol": "4931.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "4938",
       "name": "和碩",
       "symbol": "4938.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "4953",
-      "name": "緯致",
-      "symbol": "4953.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -1484,23 +1076,7 @@
       "name": "譜瑞-KY",
       "symbol": "4966.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4971",
-      "name": "IET-KY",
-      "symbol": "4971.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "4973",
-      "name": "廣穎",
-      "symbol": "4973.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1508,7 +1084,7 @@
       "name": "華星光",
       "symbol": "4979.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1516,23 +1092,7 @@
       "name": "環宇-KY",
       "symbol": "4991.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5009",
-      "name": "榮剛",
-      "symbol": "5009.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5263",
-      "name": "智崴",
-      "symbol": "5263.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1548,7 +1108,7 @@
       "name": "信驊",
       "symbol": "5274.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1556,39 +1116,7 @@
       "name": "宜鼎",
       "symbol": "5289.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5309",
-      "name": "系統電",
-      "symbol": "5309.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5314",
-      "name": "世紀*",
-      "symbol": "5314.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5328",
-      "name": "華容",
-      "symbol": "5328.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5340",
-      "name": "建榮",
-      "symbol": "5340.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1596,7 +1124,7 @@
       "name": "世界",
       "symbol": "5347.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1604,31 +1132,7 @@
       "name": "鈺創",
       "symbol": "5351.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5386",
-      "name": "青雲",
-      "symbol": "5386.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5392",
-      "name": "能率",
-      "symbol": "5392.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5425",
-      "name": "台半",
-      "symbol": "5425.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1640,59 +1144,11 @@
       ]
     },
     {
-      "code": "5439",
-      "name": "高技",
-      "symbol": "5439.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5443",
-      "name": "均豪",
-      "symbol": "5443.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5475",
-      "name": "德宏",
-      "symbol": "5475.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "5483",
       "name": "中美晶",
       "symbol": "5483.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5498",
-      "name": "凱崴",
-      "symbol": "5498.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5508",
-      "name": "永信建",
-      "symbol": "5508.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5530",
-      "name": "龍巖",
-      "symbol": "5530.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1700,15 +1156,7 @@
       "name": "聖暉*",
       "symbol": "5536.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "5864",
-      "name": "致和證",
-      "symbol": "5864.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1740,31 +1188,7 @@
       "name": "寶雅*",
       "symbol": "5904.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6016",
-      "name": "康和證",
-      "symbol": "6016.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6023",
-      "name": "元大期",
-      "symbol": "6023.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6104",
-      "name": "創惟",
-      "symbol": "6104.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1772,23 +1196,7 @@
       "name": "新普",
       "symbol": "6121.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6125",
-      "name": "廣運",
-      "symbol": "6125.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6138",
-      "name": "茂達",
-      "symbol": "6138.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1800,27 +1208,11 @@
       ]
     },
     {
-      "code": "6143",
-      "name": "振曜",
-      "symbol": "6143.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6146",
-      "name": "耕興",
-      "symbol": "6146.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6147",
       "name": "頎邦",
       "symbol": "6147.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1828,23 +1220,7 @@
       "name": "信昌電",
       "symbol": "6173.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6175",
-      "name": "立敦",
-      "symbol": "6175.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6180",
-      "name": "橘子",
-      "symbol": "6180.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1852,7 +1228,7 @@
       "name": "合晶",
       "symbol": "6182.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1860,23 +1236,7 @@
       "name": "萬潤",
       "symbol": "6187.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6188",
-      "name": "廣明",
-      "symbol": "6188.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6190",
-      "name": "萬泰科",
-      "symbol": "6190.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1888,14 +1248,6 @@
       ]
     },
     {
-      "code": "6207",
-      "name": "雷科",
-      "symbol": "6207.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6213",
       "name": "聯茂",
       "symbol": "6213.TW",
@@ -1904,35 +1256,11 @@
       ]
     },
     {
-      "code": "6217",
-      "name": "中探針",
-      "symbol": "6217.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6223",
       "name": "旺矽",
       "symbol": "6223.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6227",
-      "name": "茂綸",
-      "symbol": "6227.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6231",
-      "name": "系微",
-      "symbol": "6231.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -1944,22 +1272,6 @@
       ]
     },
     {
-      "code": "6244",
-      "name": "茂迪",
-      "symbol": "6244.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6245",
-      "name": "立端",
-      "symbol": "6245.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6257",
       "name": "矽格",
       "symbol": "6257.TW",
@@ -1968,43 +1280,11 @@
       ]
     },
     {
-      "code": "6261",
-      "name": "久元",
-      "symbol": "6261.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6263",
-      "name": "普萊德",
-      "symbol": "6263.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6274",
       "name": "台燿",
       "symbol": "6274.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6279",
-      "name": "胡連",
-      "symbol": "6279.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6284",
-      "name": "佳邦",
-      "symbol": "6284.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2020,15 +1300,7 @@
       "name": "良維",
       "symbol": "6290.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6291",
-      "name": "沛亨",
-      "symbol": "6291.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2040,27 +1312,11 @@
       ]
     },
     {
-      "code": "6411",
-      "name": "晶焱",
-      "symbol": "6411.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6415",
       "name": "矽力*-KY",
       "symbol": "6415.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "6435",
-      "name": "大中",
-      "symbol": "6435.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -2080,35 +1336,11 @@
       ]
     },
     {
-      "code": "6462",
-      "name": "神盾",
-      "symbol": "6462.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6469",
-      "name": "大樹",
-      "symbol": "6469.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6488",
       "name": "環球晶",
       "symbol": "6488.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6499",
-      "name": "益安",
-      "symbol": "6499.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2120,19 +1352,11 @@
       ]
     },
     {
-      "code": "6509",
-      "name": "聚和",
-      "symbol": "6509.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6510",
       "name": "精測",
       "symbol": "6510.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2160,43 +1384,11 @@
       ]
     },
     {
-      "code": "6535",
-      "name": "順藥",
-      "symbol": "6535.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6538",
-      "name": "倉和",
-      "symbol": "6538.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6547",
-      "name": "高端疫苗",
-      "symbol": "6547.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6548",
       "name": "長科*",
       "symbol": "6548.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6561",
-      "name": "是方",
-      "symbol": "6561.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2204,63 +1396,7 @@
       "name": "南俊國際",
       "symbol": "6584.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6613",
-      "name": "朋億*",
-      "symbol": "6613.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6617",
-      "name": "共信-KY",
-      "symbol": "6617.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6620",
-      "name": "漢達",
-      "symbol": "6620.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6640",
-      "name": "均華",
-      "symbol": "6640.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6643",
-      "name": "M31",
-      "symbol": "6643.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6664",
-      "name": "群翊",
-      "symbol": "6664.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6667",
-      "name": "信紘科",
-      "symbol": "6667.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2272,19 +1408,11 @@
       ]
     },
     {
-      "code": "6679",
-      "name": "鈺太",
-      "symbol": "6679.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6683",
       "name": "雍智科技",
       "symbol": "6683.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2293,54 +1421,6 @@
       "symbol": "6691.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "6712",
-      "name": "長聖",
-      "symbol": "6712.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6725",
-      "name": "矽科宏晟",
-      "symbol": "6725.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6727",
-      "name": "亞泰金屬",
-      "symbol": "6727.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6732",
-      "name": "昇佳電子",
-      "symbol": "6732.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6739",
-      "name": "竹陞科技",
-      "symbol": "6739.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6763",
-      "name": "綠界科技*",
-      "symbol": "6763.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -2360,27 +1440,11 @@
       ]
     },
     {
-      "code": "6788",
-      "name": "華景電",
-      "symbol": "6788.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6789",
       "name": "采鈺",
       "symbol": "6789.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "6803",
-      "name": "崑鼎",
-      "symbol": "6803.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -2392,51 +1456,11 @@
       ]
     },
     {
-      "code": "6811",
-      "name": "宏碁資訊",
-      "symbol": "6811.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6829",
-      "name": "千附精密",
-      "symbol": "6829.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6903",
-      "name": "巨漢",
-      "symbol": "6903.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "6907",
-      "name": "雅特力-KY",
-      "symbol": "6907.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "6919",
       "name": "康霈*",
       "symbol": "6919.TW",
       "indexes": [
         "mid100"
-      ]
-    },
-    {
-      "code": "6945",
-      "name": "圓祥生技",
-      "symbol": "6945.TWO",
-      "indexes": [
-        "otc200"
       ]
     },
     {
@@ -2448,14 +1472,6 @@
       ]
     },
     {
-      "code": "6996",
-      "name": "力領科技",
-      "symbol": "6996.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "7610",
       "name": "聯友金屬-創",
       "symbol": "7610.TW",
@@ -2464,43 +1480,11 @@
       ]
     },
     {
-      "code": "7703",
-      "name": "銳澤",
-      "symbol": "7703.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "7717",
-      "name": "萊德光電-KY",
-      "symbol": "7717.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "7728",
-      "name": "光焱科技",
-      "symbol": "7728.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "7734",
       "name": "印能科技",
       "symbol": "7734.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "7744",
-      "name": "崴寶",
-      "symbol": "7744.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2516,7 +1500,7 @@
       "name": "竑騰",
       "symbol": "7751.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2528,27 +1512,11 @@
       ]
     },
     {
-      "code": "7792",
-      "name": "安葆",
-      "symbol": "7792.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "7805",
-      "name": "威聯通",
-      "symbol": "7805.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "7828",
       "name": "創新服務",
       "symbol": "7828.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2556,39 +1524,7 @@
       "name": "漢測",
       "symbol": "7856.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8027",
-      "name": "鈦昇",
-      "symbol": "8027.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8040",
-      "name": "九暘",
-      "symbol": "8040.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8042",
-      "name": "金山電",
-      "symbol": "8042.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8043",
-      "name": "蜜望實",
-      "symbol": "8043.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2600,75 +1536,11 @@
       ]
     },
     {
-      "code": "8050",
-      "name": "廣積",
-      "symbol": "8050.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8054",
-      "name": "安國",
-      "symbol": "8054.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8064",
-      "name": "東捷",
-      "symbol": "8064.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "8069",
       "name": "元太",
       "symbol": "8069.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8086",
-      "name": "宏捷科",
-      "symbol": "8086.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8091",
-      "name": "翔名",
-      "symbol": "8091.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8096",
-      "name": "擎亞",
-      "symbol": "8096.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8109",
-      "name": "博大",
-      "symbol": "8109.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8155",
-      "name": "博智",
-      "symbol": "8155.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2680,35 +1552,11 @@
       ]
     },
     {
-      "code": "8227",
-      "name": "巨有科技",
-      "symbol": "8227.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8234",
-      "name": "新漢",
-      "symbol": "8234.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8255",
-      "name": "朋程",
-      "symbol": "8255.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "8299",
       "name": "群聯",
       "symbol": "8299.TWO",
       "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2716,31 +1564,7 @@
       "name": "金居",
       "symbol": "8358.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8390",
-      "name": "金益鼎",
-      "symbol": "8390.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8415",
-      "name": "大國鋼",
-      "symbol": "8415.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8436",
-      "name": "大江",
-      "symbol": "8436.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
@@ -2752,35 +1576,11 @@
       ]
     },
     {
-      "code": "8927",
-      "name": "北基",
-      "symbol": "8927.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
       "code": "8932",
       "name": "智通*",
       "symbol": "8932.TWO",
       "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8936",
-      "name": "國統",
-      "symbol": "8936.TWO",
-      "indexes": [
-        "otc200"
-      ]
-    },
-    {
-      "code": "8937",
-      "name": "合騏*",
-      "symbol": "8937.TWO",
-      "indexes": [
-        "otc200"
+        "otc50"
       ]
     },
     {
