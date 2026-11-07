@@ -1,6 +1,6 @@
 # stocktw
 
-**台灣50、中型100、富櫃50** 日線掃描器：四點成線趨勢線、Creek / Ice、平行通道，可存 Chartpack。代號旁顯示公司名稱（Yahoo 上市 `.TW`、上櫃 `.TWO`）。
+**台灣50、中型100、富櫃50** 日線掃描器：與 stockus 同一套四點成線趨勢線、Creek / Ice，可存 Chartpack。代號旁顯示公司名稱（Yahoo 上市 `.TW`、上櫃 `.TWO`）。
 
 ## 本機執行
 

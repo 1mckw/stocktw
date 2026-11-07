@@ -2,7 +2,7 @@
 """Headless 台灣50 / 中型100 / 富櫃50 daily scanner for local use and GitHub Actions.
 
 Trend lines follow the four-point expanding-window rules (same concept as ts):
-  ≥4 merged wick touches; slope sign is not constrained (support/resistance may tilt either way).
+  ≥4 merged wick touches, support slope ≥ 0, resistance slope ≤ 0.
   Draw from the first touch through the latest bar of the search window.
   Creek / Ice naming stays Wyckoff for the existing UI (Creek = support, Ice = resistance).
 """
@@ -220,13 +220,6 @@ def choose_touch_segment(indices, min_touches, recent_lo=None):
     return {"seg": max(enough, key=_seg_key)}
 
 
-def longest_touch_segment(indices):
-    segs = _touch_segments(indices)
-    if not segs:
-        return []
-    return max(segs, key=_seg_key)
-
-
 def collect_raw_touches(bars, line, resistance, start_i, end_i):
     hits = []
     for i in range(start_i, end_i + 1):
@@ -308,7 +301,7 @@ def _merge_miss(into, frm):
 
 
 def format_why(kind, miss, no_window=False):
-    side = "支撐" if kind == "support" else "壓力" if kind == "resistance" else "通道"
+    side = "壓力" if kind == "resistance" else "支撐"
     if no_window:
         return f"{side}不成線：做線資料不足（少於 80 根）"
     if not miss or miss.get("tried", 0) <= 0:
@@ -380,6 +373,10 @@ def collect_side_line(bars, lookback, kind, min_touches=None, require_recent=Tru
                 continue
             p1 = bars[i1]["l"] if kind == "support" else bars[i1]["h"]
             p2 = bars[i2]["l"] if kind == "support" else bars[i2]["h"]
+            if kind == "support" and p2 < p1:
+                continue
+            if kind == "resistance" and p2 > p1:
+                continue
             line = line_through(i1, p1, i2, p2)
             ev = evaluate_candidate(
                 bars, line, kind, win_lo, actual,
@@ -394,52 +391,11 @@ def collect_side_line(bars, lookback, kind, min_touches=None, require_recent=Tru
     return best, miss
 
 
-def make_parallel_channel(L, bars):
-    if not L or not L.get("touches"):
-        return None, _empty_miss()
-    n = len(bars)
-    lookback = int(L.get("windowSize") or n)
-    win_lo = max(0, n - lookback)
-    last_i = n - 1
-    i0 = L.get("drawFrom", L["touches"][0])
-    if i0 >= last_i:
-        return None, _empty_miss()
-    opp = "resistance" if L["kind"] == "support" else "support"
-    highs, lows = _pivots_in_lookback(bars, lookback)
-    pts = lows if opp == "support" else highs
-    m = L["line"]["m"]
-    best = None
-    miss = _empty_miss()
-    for i in pts:
-        src_y = y_at(L["line"], i)
-        price = bars[i]["l"] if opp == "support" else bars[i]["h"]
-        if opp == "resistance" and price < src_y:
-            continue
-        if opp == "support" and price > src_y:
-            continue
-        ev = evaluate_candidate(bars, {"m": m, "b": price - m * i}, opp, win_lo, lookback)
-        cand = ev.get("line")
-        if cand is None:
-            _note_miss(miss, ev)
-            continue
-        if best is None or _line_score(cand) > _line_score(best):
-            best = cand
-    if best is None:
-        return None, miss
-    best["type"] = "channel"
-    best["label"] = "平行通道"
-    best["isParallel"] = True
-    best["pairOf"] = L["type"]
-    best["drawFrom"] = min(i0, best["touches"][0])
-    best["drawTo"] = n - 1
-    return best, miss
-
-
 def analyze_symbol(bars, windows=None):
     windows = list(windows or WINDOWS)
     n = len(bars)
     found = {}
-    why = {"support": None, "resistance": None, "channel": None}
+    why = {"support": None, "resistance": None}
 
     def search_kind(kind, min_touches=None, require_recent=True):
         miss = _empty_miss()
@@ -471,13 +427,7 @@ def analyze_symbol(bars, windows=None):
     for L in (up, down):
         if L and L.get("windowSize"):
             used = L["windowSize"] if used is None else max(used, L["windowSize"])
-    channel = None
-    primary = up if up and not down else (down if down and not up else None)
-    if primary:
-        channel, ch_miss = make_parallel_channel(primary, bars)
-        if not channel:
-            why["channel"] = format_why("channel", ch_miss)
-    return {"up": up, "down": down, "channel": channel, "window": used, "why": why}
+    return {"up": up, "down": down, "window": used, "why": why}
 
 
 def shift_line(L, offset: int):
@@ -504,7 +454,6 @@ def shift_analysis(analysis: dict, offset: int) -> dict:
         "window": analysis.get("window"),
         "up": shift_line(analysis.get("up"), offset),
         "down": shift_line(analysis.get("down"), offset),
-        "channel": shift_line(analysis.get("channel"), offset),
         "why": analysis.get("why"),
     }
 
@@ -525,8 +474,6 @@ def slim_line(L):
         "score": L.get("score"),
         "label": L.get("label"),
         "type": L.get("type"),
-        "isParallel": L.get("isParallel"),
-        "pairOf": L.get("pairOf"),
     }
 
 
@@ -574,13 +521,18 @@ def scan_listed(date_str: str, sleep_s: float, index: str = "all") -> list[dict]
                     "window": analysis["window"],
                     "up": slim_line(analysis["up"]),
                     "down": slim_line(analysis["down"]),
-                    "channel": slim_line(analysis["channel"]),
                     "why": analysis.get("why"),
                 },
             })
             ok += 1
         except Exception as e:
-            results.append({"symbol": sym, "name": name, "index": idxs[0] if idxs else None, "indexes": idxs, "error": str(e)})
+            results.append({
+                "symbol": sym,
+                "name": name,
+                "index": idxs[0] if idxs else None,
+                "indexes": idxs,
+                "error": str(e),
+            })
             print(f"  fail: {e}", flush=True)
         time.sleep(sleep_s)
     saved_at = datetime.now(timezone.utc).isoformat()
@@ -598,13 +550,12 @@ def scan_listed(date_str: str, sleep_s: float, index: str = "all") -> list[dict]
         if len(rows) > SHARD_SIZE:
             for shard, start in enumerate(range(0, len(rows), SHARD_SIZE)):
                 chunk = rows[start : start + SHARD_SIZE]
-                chunk_ok = sum(1 for r in chunk if r.get("bars"))
                 packs.append({
                     "date": date_str,
                     "index": f"{idx}{shard:02d}",
                     "indexLabel": label,
                     "savedAt": saved_at,
-                    "count": chunk_ok,
+                    "count": sum(1 for r in chunk if r.get("bars")),
                     "results": chunk,
                 })
         else:
@@ -628,7 +579,7 @@ def recent_signal(row: dict, lookback: int = TREND_SIGNAL_BARS) -> str:
     n = len(bars)
     frm = max(0, n - lookback)
     breakout = touch = reclaim = False
-    for key in ("up", "down", "channel"):
+    for key in ("up", "down"):
         L = analysis.get(key)
         if not L or not L.get("line"):
             continue
@@ -669,7 +620,7 @@ def write_latest_md(out: Path, packs: list[dict]) -> None:
             sig = recent_signal(r) if r.get("bars") else (r.get("error") or "無資料")
             a = r.get("analysis") or {}
             labels = []
-            for key in ("up", "down", "channel"):
+            for key in ("up", "down"):
                 L = a.get(key)
                 if L and L.get("label"):
                     labels.append(L["label"])
@@ -710,6 +661,35 @@ def write_manifest(out: Path) -> dict:
     return manifest
 
 
+def write_latest_md_merged(out: Path, date_str: str, packs: list[dict]) -> None:
+    by_label = {}
+    for pack in packs:
+        key = pack.get("indexLabel") or canonical_index(pack.get("index") or "") or pack.get("index")
+        rec = by_label.setdefault(
+            key,
+            {
+                "indexLabel": key,
+                "index": canonical_index(pack.get("index") or ""),
+                "date": date_str,
+                "count": 0,
+                "results": [],
+            },
+        )
+        rec["count"] += pack.get("count", 0)
+        rec["results"].extend(pack.get("results") or [])
+    ordered = []
+    seen = set()
+    for idx in INDEX_IDS:
+        label = INDEX_LABELS[idx]
+        if label in by_label:
+            ordered.append(by_label[label])
+            seen.add(label)
+    for label, rec in by_label.items():
+        if label not in seen:
+            ordered.append(rec)
+    write_latest_md(out, ordered)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="Scan 台灣50 / 中型100 / 富櫃50 daily trend lines")
     p.add_argument("--index", default="all", help="all | tw50 | mid100 | otc50")
@@ -729,26 +709,6 @@ def main() -> None:
     write_latest_md_merged(out, date_str, written)
     write_manifest(out)
     print("wrote chartpacks/manifest.json and LATEST.md", flush=True)
-
-
-def write_latest_md_merged(out: Path, date_str: str, packs: list[dict]) -> None:
-    by_label = {}
-    for pack in packs:
-        key = pack.get("indexLabel") or canonical_index(pack.get("index") or "") or pack.get("index")
-        rec = by_label.setdefault(key, {"indexLabel": key, "index": canonical_index(pack.get("index") or ""), "date": date_str, "count": 0, "results": []})
-        rec["count"] += pack.get("count", 0)
-        rec["results"].extend(pack.get("results") or [])
-    ordered = []
-    seen = set()
-    for idx in INDEX_IDS:
-        label = INDEX_LABELS[idx]
-        if label in by_label:
-            ordered.append(by_label[label])
-            seen.add(label)
-    for label, rec in by_label.items():
-        if label not in seen:
-            ordered.append(rec)
-    write_latest_md(out, ordered)
 
 
 if __name__ == "__main__":
