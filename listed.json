@@ -1,5 +1,5 @@
 {
-  "count": 200,
+  "count": 199,
   "indexes": {
     "tw50": {
       "label": "台灣50",
@@ -7,7 +7,7 @@
     },
     "mid100": {
       "label": "中型100",
-      "count": 100
+      "count": 99
     },
     "otc50": {
       "label": "富櫃50",
@@ -1459,14 +1459,6 @@
       "code": "6919",
       "name": "康霈*",
       "symbol": "6919.TW",
-      "indexes": [
-        "mid100"
-      ]
-    },
-    {
-      "code": "6949",
-      "name": "沛爾生醫*-創",
-      "symbol": "6949.TW",
       "indexes": [
         "mid100"
       ]
